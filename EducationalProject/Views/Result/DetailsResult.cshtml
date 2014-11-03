@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "DetailsResult";
+}
+@using EducationalProject.DataInfo
+@using EducationalProject.Models
+@model DetailsResultWrapper
+<h2>Details: @Model.TestName</h2>
+<h2>Passed: @Model.Passed</h2>
+<h2>Percent taken: @Model.PercentTaken%</h2>
+
+@foreach (var question in Model.QuestionsList)
+   {
+       <h1>@question.QuestionText</h1>
+    
+       if (question.Type == DataConst.RadioType)
+       {
+           <table class="table table-bordered  table-striped">
+               <thead>
+                   <tr>
+                       <th>YourAnswer</th>
+                       <th>TrueAnswer</th>
+                       <th></th>
+                   </tr> 
+               </thead>
+               <tbody>   
+               @foreach (var item in ((CheckedQuestion) question).VariantsList)
+               {
+                   <tr>
+                       <td style="max-width: 300px;"><input type="radio" checked=@item.UserAnswer name=@question.UserNumber disabled='disabled'></td>
+                       <td style="max-width: 290px;"><input type="radio" checked=@item.RealAnswer name=@question.RealNumber disabled='disabled'></td>
+                       <td style="min-width: 320px;">@item.Text</td>           
+                   </tr>
+               }
+               </tbody>   
+           </table>
+       }
+       if (question.Type == DataConst.CheckedType)
+       {
+           <table class="table table-bordered  table-striped">
+               <thead>
+                   <tr>
+                       <th>YourAnswer</th>
+                       <th>TrueAnswer</th>
+                       <th></th>
+                   </tr>
+               </thead>
+               <tbody>     
+               @foreach (var item in ((CheckedQuestion) question).VariantsList)
+               {
+                   <tr>
+                       <td class="tableCell"><input type="checkbox" checked=@item.UserAnswer name=@question.UserNumber disabled='disabled'></td>
+                       <td class="tableCell"><input type="checkbox" checked=@item.RealAnswer name=@question.RealNumber disabled='disabled'></td>
+                       <td class="tableCell">@item.Text</td>           
+                   </tr>
+               }
+               </tbody>
+           </table>
+       }
+}

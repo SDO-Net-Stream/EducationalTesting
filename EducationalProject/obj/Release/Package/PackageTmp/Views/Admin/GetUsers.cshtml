@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EducationalProject.Models.UsersWrapper>
+@{
+    ViewBag.Title = "GetUsers";
+}
+<p>&nbsp;</p>
+<div class="spacerBody">
+    @Html.ActionLink("Create New Role", "RoleCreate") | @Html.ActionLink("Role Manager", "RoleAddToUser")
+    <h2>New Users:</h2>
+@using (Html.BeginForm("GetUsers", "Admin"))
+    {
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+        if (Model.Count() > 0) {         
+            <table border="1"class="simple-little-table" >
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Submit</th>
+                    <th>Operatoin</th>
+                </tr>
+
+                @foreach(var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.TextBox("UserName", user.UserName)
+                          
+                        </td>
+
+                        <td>
+                            @Html.DropDownList("RoleName", ViewBag.Roles as SelectList)
+                        </td>
+                        <td>
+                            <input type="submit" value="Save" />
+                        </td>
+                        <td>
+                            <span onclick="return confirm('Are you sure to delete?')">
+                                <a href="/Admin/DeleteUser?UserName=@user.UserName" class="deleteLink">Delete</a>
+                            </span>
+                        </td>
+                   </tr>
+
+                }
+
+            </table>
+        }
+        else
+        {
+            <div class="message-success">@ViewBag.Error</div>
+        }
+
+    }
+
+
+
+
+    </div>

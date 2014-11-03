@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<test testname="Checked Test1" order="Normal">
+  <question number="1" type="Checked">
+    <text>Simple checked question 1</text>
+    <answer>0111</answer>
+    <variantsanswer>
+      <variant>Variant answer 1c</variant>
+      <variant>Variant answer 2c</variant>
+      <variant>Variant answer 3c</variant>
+      <variant>Variant answer 4c</variant>
+	  <variant>Variant answer 5c</variant>
+    </variantsanswer>
+  </question>
+</test>

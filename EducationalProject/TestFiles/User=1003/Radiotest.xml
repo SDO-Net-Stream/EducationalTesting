@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<test testname="Radio Test1" order="Normal">
+  
+  <question number="1" type="Radio">
+    <text>Simple question 1</text>
+    <answer>000010000</answer>
+    <variantsanswer>
+      <variant>Variant answer 1</variant>
+      <variant>Variant answer 2</variant>
+      <variant>Variant answer 3</variant>
+      <variant>Variant answer 4</variant>
+      <variant>Variant answer 5</variant>
+      <variant>Variant answer 6</variant>
+      <variant>Variant answer 7</variant>
+      <variant>Variant answer 8</variant>
+      <variant>Variant answer 9</variant>
+    </variantsanswer>
+  </question>
+</test>
