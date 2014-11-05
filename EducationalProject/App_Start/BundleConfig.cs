@@ -3,7 +3,7 @@ using System.Web.Optimization;
 
 namespace EducationalProject
 {
-    public class BundleConfig1
+    public class BundleConfig
     {
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
@@ -43,7 +43,8 @@ namespace EducationalProject
 
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/bootstrap-theme.css"));
+                "~/Content/bootstrap-theme.css",
+                "~/Content/justified-nav.css"));
         }
     }
 }

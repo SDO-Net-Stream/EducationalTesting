@@ -23,7 +23,7 @@
                         @Html.Partial("_LoginPartial")
                     </section>
                     <nav>
-                        <ul id="menu" class="nav navbar-nav">
+                        <ul class="nav nav-justified">
                             @{
                                 var roleName = Roles.GetRolesForUser().FirstOrDefault();
                                 if (roleName != null)

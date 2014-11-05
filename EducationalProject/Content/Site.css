@@ -99,19 +99,19 @@ h5, h6 {
 }
 
 #body {
-    background-color: #efeeef;
+    background-color: white !important;
     clear: both;
     padding-bottom: 35px;
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
+        /*background: url("../Images/accent.png") no-repeat;*/
         padding-left: 10px;
         padding-top: 30px;
     }
 
     .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
+        /*background: url("../Images/heroAccent.png") no-repeat;*/
     }
 
 header .content-wrapper {
@@ -120,7 +120,7 @@ header .content-wrapper {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #efeeef !important;
     font-size: .8em;
     height: 100px;
 }
