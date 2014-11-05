@@ -14,7 +14,7 @@ using EducationalProject.Models;
 namespace EducationalProject.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -79,11 +79,10 @@ namespace EducationalProject.Controllers
                 // Attempt to register the user
                 try
                 {
-                    
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    if (!Roles.RoleExists("None"))
-                        Roles.CreateRole("None");
-                    Roles.AddUserToRole(model.UserName, "None");
+                    if (!Roles.RoleExists("User"))
+                        Roles.CreateRole("User");
+                    Roles.AddUserToRole(model.UserName, "User");
                     WebSecurity.Login(model.UserName, model.Password);
                     
                     return RedirectToAction("RolePermissions", "Home");

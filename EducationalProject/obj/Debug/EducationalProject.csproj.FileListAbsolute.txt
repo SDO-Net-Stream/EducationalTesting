@@ -197,7 +197,6 @@ D:\educational\trunk\EducationalProject\EducationalProject\bin\WebActivatorEx.dl
 D:\educational\trunk\EducationalProject\EducationalProject\bin\Antlr3.Runtime.pdb
 D:\educational\trunk\EducationalProject\EducationalProject\bin\System.Web.Optimization.xml
 D:\educational\trunk\EducationalProject\EducationalProject\obj\Debug\EducationalProject.csprojResolveAssemblyReference.cache
-C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csprojResolveAssemblyReference.cache
 C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.dll.config
 C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.pdb
@@ -302,3 +301,4 @@ C:\workspace\EducationalTesting\EducationalProject\bin\zh-Hans\System.Spatial.re
 C:\workspace\EducationalTesting\EducationalProject\bin\zh-Hant\System.Spatial.resources.dll
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.dll
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.pdb
+C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csprojResolveAssemblyReference.cache

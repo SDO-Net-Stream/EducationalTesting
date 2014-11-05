@@ -10,7 +10,7 @@ using WebMatrix.WebData;
 
 namespace EducationalProject.Controllers
 {
-     [InitializeSimpleMembership]
+     //[InitializeSimpleMembership]
     public class AdminController : Controller
     {
         [Authorize(Roles = "Administrator")]
