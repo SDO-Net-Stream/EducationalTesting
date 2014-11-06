@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test testname="Simple Test3" order="Normal">
+
+  <question number="1" type="Radio">
+    <text>Simple question 1</text>
+    <answer>00001</answer>
+    <variantsanswer>
+      <variant>Variant answer 1</variant>
+      <variant>Variant answer 2</variant>
+      <variant>Variant answer 3</variant>
+      <variant>Variant answer 4</variant>
+      <variant>Variant answer 5</variant>
+    </variantsanswer>
+  </question>
+
+  <question number="2" type="Checked">
+    <text>Simple question 2</text>
+    <answer>0111</answer>
+    <variantsanswer>
+      <variant>Variant answer 1c</variant>
+      <variant>Variant answer 2c</variant>
+      <variant>Variant answer 3c</variant>
+      <variant>Variant answer 4c</variant>
+    </variantsanswer>
+  </question>
+
+  <question number="3" type="Radio">
+    <text>Simple question 3</text>
+    <answer>100</answer>
+    <variantsanswer>
+      <variant>Variant answer 1r</variant>
+      <variant>Variant answer 2r</variant>
+      <variant>Variant answer 3r</variant>
+    </variantsanswer>
+  </question>
+</test>
