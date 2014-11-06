@@ -49,6 +49,7 @@ namespace EducationalProject.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -93,7 +94,7 @@ namespace EducationalProject.Models
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
-
+    
     public class RegisterModel
     {
         [Required]
@@ -110,6 +111,36 @@ namespace EducationalProject.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "E-Mail")]
+        public string Email { get; set; }
+    }
+
+    public class LostPasswordModel
+    {
+        [Required(ErrorMessage = "We need your email to send you a reset link!")]
+        [Display(Name = "Your account email")]
+        [EmailAddress(ErrorMessage = "Not a valid email!? What are you trying to do here?")]
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordModel
+    {
+        [Required]
+        [Display(Name = "New Password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "New password and confirmation does not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string ReturnToken { get; set; }
     }
 
     public class ExternalLogin

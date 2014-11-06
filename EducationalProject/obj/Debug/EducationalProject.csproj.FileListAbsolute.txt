@@ -223,6 +223,8 @@ C:\workspace\EducationalTesting\EducationalProject\bin\Newtonsoft.Json.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Owin.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.Mvc.dll
+C:\workspace\EducationalTesting\EducationalProject\bin\Postal.dll
+C:\workspace\EducationalTesting\EducationalProject\bin\RazorEngine.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Net.Http.Formatting.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Spatial.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Helpers.dll
@@ -249,6 +251,9 @@ C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Web.WebPages.OA
 C:\workspace\EducationalTesting\EducationalProject\bin\Newtonsoft.Json.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.Mvc.xml
+C:\workspace\EducationalTesting\EducationalProject\bin\Postal.xml
+C:\workspace\EducationalTesting\EducationalProject\bin\RazorEngine.pdb
+C:\workspace\EducationalTesting\EducationalProject\bin\RazorEngine.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Helpers.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Mvc.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Optimization.xml
@@ -299,6 +304,8 @@ C:\workspace\EducationalTesting\EducationalProject\bin\ko\System.Spatial.resourc
 C:\workspace\EducationalTesting\EducationalProject\bin\ru\System.Spatial.resources.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\zh-Hans\System.Spatial.resources.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\zh-Hant\System.Spatial.resources.dll
+C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csprojResolveAssemblyReference.cache
+C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.Migrations.ResetPassword.resources
+C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csproj.GenerateResource.Cache
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.dll
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.pdb
-C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csprojResolveAssemblyReference.cache
