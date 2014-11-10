@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EducationalProject.DataInfo;
 using EducationalProject.Models;
-using Microsoft.Ajax.Utilities;
-using Microsoft.SqlServer.Server;
 using WebMatrix.WebData;
 using Action = EducationalProject.Models.Action;
 

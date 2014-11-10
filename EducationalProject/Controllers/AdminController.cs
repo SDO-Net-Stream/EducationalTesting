@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
-using EducationalProject.Filters;
 using EducationalProject.Models;
 using PagedList;
 using WebMatrix.WebData;

@@ -210,8 +210,6 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookSection.cs" />
     <Compile Include="Models\Contact.cs" />
-    <Compile Include="Models\EducationalProjectContext.cs" />
-    <Compile Include="Models\EducationalProjectInitializer.cs" />
     <Compile Include="Models\Lecture.cs" />
     <Compile Include="Models\TestModels.cs" />
     <Compile Include="Models\TestWrappers.cs" />
@@ -1095,11 +1093,6 @@
     <Content Include="Views\Test\TestInAction.cshtml" />
     <Content Include="Views\Result\Results.cshtml" />
     <Content Include="Views\Result\DetailsResult.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
-    <Content Include="Views\Home\Delete.cshtml" />
-    <Content Include="Views\Home\Edit.cshtml" />
-    <Content Include="Views\Home\Lectures.cshtml" />
-    <Content Include="Views\Home\Literature.cshtml" />
     <Content Include="Views\Admin\GetAllUsers.cshtml" />
     <Content Include="Views\Admin\GetUsers.cshtml" />
     <Content Include="Views\Admin\Indexer.cshtml" />
@@ -1157,7 +1150,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59928</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54579/</IISUrl>
+          <IISUrl>http://localhost:54580/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
