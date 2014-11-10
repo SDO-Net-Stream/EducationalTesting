@@ -10,7 +10,7 @@ namespace EducationalProject.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            // AutomaticMigrationDataLossAllowed = true; // Uncomment it if you made changes in database schema and aware of data loses
         }
 
         protected override void Seed(EducationalProject.Models.UsersContext context)
