@@ -1,27 +1,23 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
-         ToolsVersion="12.0" DefaultTargets="Build" >
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0" DefaultTargets="Build" >
 
 	<PropertyGroup>
 		<Here>$(MSBuildThisFileDirectory)</Here>
 	</PropertyGroup>
 
-  <!-- Import all ProjectFiles here -->
+<!-- Import all ProjectFiles here -->
 	<ItemGroup>
 		<ProjectFiles Include="EducationalProject\EducationalProject.csproj"/>
 	</ItemGroup>
 
 	<Target Name="_Clean">
-		<Delete Files="bin\**\*.*" />
+		<Delete Files="EducationalProject\bin\*.*" />
 	</Target>
 
-	<Target Name="_CheckPrerequisites">
-	</Target>
-
-	<Target Name="Build" DependsOnTargets="_Clean; _CheckPrerequisites;" >
+	<Target Name="Build" DependsOnTargets="_Clean;" >
 		<MSBuild Projects="@(ProjectFiles);" Targets="Clean;Build" Properties="TrackFileAccess=False;"/>
 	</Target>
 
-	 <Target Name="JustPack">
+	 <Target Name="Deploy">
 
 		<Exec Command="
 	del C:\inetpub\EducationProject_Live\*.* /F /S /Q
@@ -33,7 +29,8 @@
 		</Exec>
 	 </Target>
 
-	 <Target Name="Pack" DependsOnTargets="Build; JustPack" >
+<!-- Final single step -->
+	 <Target Name="BuildAndDeploy" DependsOnTargets="Build; Deploy;" >
 	 </Target>
 
 </Project>
