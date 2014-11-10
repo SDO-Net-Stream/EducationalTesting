@@ -1,0 +1,39 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         ToolsVersion="12.0" DefaultTargets="Build" >
+
+	<PropertyGroup>
+		<Here>$(MSBuildThisFileDirectory)</Here>
+	</PropertyGroup>
+
+  <!-- Import all ProjectFiles here -->
+	<ItemGroup>
+		<ProjectFiles Include="EducationalProject\EducationalProject.csproj"/>
+	</ItemGroup>
+
+	<Target Name="_Clean">
+		<Delete Files="bin\**\*.*" />
+	</Target>
+
+	<Target Name="_CheckPrerequisites">
+	</Target>
+
+	<Target Name="Build" DependsOnTargets="_Clean; _CheckPrerequisites;" >
+		<MSBuild Projects="@(ProjectFiles);" Targets="Clean;Build" Properties="TrackFileAccess=False;"/>
+	</Target>
+
+	 <Target Name="JustPack">
+
+		<Exec Command="
+	del C:\inetpub\EducationProject_Live\*.* /F /S /Q
+	
+	xcopy EducationalProject C:\inetpub\EducationProject_Live /E /C /H
+
+	exit 0
+		  ">
+		</Exec>
+	 </Target>
+
+	 <Target Name="Pack" DependsOnTargets="Build; JustPack" >
+	 </Target>
+
+</Project>
