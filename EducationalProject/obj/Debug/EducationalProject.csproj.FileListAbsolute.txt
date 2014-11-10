@@ -201,13 +201,6 @@ C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.dll.co
 C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.pdb
 C:\workspace\EducationalTesting\EducationalProject\bin\AjaxMin.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\Antlr3.Runtime.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.AspNet.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.Core.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OAuth.Consumer.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OAuth.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OpenId.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\EntityFramework.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.Core.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
@@ -218,7 +211,6 @@ C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.Host.Syste
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.Security.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Web.Helpers.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Web.Infrastructure.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Web.WebPages.OAuth.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Newtonsoft.Json.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Owin.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.dll
@@ -241,13 +233,11 @@ C:\workspace\EducationalTesting\EducationalProject\bin\WebActivatorEx.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\WebGrease.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\WebMatrix.Data.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\WebMatrix.WebData.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\Antlr3.Runtime.pdb
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.Security.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Web.WebPages.OAuth.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Newtonsoft.Json.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\PagedList.Mvc.xml
@@ -265,12 +255,6 @@ C:\workspace\EducationalTesting\EducationalProject\bin\EntityFramework.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Net.Http.Formatting.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Http.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Http.WebHost.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.AspNet.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.Core.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OAuth.Consumer.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OAuth.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OpenId.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\System.Web.Http.OData.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Data.Edm.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Data.OData.xml
@@ -306,6 +290,7 @@ C:\workspace\EducationalTesting\EducationalProject\bin\zh-Hans\System.Spatial.re
 C:\workspace\EducationalTesting\EducationalProject\bin\zh-Hant\System.Spatial.resources.dll
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csprojResolveAssemblyReference.cache
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.Migrations.ResetPassword.resources
+C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.Migrations.EmailLikeLogin.resources
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.csproj.GenerateResource.Cache
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.dll
 C:\workspace\EducationalTesting\EducationalProject\obj\Debug\EducationalProject.pdb

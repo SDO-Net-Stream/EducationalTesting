@@ -49,13 +49,14 @@ namespace EducationalProject.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
     public class RegisterExternalLoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "E-mail")]
         public string UserName { get; set; }
 
         public string ExternalLoginData { get; set; }
@@ -83,7 +84,8 @@ namespace EducationalProject.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "E-mail")]
+        [EmailAddress(ErrorMessage = "Not a valid email!?")]
         public string UserName { get; set; }
 
         [Required]
@@ -98,8 +100,17 @@ namespace EducationalProject.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "E-mail")]
+        [EmailAddress(ErrorMessage = "Not a valid email!?")]
         public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -111,11 +122,6 @@ namespace EducationalProject.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "E-Mail")]
-        public string Email { get; set; }
     }
 
     public class LostPasswordModel

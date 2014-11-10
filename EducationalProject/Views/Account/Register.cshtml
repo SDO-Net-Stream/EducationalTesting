@@ -21,16 +21,21 @@
                 @Html.TextBoxFor(m => m.UserName)
             </li>
             <li>
+                @Html.LabelFor(m => m.FirstName)<br />
+                @Html.TextBoxFor(m => m.FirstName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.LastName)<br />
+                @Html.TextBoxFor(m => m.LastName)
+            </li>
+
+            <li>
                 @Html.LabelFor(m => m.Password)<br />
                 @Html.PasswordFor(m => m.Password)
             </li>
             <li>
                 @Html.LabelFor(m => m.ConfirmPassword)<br />
                 @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Email)<br />
-                @Html.TextBoxFor(m => m.Email)
             </li>
         </ol>
         <input type="submit" value="Register" />

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using EducationalProject.Controllers.Utilities;
 using EducationalProject.Models;
-using Microsoft.Web.WebPages.OAuth;
+//using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 
 namespace EducationalProject.Controllers
