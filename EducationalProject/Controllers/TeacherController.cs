@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using EducationalProject.Controllers.Utilities;
 using EducationalProject.Models;
-//using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 
 namespace EducationalProject.Controllers
