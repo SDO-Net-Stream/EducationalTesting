@@ -9,7 +9,7 @@ namespace EducationalProject
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR();
+            //app.MapSignalR();
         }
     }
 }

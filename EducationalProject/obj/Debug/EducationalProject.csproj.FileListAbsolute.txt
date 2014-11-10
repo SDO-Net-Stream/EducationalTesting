@@ -202,8 +202,6 @@ C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\EducationalProject.pdb
 C:\workspace\EducationalTesting\EducationalProject\bin\AjaxMin.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\EntityFramework.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.Core.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Data.Edm.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Data.OData.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.dll
@@ -233,8 +231,6 @@ C:\workspace\EducationalTesting\EducationalProject\bin\WebActivatorEx.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\WebGrease.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\WebMatrix.Data.dll
 C:\workspace\EducationalTesting\EducationalProject\bin\WebMatrix.WebData.dll
-C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.Core.xml
-C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\workspace\EducationalTesting\EducationalProject\bin\Microsoft.Owin.Security.xml
