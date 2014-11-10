@@ -1,0 +1,6 @@
+#
+/*.suo
+/*.dgml
+/packages/
+/EducationalProject/bin/
+/EducationalProject/obj/
