@@ -773,8 +773,9 @@ tr.pager td {
      width: 65px;
 }
 
-.subbmitBtn {
+.submitBtn {
     margin-top: 20px;
+    width: 65px;
 }
 
 /*===*/

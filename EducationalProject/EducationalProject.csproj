@@ -282,7 +282,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\Education.pubxml" />
     <None Include="Properties\PublishProfiles\Etesting.pubxml" />
     <Content Include="Scripts\angular-animate.js" />

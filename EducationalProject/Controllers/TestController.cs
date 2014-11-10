@@ -148,9 +148,9 @@ namespace EducationalProject.Controllers
         {
             switch (response.Command)
             {
-                case DataConst.Subbmit:
+                case DataConst.Submit:
                 {
-                    SubbmitTest(userId, currentQuestion, action, db);
+                    SubmitTest(userId, currentQuestion, action, db);
                     return RedirectToAction("Results", "Result");
                 }
                 case DataConst.Next:
@@ -182,7 +182,7 @@ namespace EducationalProject.Controllers
             return RedirectToAction("TestInAction", "Test", new { number = 1 });
         }
 
-        private void SubbmitTest(int userId, TestInProgres currentQuestion, Action action, UsersContext db)
+        private void SubmitTest(int userId, TestInProgres currentQuestion, Action action, UsersContext db)
         {
                 currentQuestion.Submitted = true;
                 action.DatePassing = DateTime.Now;

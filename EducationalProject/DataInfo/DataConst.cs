@@ -12,7 +12,7 @@ namespace EducationalProject.DataInfo
         public const string RadioType = "Radio";
         public const string WarningMessageForTest = "you can not go to this question";
         public const string WarningErrorMessage = "What's happen wrong";
-        public const string Subbmit = "Subbmit";
+        public const string Submit = "Submit";
         public const string Next = "Next";
         public const string Prev = "Prev";
         public const string GoTo = "GoTo";
