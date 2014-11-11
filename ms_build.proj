@@ -33,7 +33,7 @@
     
     <ItemGroup>
       <DeployWebFiles 
-          Include="EducationalTesting\**\*.*"
+          Include="EducationalProject\**\*.*"
           Exclude="**\*.cs;**\*.csproj;**\*.user;**\obj\**;**\.svn\**;**\*.pdb;**\*.edmx;**\packages.config;**\Web.*.config" />
     </ItemGroup>
     
