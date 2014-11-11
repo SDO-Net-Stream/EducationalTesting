@@ -4,7 +4,7 @@
 		<Here>$(MSBuildThisFileDirectory)</Here>
     <Configuration>Release</Configuration>
     
-    <DeployPath>C:\inetpub\EducationProject_$(Configuration)</DeployPath>
+    <DeployPath>C:\inetpub\$(DeployFolder)</DeployPath>
 
     <TransformInputFile>PeopleFinder.UI.Web\Web.config</TransformInputFile>
     <TransformFile>PeopleFinder.UI.Web\Web.Deploy-$(Configuration).config</TransformFile>
