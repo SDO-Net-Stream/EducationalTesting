@@ -6,11 +6,20 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Deploy-Dev|Any CPU = Deploy-Dev|Any CPU
+		Deploy-Live|Any CPU = Deploy-Live|Any CPU
+		Deploy-Stage|Any CPU = Deploy-Stage|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Deploy-Dev|Any CPU.ActiveCfg = Deploy-Dev|Any CPU
+		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Deploy-Dev|Any CPU.Build.0 = Deploy-Dev|Any CPU
+		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Deploy-Live|Any CPU.ActiveCfg = Deploy-Live|Any CPU
+		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Deploy-Live|Any CPU.Build.0 = Deploy-Live|Any CPU
+		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Deploy-Stage|Any CPU.ActiveCfg = Deploy-Stage|Any CPU
+		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Deploy-Stage|Any CPU.Build.0 = Deploy-Stage|Any CPU
 		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB6BC582-DC53-4C8A-92DC-840AC2B6C05D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
