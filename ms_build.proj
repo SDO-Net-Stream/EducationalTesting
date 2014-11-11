@@ -6,8 +6,8 @@
     
     <DeployPath>C:\inetpub\$(DeployFolder)</DeployPath>
 
-    <TransformInputFile>EducationalTesting\Web.config</TransformInputFile>
-    <TransformFile>EducationalTesting\Web.Deploy-$(Configuration).config</TransformFile>
+    <TransformInputFile>EducationalProject\Web.config</TransformInputFile>
+    <TransformFile>EducationalProject\Web.Deploy-$(Configuration).config</TransformFile>
     <TransformOutputFile>$(DeployPath)\Web.config</TransformOutputFile>
 	</PropertyGroup>
 
