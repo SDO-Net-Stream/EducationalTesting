@@ -4,3 +4,10 @@
 /packages/
 /EducationalProject/bin/
 /EducationalProject/obj/
+/EduTest/packages
+/EduTest/*.suo
+/EduTest/EduTest/bin
+/EduTest/EduTest/obj
+/EduTest/EduTest.Tests/bin
+/EduTest/EduTest.Tests/obj
+/EduTest/EduTest/EduTest.csproj.user
