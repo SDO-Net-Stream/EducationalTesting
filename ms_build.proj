@@ -1,5 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0" DefaultTargets="Build" >
 
+<!-- Initial definitions -->
 	<PropertyGroup>
 		<Here>$(MSBuildThisFileDirectory)</Here>
     <Configuration>Release</Configuration>
@@ -14,23 +15,29 @@
   <UsingTask TaskName="TransformXml"
              AssemblyFile="C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.Dll"/>
 
-<!-- Import all ProjectFiles here -->
+  <!-- Import all ProjectFiles here -->
 	<ItemGroup>
 		<ProjectFiles Include="EducationalProject\EducationalProject.csproj" />
 	</ItemGroup>
 
+  
+ <!-- Build and compile steps -->
 	<Target Name="_Clean">
 		<Delete Files="EducationalProject\bin\*.*" />
 	</Target>
 
 	<Target Name="Build" DependsOnTargets="_Clean;">
-    <Message Text="=== BUILDING $(Configuration) configuration ===" />
+    <Message Text="=== BUILDING '$(Configuration)' configuration ===" />
 		<MSBuild Projects="@(ProjectFiles);" Targets="Clean;Build" Properties="TrackFileAccess=False;"/>
 	</Target>
 
+<!-- Deploy steps -->
   <Target Name="Deploy">
-    <Message Text="=== DEPLOPYING $(Configuration) configuration TO $() ===" />
-    
+    <Message Text="=== DEPLOPYING '$(Configuration)' configuration TO $() ===" />
+
+    <RemoveDir Directories="$((DeployPath)" />
+    <MakeDir Directories="$(DeployPath)"/>
+
     <ItemGroup>
       <DeployWebFiles 
           Include="EducationalProject\**\*.*"
@@ -41,13 +48,15 @@
           DestinationFiles="@(DeployWebFiles->'$(DeployPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 
+<!-- Config file deployment and transformation -->
   <Target Name="Transform">
     <Message Text="=== TRANSFER $(Configuration) CONFIGURATION FILE ===" />
     <TransformXml Source="$(TransformInputFile)"
                   Transform="$(TransformFile)"
                   Destination="$(TransformOutputFile)" />
   </Target>
-  
+
+<!-- Final Step that should be called outside -->
   <Target Name="BuildAll" DependsOnTargets="Build;Deploy;Transform;"></Target>
   
 </Project>
