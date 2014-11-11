@@ -6,8 +6,8 @@
     
     <DeployPath>C:\inetpub\$(DeployFolder)</DeployPath>
 
-    <TransformInputFile>PeopleFinder.UI.Web\Web.config</TransformInputFile>
-    <TransformFile>PeopleFinder.UI.Web\Web.Deploy-$(Configuration).config</TransformFile>
+    <TransformInputFile>EducationalTesting\Web.config</TransformInputFile>
+    <TransformFile>EducationalTesting\Web.Deploy-$(Configuration).config</TransformFile>
     <TransformOutputFile>$(DeployPath)\Web.config</TransformOutputFile>
 	</PropertyGroup>
 
@@ -33,7 +33,7 @@
     
     <ItemGroup>
       <DeployWebFiles 
-          Include="PeopleFinder.UI.Web\**\*.*"
+          Include="EducationalTesting\**\*.*"
           Exclude="**\*.cs;**\*.csproj;**\*.user;**\obj\**;**\.svn\**;**\*.pdb;**\*.edmx;**\packages.config;**\Web.*.config" />
     </ItemGroup>
     
