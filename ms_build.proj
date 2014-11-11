@@ -2,35 +2,52 @@
 
 	<PropertyGroup>
 		<Here>$(MSBuildThisFileDirectory)</Here>
+    <Configuration>Release</Configuration>
+    
+    <DeployPath>C:\inetpub\$(DeployFolder)</DeployPath>
+
+    <TransformInputFile>EducationalProject\Web.config</TransformInputFile>
+    <TransformFile>EducationalProject\Web.$(Configuration).config</TransformFile>
+    <TransformOutputFile>$(DeployPath)\Web.config</TransformOutputFile>
 	</PropertyGroup>
+
+  <UsingTask TaskName="TransformXml"
+             AssemblyFile="C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.Dll"/>
 
 <!-- Import all ProjectFiles here -->
 	<ItemGroup>
-		<ProjectFiles Include="EducationalProject\EducationalProject.csproj"/>
+		<ProjectFiles Include="EducationalProject\EducationalProject.csproj" />
 	</ItemGroup>
 
 	<Target Name="_Clean">
 		<Delete Files="EducationalProject\bin\*.*" />
 	</Target>
 
-	<Target Name="Build" DependsOnTargets="_Clean;" >
+	<Target Name="Build" DependsOnTargets="_Clean;">
+    <Message Text="=== BUILDING $(Configuration) configuration ===" />
 		<MSBuild Projects="@(ProjectFiles);" Targets="Clean;Build" Properties="TrackFileAccess=False;"/>
 	</Target>
 
-	 <Target Name="Deploy">
+  <Target Name="Deploy">
+    <Message Text="=== DEPLOPYING $(Configuration) configuration TO $() ===" />
+    
+    <ItemGroup>
+      <DeployWebFiles 
+          Include="EducationalProject\**\*.*"
+          Exclude="**\*.cs;**\*.csproj;**\*.user;**\obj\**;**\.svn\**;**\*.pdb;**\*.edmx;**\packages.config;**\Web.*.config" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(DeployWebFiles)"
+          DestinationFiles="@(DeployWebFiles->'$(DeployPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 
-		<Exec Command="
-	del C:\inetpub\EducationProject_Live\*.* /F /S /Q
-	
-	xcopy EducationalProject C:\inetpub\EducationProject_Live /E /C /H
-
-	exit 0
-		  ">
-		</Exec>
-	 </Target>
-
-<!-- Final single step -->
-	 <Target Name="BuildAndDeploy" DependsOnTargets="Build; Deploy;" >
-	 </Target>
-
+  <Target Name="Transform">
+    <Message Text="=== TRANSFER $(Configuration) CONFIGURATION FILE ===" />
+    <TransformXml Source="$(TransformInputFile)"
+                  Transform="$(TransformFile)"
+                  Destination="$(TransformOutputFile)" />
+  </Target>
+  
+  <Target Name="BuildAll" DependsOnTargets="Build;Deploy;Transform;"></Target>
+  
 </Project>
