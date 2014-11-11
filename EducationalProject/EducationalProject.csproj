@@ -201,9 +201,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201411111118003_ChangedTestsWorkflow.cs" />
-    <Compile Include="Migrations\201411111118003_ChangedTestsWorkflow.Designer.cs">
-      <DependentUpon>201411111118003_ChangedTestsWorkflow.cs</DependentUpon>
+    <Compile Include="Migrations\201411111546050_AddNames.cs" />
+    <Compile Include="Migrations\201411111546050_AddNames.Designer.cs">
+      <DependentUpon>201411111546050_AddNames.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -1138,8 +1138,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201411111118003_ChangedTestsWorkflow.resx">
-      <DependentUpon>201411111118003_ChangedTestsWorkflow.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201411111546050_AddNames.resx">
+      <DependentUpon>201411111546050_AddNames.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
