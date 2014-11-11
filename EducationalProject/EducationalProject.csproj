@@ -217,7 +217,6 @@
     <Compile Include="Models\UsersWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataInfo\RoleType.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -284,8 +283,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Properties\PublishProfiles\Education.pubxml" />
-    <None Include="Properties\PublishProfiles\Etesting.pubxml" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-cookies.js" />
