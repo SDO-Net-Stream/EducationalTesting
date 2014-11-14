@@ -11,3 +11,15 @@
 /EduTest/EduTest.Tests/bin
 /EduTest/EduTest.Tests/obj
 /EduTest/EduTest/EduTest.csproj.user
+/EduTesting/*.suo
+/EduTesting/packages
+/EduTesting/EduTesting.Application/obj
+/EduTesting/EduTesting.Application/bin
+/EduTesting/EduTesting.Core/obj
+/EduTesting/EduTesting.Core/bin
+/EduTesting/EduTesting.EntityFramework/obj
+/EduTesting/EduTesting.EntityFramework/bin
+/EduTesting/EduTesting.Web/obj
+/EduTesting/EduTesting.Web/bin
+/EduTesting/EduTesting.WebApi/obj
+/EduTesting/EduTesting.WebApi/bin
