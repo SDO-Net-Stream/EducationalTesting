@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="uk">
+  <texts>
+    <text name="InternalServerError" value="Виникла помилка в процессі вашого запиту!" />
+    <text name="ValidationError" value="Ваш запит не працездатний!" />
+  </texts>
+</localizationDictionary>
