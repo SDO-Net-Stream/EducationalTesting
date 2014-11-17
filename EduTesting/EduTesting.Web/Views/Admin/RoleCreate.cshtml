@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "RoleCreate";
+}
+
+<div class="spacerBody">
+    <p>&nbsp;</p>
+    @Html.ActionLink("Roles", "RoleIndex") | @Html.ActionLink("Role Manager", "RoleAddToUser")
+    <h2>Role Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div>
+            Role name
+        </div>
+             
+    <div class="message-success">@ViewBag.ResultMessage</div>
+        <p>
+            @Html.TextBox("RoleName","New Role")   
+        </p>
+        <input type="submit" value="Save" />
+        
+        
+    }
+    
+</div>
+

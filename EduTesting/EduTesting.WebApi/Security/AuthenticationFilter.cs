@@ -13,22 +13,22 @@ namespace EduTesting.Security
 {
     public class AuthenticationFilter : IAuthenticationFilter
     {
-        private readonly IWebUserManager _webUserManager;
-        private readonly ISessionManager _sessionManager;
-        public AuthenticationFilter(IWebUserManager webUserManager, ISessionManager sessionManager)
+        private readonly IIocManager _iocManager;
+        public AuthenticationFilter(IIocManager iocManager)
         {
-            _webUserManager = webUserManager;
-            _sessionManager = sessionManager;
+            _iocManager = iocManager;
         }
 
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
-            if (_webUserManager.CurrentUser == null)
+            var userManager = _iocManager.Resolve<IWebUserManager>();
+            if (userManager.CurrentUser == null)
             {
-                var user = _sessionManager.GetUserFromSession();
+                var session = _iocManager.Resolve<ISessionManager>();
+                var user = session.GetUserFromSession();
                 if (user != null)
                 {
-                    _webUserManager.SetCurrent(user);
+                    userManager.SetCurrent(user);
                 }
             }
             return Task.FromResult(0);
