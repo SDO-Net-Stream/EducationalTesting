@@ -265,9 +265,6 @@
     <Content Include="Localization\EduTesting\EduTesting.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Localization\Login\Login.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\angular\angular-animate.js" />
     <Content Include="Scripts\angular\angular-animate.min.js" />
     <Content Include="Scripts\angular\angular-aria.js" />
