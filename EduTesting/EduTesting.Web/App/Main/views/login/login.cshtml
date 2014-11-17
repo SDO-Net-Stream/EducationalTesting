@@ -1,0 +1,35 @@
+﻿<div ng-controller="app.views.login as vm">
+    <section class="col-xs-6">
+        <form ng-submit="submitLogin()" onsubmit="return false" name="loginform">
+            <fieldset>
+                <legend>Log in form</legend>
+                <ul>
+                    <li>
+                        <label for="loginform-email">
+                            Email
+                        </label>
+                        <input type="text" name="email" ng-model="login.email" id="loginform-email" />
+                    </li>
+                    <li>
+                        <label for="loginform-password">
+                            Password
+                        </label>
+                        <input type="password" name="password" ng-model="login.password" id="loginform-password" />
+                    </li>
+                </ul>
+                <button type="submit">Log in</button>
+            </fieldset>
+            <p>
+                <a href="#/account/lostPassword">Forgot Password</a>
+            </p>
+            <p>
+                <a href="#account/register">if you don't have an account.</a>
+            </p>
+        </form>
+    </section>
+    <section class="col-xs-6">
+        <h2>Instead of OAuth there will be Active Directory authorisation</h2>
+        <a ng-click="ntlmLogin()" onclick="return false">AD login</a>
+    </section>
+    <div class="clearfix"></div>
+</div>

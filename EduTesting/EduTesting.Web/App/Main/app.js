@@ -27,7 +27,28 @@
                     url: '/about',
                     templateUrl: '/App/Main/views/about/about.cshtml',
                     menu: 'About' //Matches to name of 'About' menu in EduTestingNavigationProvider
+                })
+                .state('login', {
+                    url: '/login/login',
+                    templateUrl: '/App/Main/views/login/login.cshtml',
                 });
         }
     ]);
+    (function () {
+        var username = null;
+        app.value('user', {
+            signIn: function (name) {
+                username = name;
+            },
+            isAuthenticated: function () {
+                return !!username;
+            },
+            name: function () {
+                return username;
+            }
+        });
+    })();
+
+
+
 })();

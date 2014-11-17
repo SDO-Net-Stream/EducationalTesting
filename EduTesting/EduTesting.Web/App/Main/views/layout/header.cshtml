@@ -16,7 +16,18 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                    @Html.Partial("_LoginPartial")
+                <li ng-if="vm.user.isAuthenticated()==false">
+                    <a href="#/account/register">Register</a>
+                </li>
+                <li ng-if="vm.user.isAuthenticated()==false">
+                    <a href="#/login/login">Log in</a>
+                </li>
+                <li ng-if="vm.user.isAuthenticated()">
+                    Hello, {{vm.user.name()}}!
+                </li>
+                <li ng-if="vm.user.isAuthenticated()">
+                    <a ng-click="vm.logOff()">Log off</a>
+                </li>
                 <li class="dropdown">
                     <a href="" data-toggle="dropdown"><i ng-class="vm.currentLanguage.icon"></i> <span>{{vm.currentLanguage.displayName}}</span> <b class="caret"></b></a>
                     <ul class="dropdown-menu">

@@ -4,7 +4,6 @@ using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using Postal;
-using WebMatrix.WebData;
 using EducationalProject.Models;
 
 namespace EducationalProject.Controllers
@@ -30,7 +29,7 @@ namespace EducationalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -47,7 +46,7 @@ namespace EducationalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            //WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -74,6 +73,7 @@ namespace EducationalProject.Controllers
                 // Attempt to register the user
                 try
                 {
+                    /*
                     string confirmationToken = WebSecurity.CreateUserAndAccount(model.UserName, model.Password,
                         new { model.FirstName, model.LastName }, true);
                     SendEmailConfirmation(model.UserName, model.UserName, confirmationToken);
@@ -82,7 +82,7 @@ namespace EducationalProject.Controllers
                         Roles.CreateRole("User");
                     Roles.AddUserToRole(model.UserName, "User");
                     WebSecurity.Login(model.UserName, model.Password);
-                    
+                    */
                     return RedirectToAction("RolePermissions", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -98,7 +98,7 @@ namespace EducationalProject.Controllers
         [AllowAnonymous]
         public ActionResult RegisterConfirmation(string Id)
         {
-            if (WebSecurity.ConfirmAccount(Id))
+            //if (WebSecurity.ConfirmAccount(Id))
             {
                 return RedirectToAction("ConfirmationSuccess");
             }
@@ -147,6 +147,7 @@ namespace EducationalProject.Controllers
               if (user != null)
               {
                  // Generae password token that will be used in the email link to authenticate user
+                  /*
                  var token = WebSecurity.GeneratePasswordResetToken(user.UserName);
 
                  // Email stuff
@@ -169,6 +170,7 @@ namespace EducationalProject.Controllers
                  {
                     ModelState.AddModelError("", "Issue sending email: " + e.Message);
                  }
+                   * */
               }         
               else // Email not found
               {
@@ -207,6 +209,7 @@ namespace EducationalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                /*
                 bool resetResponse = WebSecurity.ResetPassword(model.ReturnToken, model.Password);
                 if (resetResponse)
                 {
@@ -216,6 +219,7 @@ namespace EducationalProject.Controllers
                 {
                     ViewBag.Message = "Something went horribly wrong!";
                 }
+                 */
             }
             return View(model);
         }

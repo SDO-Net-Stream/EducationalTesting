@@ -4,7 +4,6 @@
         '$scope', 'abp.services.app.test', function ($scope, testService) {
             var vm = this;
             //Home logic...
-            $scope.names = testService.getNames();
         }
     ]);
 })();

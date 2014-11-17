@@ -65,6 +65,7 @@
     <Compile Include="DataProvider\IUserProvider.cs" />
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
+    <Compile Include="Model\LoginByEmailViewModel.cs" />
     <Compile Include="Model\LoginInfo.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

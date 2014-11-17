@@ -10,18 +10,20 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Service
 {
-    public class AccountService : IAccountService
+    public class LoginService : ILoginService
     {
         private readonly IUserProvider _userProvider;
         private readonly ISessionManager _sessionManager;
         private readonly IHttpContextProvider _httpContext;
-        public AccountService(IUserProvider userProvider)
+        public LoginService(IUserProvider userProvider, ISessionManager sessionManager, IHttpContextProvider httpContext)
         {
             _userProvider = userProvider;
+            _sessionManager = sessionManager;
+            _httpContext = httpContext;
         }
-        public LoginInfo Login(string email, string password)
+        public LoginInfo Login(LoginByEmailViewModel login)
         {
-            var user = _userProvider.GetUserByEmailPassword(email, password);
+            var user = _userProvider.GetUserByEmailPassword(login.Email, login.Password);
             if (user == null)
                 return null;
             _sessionManager.UpdateSession(user);
@@ -31,7 +33,7 @@ namespace EduTesting.Service
         public LoginInfo NtlmLogin()
         {
             var identity = _httpContext.Current.User.Identity as WindowsIdentity;
-            if (identity != null)
+            if (identity != null && identity.IsAuthenticated)
             {
                 var user = _userProvider.GetUserByDomainName(identity.Name);
                 if (user != null)

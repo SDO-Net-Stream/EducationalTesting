@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Service
 {
-    public interface IAccountService
+    public interface ILoginService
     {
-        LoginInfo Login(string email, string password);
+        LoginInfo Login(LoginByEmailViewModel user);
         LoginInfo NtlmLogin();
         void LogOff();
     }

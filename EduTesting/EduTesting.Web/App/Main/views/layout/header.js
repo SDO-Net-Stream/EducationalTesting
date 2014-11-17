@@ -1,7 +1,7 @@
 ﻿(function () {
     var controllerId = 'app.views.layout.header';
     angular.module('app').controller(controllerId, [
-        '$rootScope', '$state', function ($rootScope, $state) {
+        '$rootScope', '$state', 'user', 'abp.services.app.login', function ($rootScope, $state, user, loginService) {
             var vm = this;
 
             vm.languages = abp.localization.languages;
@@ -13,6 +13,13 @@
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 vm.currentMenuName = toState.menu;
             });
+            vm.user = user;
+            vm.logOff = function () {
+                loginService.logOff().success(function () {
+                    user.signIn(false);
+                });
+                return false;
+            };
         }
     ]);
 })();

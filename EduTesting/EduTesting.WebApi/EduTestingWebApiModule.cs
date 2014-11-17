@@ -19,7 +19,7 @@ namespace EduTesting
             IocManager.Register<IWebUserManager, WebUserManager>();
             IocManager.Register<ISessionManager, SessionManager>();
             IocManager.Register<IHttpContextProvider, HttpContextProvider>();
-            IocManager.Register<IAccountService, AccountService>();
+            IocManager.Register<ILoginService, LoginService>();
             /*
             DynamicApiControllerBuilder
                 .ForAll<IApplicationService>(typeof(EduTestingApplicationModule).Assembly, "app")
@@ -28,7 +28,7 @@ namespace EduTesting
             DynamicApiControllerBuilder.For<ITestService>("app/test")
                 .WithFilters(new AuthenticationFilter(IocManager))
                 .Build();
-            DynamicApiControllerBuilder.For<IAccountService>("app/account").Build();
+            DynamicApiControllerBuilder.For<ILoginService>("app/login").Build();
         }
     }
 }

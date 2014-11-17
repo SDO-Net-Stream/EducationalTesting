@@ -15,7 +15,7 @@ namespace EduTesting.DataProvider
             {
                 Id = domainName,
                 DomainName = domainName,
-                Email = domainName.Split('\'')[1] + "@eleks.com"
+                Email = domainName.Split('\\')[1] + "@eleks.com"
             };
         }
 
