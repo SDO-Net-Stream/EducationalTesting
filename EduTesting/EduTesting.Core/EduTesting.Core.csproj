@@ -69,7 +69,6 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IAccountService.cs" />
-    <Compile Include="Service\IAuthenticationManager.cs" />
     <Compile Include="Service\ITestService.cs" />
     <Compile Include="Service\IWebUserManager.cs" />
   </ItemGroup>
