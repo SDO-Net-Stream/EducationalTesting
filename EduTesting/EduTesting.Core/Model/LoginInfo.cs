@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Model
 {
-    public class User
+    public class LoginInfo
     {
-        public string Id { get; set; }
-        public string DomainName { get; set; }
-        public string Email { get; set; }
+        public LoginInfo(User currentUser)
+        {
+
+        }
     }
 }

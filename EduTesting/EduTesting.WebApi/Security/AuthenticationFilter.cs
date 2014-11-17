@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Filters;
-using System.Web.Security;
 namespace EduTesting.Security
 {
     public class AuthenticationFilter : IAuthenticationFilter
@@ -22,17 +21,15 @@ namespace EduTesting.Security
 
         public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
-
-            var httpContext = context.Request.Properties["MS_HttpContext"] as HttpContextWrapper;
-            var cookie = httpContext.Request.Cookies.Get(EduTestingConsts.AUTH_COOKIE_NAME);
-            if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+            var userManager = _iocManager.Resolve<IWebUserManager>();
+            if (userManager.CurrentUser == null)
             {
-                var ticket = FormsAuthentication.Decrypt(cookie.Value);
-                var userId = ticket.UserData;
-                var userManager = _iocManager.Resolve<IWebUserManager>();
-                var userProvider = _iocManager.Resolve<IUserProvider>();
-                var user = userProvider.GetUserByDomainName(userId);
-                userManager.SetCurrent(user);
+                var session = _iocManager.Resolve<ISessionManager>();
+                var user = session.GetUserFromSession();
+                if (user != null)
+                {
+                    userManager.SetCurrent(user);
+                }
             }
             return Task.FromResult(0);
         }

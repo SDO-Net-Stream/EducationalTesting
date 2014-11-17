@@ -1368,3 +1368,155 @@ DEBUG 2014-11-14 19:46:58,385 [1    ] Abp.Modules.AbpModuleManager             -
 DEBUG 2014-11-14 19:46:58,385 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.Web.EduTestingWebModule, EduTesting.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 DEBUG 2014-11-14 19:46:58,385 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingWebApiModule, EduTesting.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 DEBUG 2014-11-14 19:46:58,387 [1    ] Abp.Modules.AbpModuleManager             - 10 modules loaded.
+DEBUG 2014-11-17 16:16:50,158 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2014-11-17 16:16:50,466 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,476 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,476 [1    ] Abp.Modules.DefaultModuleFinder          - - Abp.AbpCoreModule
+DEBUG 2014-11-17 16:16:50,476 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.EntityFramework, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,479 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,479 [1    ] Abp.Modules.DefaultModuleFinder          - - Abp.EntityFramework.AbpEntityFrameworkModule
+DEBUG 2014-11-17 16:16:50,479 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.Web.Api, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,482 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,482 [1    ] Abp.Modules.DefaultModuleFinder          - - Abp.WebApi.AbpWebApiModule
+DEBUG 2014-11-17 16:16:50,483 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.Web, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,483 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,483 [1    ] Abp.Modules.DefaultModuleFinder          - - Abp.Web.AbpWebModule
+DEBUG 2014-11-17 16:16:50,483 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.Web.Mvc, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,486 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,487 [1    ] Abp.Modules.DefaultModuleFinder          - - Abp.Web.Mvc.AbpWebMvcModule
+DEBUG 2014-11-17 16:16:50,487 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f
+DEBUG 2014-11-17 16:16:50,493 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005
+DEBUG 2014-11-17 16:16:50,504 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: AutoMapper.Net4, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005
+DEBUG 2014-11-17 16:16:50,506 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:16:50,540 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Facilities.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:16:50,540 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Services.Logging.Log4netIntegration, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:16:50,540 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:16:50,548 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,549 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,549 [1    ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingApplicationModule
+DEBUG 2014-11-17 16:16:50,549 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,549 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,549 [1    ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingCoreModule
+DEBUG 2014-11-17 16:16:50,549 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,550 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,550 [1    ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingDataModule
+DEBUG 2014-11-17 16:16:50,550 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,551 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,551 [1    ] Abp.Modules.DefaultModuleFinder          - - EduTesting.Web.EduTestingWebModule
+DEBUG 2014-11-17 16:16:50,551 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,551 [1    ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:16:50,551 [1    ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingWebApiModule
+DEBUG 2014-11-17 16:16:50,551 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+DEBUG 2014-11-17 16:16:50,759 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+DEBUG 2014-11-17 16:16:50,766 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821
+DEBUG 2014-11-17 16:16:50,771 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+DEBUG 2014-11-17 16:16:50,794 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Collections.Immutable, Version=1.0.34.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+DEBUG 2014-11-17 16:16:50,815 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,823 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,833 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,857 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,861 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,897 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,899 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,911 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,911 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,918 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,918 [1    ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:16:50,954 [1    ] Abp.Modules.DefaultModuleFinder          - Found 10 ABP modules in total.
+DEBUG 2014-11-17 16:16:50,965 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpCoreModule, Abp, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,972 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkModule, Abp.EntityFramework, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,972 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.WebApi.AbpWebApiModule, Abp.Web.Api, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,972 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebModule, Abp.Web, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,972 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.Mvc.AbpWebMvcModule, Abp.Web.Mvc, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,973 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingApplicationModule, EduTesting.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,973 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingCoreModule, EduTesting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,973 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingDataModule, EduTesting.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,973 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.Web.EduTestingWebModule, EduTesting.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,973 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingWebApiModule, EduTesting.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:16:50,981 [1    ] Abp.Modules.AbpModuleManager             - 10 modules loaded.
+ERROR 2014-11-17 16:17:01,378 [10   ] Default                                  - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at EduTesting.Security.SessionManager.GetUserFromSession() in d:\apps\EducationalTesting\EduTesting\EduTesting.WebApi\Security\SessionManager.cs:line 47
+   at EduTesting.Security.AuthenticationFilter.AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken) in d:\apps\EducationalTesting\EduTesting\EduTesting.WebApi\Security\AuthenticationFilter.cs:line 28
+   at System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at System.Web.Http.Controllers.ExceptionFilterResult.<ExecuteAsync>d__0.MoveNext()
+ERROR 2014-11-17 16:18:24,736 [21   ] Default                                  - Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at EduTesting.Security.SessionManager.GetUserFromSession() in d:\apps\EducationalTesting\EduTesting\EduTesting.WebApi\Security\SessionManager.cs:line 47
+   at EduTesting.Security.AuthenticationFilter.AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken) in d:\apps\EducationalTesting\EduTesting\EduTesting.WebApi\Security\AuthenticationFilter.cs:line 28
+   at System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at System.Web.Http.Controllers.ExceptionFilterResult.<ExecuteAsync>d__0.MoveNext()
+DEBUG 2014-11-17 16:19:04,585 [19   ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2014-11-17 16:19:04,920 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:04,933 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:04,933 [19   ] Abp.Modules.DefaultModuleFinder          - - Abp.AbpCoreModule
+DEBUG 2014-11-17 16:19:04,933 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.EntityFramework, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:04,936 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:04,936 [19   ] Abp.Modules.DefaultModuleFinder          - - Abp.EntityFramework.AbpEntityFrameworkModule
+DEBUG 2014-11-17 16:19:04,936 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.Web.Api, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:04,939 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:04,939 [19   ] Abp.Modules.DefaultModuleFinder          - - Abp.WebApi.AbpWebApiModule
+DEBUG 2014-11-17 16:19:04,939 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.Web, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:04,939 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:04,939 [19   ] Abp.Modules.DefaultModuleFinder          - - Abp.Web.AbpWebModule
+DEBUG 2014-11-17 16:19:04,939 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Abp.Web.Mvc, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:04,942 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:04,942 [19   ] Abp.Modules.DefaultModuleFinder          - - Abp.Web.Mvc.AbpWebMvcModule
+DEBUG 2014-11-17 16:19:04,942 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f
+DEBUG 2014-11-17 16:19:04,948 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005
+DEBUG 2014-11-17 16:19:04,963 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: AutoMapper.Net4, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005
+DEBUG 2014-11-17 16:19:04,964 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:19:05,001 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Facilities.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:19:05,001 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Services.Logging.Log4netIntegration, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:19:05,001 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingApplicationModule
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingCoreModule
+DEBUG 2014-11-17 16:19:05,010 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,012 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:05,012 [19   ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingDataModule
+DEBUG 2014-11-17 16:19:05,012 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,013 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:05,013 [19   ] Abp.Modules.DefaultModuleFinder          - - EduTesting.Web.EduTestingWebModule
+DEBUG 2014-11-17 16:19:05,013 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EduTesting.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,013 [19   ] Abp.Modules.DefaultModuleFinder          - Found modules:
+DEBUG 2014-11-17 16:19:05,013 [19   ] Abp.Modules.DefaultModuleFinder          - - EduTesting.EduTestingWebApiModule
+DEBUG 2014-11-17 16:19:05,013 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+DEBUG 2014-11-17 16:19:05,221 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+DEBUG 2014-11-17 16:19:05,228 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821
+DEBUG 2014-11-17 16:19:05,232 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+DEBUG 2014-11-17 16:19:05,257 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Collections.Immutable, Version=1.0.34.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+DEBUG 2014-11-17 16:19:05,278 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,285 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,294 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,318 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,322 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,354 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,356 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,370 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,370 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,377 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,378 [19   ] Abp.Modules.DefaultModuleFinder          - Searching ABP modules in assembly: WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+DEBUG 2014-11-17 16:19:05,412 [19   ] Abp.Modules.DefaultModuleFinder          - Found 10 ABP modules in total.
+DEBUG 2014-11-17 16:19:05,423 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpCoreModule, Abp, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,431 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkModule, Abp.EntityFramework, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,432 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.WebApi.AbpWebApiModule, Abp.Web.Api, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,432 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebModule, Abp.Web, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,432 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.Mvc.AbpWebMvcModule, Abp.Web.Mvc, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,432 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingApplicationModule, EduTesting.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,433 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingCoreModule, EduTesting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,433 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingDataModule, EduTesting.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,433 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.Web.EduTestingWebModule, EduTesting.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,433 [19   ] Abp.Modules.AbpModuleManager             - Loaded module: EduTesting.EduTestingWebApiModule, EduTesting.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2014-11-17 16:19:05,439 [19   ] Abp.Modules.AbpModuleManager             - 10 modules loaded.

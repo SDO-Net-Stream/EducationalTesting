@@ -65,8 +65,11 @@
     <Compile Include="DataProvider\IUserProvider.cs" />
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
+    <Compile Include="Model\LoginInfo.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IAccountService.cs" />
+    <Compile Include="Service\IAuthenticationManager.cs" />
     <Compile Include="Service\ITestService.cs" />
     <Compile Include="Service\IWebUserManager.cs" />
   </ItemGroup>

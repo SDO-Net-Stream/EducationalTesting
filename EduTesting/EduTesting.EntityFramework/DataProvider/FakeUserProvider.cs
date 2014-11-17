@@ -13,6 +13,7 @@ namespace EduTesting.DataProvider
         {
             return new User
             {
+                Id = domainName,
                 DomainName = domainName,
                 Email = domainName.Split('\'')[1] + "@eleks.com"
             };
@@ -24,6 +25,7 @@ namespace EduTesting.DataProvider
             {
                 return new User
                 {
+                    Id = email,
                     Email = email
                 };
             }
@@ -31,6 +33,16 @@ namespace EduTesting.DataProvider
             {
                 return null;
             }
+        }
+
+        public User GetUserById(string id)
+        {
+            return new User
+            {
+                Id = id,
+                DomainName = id,
+                Email = id
+            };
         }
     }
 }

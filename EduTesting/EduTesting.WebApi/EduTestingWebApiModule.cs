@@ -7,6 +7,7 @@ using EduTesting.Service;
 using EduTesting.Security;
 using Abp.Dependency;
 using Castle.MicroKernel.Registration;
+using EduTesting.WebRequestParameters;
 namespace EduTesting
 {
     [DependsOn(typeof(AbpWebApiModule), typeof(EduTestingApplicationModule))]
@@ -15,9 +16,10 @@ namespace EduTesting
         public override void Initialize()
         {
             //IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            IocManager.IocContainer.Register(
-                Component.For<IWebUserManager>().ImplementedBy<WebUserManager>().LifestylePerWebRequest()
-            );
+            IocManager.Register<IWebUserManager, WebUserManager>();
+            IocManager.Register<ISessionManager, SessionManager>();
+            IocManager.Register<IHttpContextProvider, HttpContextProvider>();
+            IocManager.Register<IAccountService, AccountService>();
             /*
             DynamicApiControllerBuilder
                 .ForAll<IApplicationService>(typeof(EduTestingApplicationModule).Assembly, "app")
@@ -26,7 +28,7 @@ namespace EduTesting
             DynamicApiControllerBuilder.For<ITestService>("app/test")
                 .WithFilters(new AuthenticationFilter(IocManager))
                 .Build();
-
+            DynamicApiControllerBuilder.For<IAccountService>("app/account").Build();
         }
     }
 }
