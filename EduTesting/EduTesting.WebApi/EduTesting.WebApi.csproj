@@ -78,6 +78,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
@@ -95,6 +96,8 @@
   <ItemGroup>
     <Compile Include="EduTestingWebApiModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AuthenticationFilter.cs" />
+    <Compile Include="Security\WebUserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -103,8 +106,12 @@
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\EduTesting.Application\EduTesting.Application.csproj">
-      <Project>{EDF5D964-4C0F-4F19-B674-58A38A5E5401}</Project>
+      <Project>{edf5d964-4c0f-4f19-b674-58a38a5e5401}</Project>
       <Name>EduTesting.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EduTesting.Core\EduTesting.Core.csproj">
+      <Project>{17298ea0-af73-4f30-b6f1-2066100d7d74}</Project>
+      <Name>EduTesting.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

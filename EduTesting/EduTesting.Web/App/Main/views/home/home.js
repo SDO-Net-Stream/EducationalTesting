@@ -1,9 +1,10 @@
 ﻿(function() {
     var controllerId = 'app.views.home';
     angular.module('app').controller(controllerId, [
-        '$scope', function($scope) {
+        '$scope', 'abp.services.app.test', function ($scope, testService) {
             var vm = this;
             //Home logic...
+            $scope.names = testService.getNames();
         }
     ]);
 })();

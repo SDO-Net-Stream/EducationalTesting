@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Abp.Modules;
+using EduTesting.Service;
 
 namespace EduTesting
 {
@@ -8,7 +9,8 @@ namespace EduTesting
     {
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            //IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            IocManager.Register<ITestService, TestService>();
         }
     }
 }
