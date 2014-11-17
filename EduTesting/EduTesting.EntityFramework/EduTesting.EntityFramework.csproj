@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider\FakeUserProvider.cs" />
     <Compile Include="EntityFramework\EduTestingDbContext.cs" />
     <Compile Include="EntityFramework\Repositories\EduTestingRepositoryBase.cs" />
     <Compile Include="Migrations\Configuration.cs" />
