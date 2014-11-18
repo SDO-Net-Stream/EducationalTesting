@@ -23,7 +23,7 @@
                     <a href="#/login/login">Log in</a>
                 </li>
                 <li ng-if="vm.user.isAuthenticated()">
-                    Hello, {{vm.user.name()}}!
+                    <a href="#/login/login">Hello, {{vm.user.name()}}!</a>
                 </li>
                 <li ng-if="vm.user.isAuthenticated()">
                     <a ng-click="vm.logOff()">Log off</a>

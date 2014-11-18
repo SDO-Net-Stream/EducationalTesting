@@ -99,6 +99,7 @@
     <Compile Include="Security\AuthenticationFilter.cs" />
     <Compile Include="Security\SessionManager.cs" />
     <Compile Include="Security\WebUserManager.cs" />
+    <Compile Include="Service\ISessionManager.cs" />
     <Compile Include="Service\LoginService.cs" />
     <Compile Include="WebRequestParameters\HttpContextProvider.cs" />
     <Compile Include="WebRequestParameters\IHttpContextProvider.cs" />

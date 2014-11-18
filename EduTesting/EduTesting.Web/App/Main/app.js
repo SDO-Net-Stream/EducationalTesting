@@ -37,8 +37,10 @@
     (function () {
         var username = null;
         app.value('user', {
-            signIn: function (name) {
-                username = name;
+            signIn: function (loginInfo) {
+                if (loginInfo != null) {
+                    username = loginInfo.userName;
+                }
             },
             isAuthenticated: function () {
                 return !!username;
@@ -48,7 +50,8 @@
             }
         });
     })();
-
-
+    app.run(['user', 'abp.services.app.login', function(user, loginService) {
+        loginService.getUserInfo().success(user.signIn);
+    }]);
 
 })();

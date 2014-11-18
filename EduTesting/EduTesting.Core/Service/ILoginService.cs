@@ -9,8 +9,9 @@ namespace EduTesting.Service
 {
     public interface ILoginService
     {
+        LoginInfo GetUserInfo();
         LoginInfo Login(LoginByEmailViewModel user);
         LoginInfo NtlmLogin();
-        void LogOff();
+        LoginInfo LogOff();
     }
 }

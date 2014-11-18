@@ -25,10 +25,13 @@ namespace EduTesting
                 .ForAll<IApplicationService>(typeof(EduTestingApplicationModule).Assembly, "app")
                 .Build();
              */
+            var authenticationFilter = new AuthenticationFilter(IocManager);
             DynamicApiControllerBuilder.For<ITestService>("app/test")
-                .WithFilters(new AuthenticationFilter(IocManager))
+                .WithFilters(authenticationFilter)
                 .Build();
-            DynamicApiControllerBuilder.For<ILoginService>("app/login").Build();
+            DynamicApiControllerBuilder.For<ILoginService>("app/login")
+                .WithFilters(authenticationFilter)
+                .Build();
         }
     }
 }

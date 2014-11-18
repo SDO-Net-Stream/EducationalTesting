@@ -15,11 +15,13 @@ namespace EduTesting.Service
         private readonly IUserProvider _userProvider;
         private readonly ISessionManager _sessionManager;
         private readonly IHttpContextProvider _httpContext;
-        public LoginService(IUserProvider userProvider, ISessionManager sessionManager, IHttpContextProvider httpContext)
+        private readonly IWebUserManager _webUser;
+        public LoginService(IUserProvider userProvider, ISessionManager sessionManager, IHttpContextProvider httpContext, IWebUserManager webUser)
         {
             _userProvider = userProvider;
             _sessionManager = sessionManager;
             _httpContext = httpContext;
+            _webUser = webUser;
         }
         public LoginInfo Login(LoginByEmailViewModel login)
         {
@@ -55,9 +57,16 @@ namespace EduTesting.Service
             return null;
         }
 
-        public void LogOff()
+        public LoginInfo LogOff()
         {
             _sessionManager.TerminateSession();
+            _webUser.SetCurrent(null);
+            return new LoginInfo(null);
+        }
+
+        public LoginInfo GetUserInfo()
+        {
+            return new LoginInfo(_webUser.CurrentUser);
         }
     }
 }

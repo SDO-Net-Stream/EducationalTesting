@@ -37,11 +37,16 @@ namespace EduTesting.DataProvider
 
         public User GetUserById(string id)
         {
+            var name = id;
+            if (name.Contains('@'))
+                name = name.Split('@')[0];
+            if (name.Contains('\\'))
+                name = name.Split('\\')[1];
             return new User
             {
                 Id = id,
-                DomainName = id,
-                Email = id
+                DomainName = "domain\\" + name,
+                Email = name + "@email.email"
             };
         }
     }

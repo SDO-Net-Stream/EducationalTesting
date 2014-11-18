@@ -26,7 +26,6 @@ namespace EduTesting.Security
         public void UpdateSession(User user)
         {
             var context = _httpContext.Current;
-            var time = DateTime.UtcNow;
             var ticket = new FormsAuthenticationTicket(user.Id, false, CookieExpirationTimeoutMinutes);
             string encryptedTicket = FormsAuthentication.Encrypt(ticket);
             var cookie = new HttpCookie(EduTestingConsts.AUTH_COOKIE_NAME, encryptedTicket)
@@ -40,7 +39,14 @@ namespace EduTesting.Security
 
         public void TerminateSession()
         {
-            _httpContext.Current.Response.Cookies.Remove(EduTestingConsts.AUTH_COOKIE_NAME);
+            var context = _httpContext.Current;
+            var cookie = new HttpCookie(EduTestingConsts.AUTH_COOKIE_NAME, "")
+            {
+                HttpOnly = true,
+                Path = context.Request.ApplicationPath,
+                Secure = context.Request.IsSecureConnection
+            };
+            context.Response.Cookies.Add(cookie);
         }
 
         public User GetUserFromSession()
@@ -49,7 +55,7 @@ namespace EduTesting.Security
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
             {
                 var ticket = FormsAuthentication.Decrypt(cookie.Value);
-                var userId = ticket.UserData;
+                var userId = ticket.Name;
                 return _userProvider.GetUserById(userId);
             }
             return null;

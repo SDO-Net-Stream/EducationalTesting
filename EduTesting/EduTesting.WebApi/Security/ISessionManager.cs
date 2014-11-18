@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.Service
+namespace EduTesting.Security
 {
     public interface ISessionManager
     {

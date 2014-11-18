@@ -11,7 +11,21 @@ namespace EduTesting.Model
         public string UserName { get; set; }
         public LoginInfo(User currentUser)
         {
-            UserName = currentUser.DomainName + " " + currentUser.Email;
+            if (currentUser == null)
+            {
+                UserName = "";
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(currentUser.DomainName))
+                {
+                    UserName = currentUser.DomainName.Split('\\')[1];
+                }
+                else
+                {
+                    UserName = (currentUser.Email ?? "anonymous").Split('@')[0];
+                }
+            }
         }
     }
 }
