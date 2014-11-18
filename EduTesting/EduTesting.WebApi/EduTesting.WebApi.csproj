@@ -95,11 +95,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EduTestingWebApiModule.cs" />
+    <Compile Include="Model\LoginInfo.cs" />
+    <Compile Include="Model\Parameters\LoginByEmailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthenticationFilter.cs" />
     <Compile Include="Security\SessionManager.cs" />
     <Compile Include="Security\WebUserManager.cs" />
     <Compile Include="Security\ISessionManager.cs" />
+    <Compile Include="Service\ILoginService.cs" />
     <Compile Include="Service\LoginService.cs" />
     <Compile Include="WebRequestParameters\HttpContextProvider.cs" />
     <Compile Include="WebRequestParameters\IHttpContextProvider.cs" />

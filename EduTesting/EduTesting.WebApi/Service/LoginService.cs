@@ -1,5 +1,7 @@
 ﻿using EduTesting.DataProvider;
 using EduTesting.Model;
+using EduTesting.Model.Parameters;
+using EduTesting.Security;
 using EduTesting.WebRequestParameters;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,7 @@ namespace EduTesting.Service
             _httpContext = httpContext;
             _webUser = webUser;
         }
-        public LoginInfo Login(LoginByEmailViewModel login)
+        public LoginInfo Login(LoginByEmailModel login)
         {
             var user = _userProvider.GetUserByEmailPassword(login.Email, login.Password);
             if (user == null)

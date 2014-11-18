@@ -6,6 +6,8 @@ using System.Web.Routing;
 using Abp.Localization;
 using Abp.Localization.Sources.Xml;
 using Abp.Modules;
+using EduTesting.Service;
+using EduTesting.Web.Models;
 
 namespace EduTesting.Web
 {
@@ -34,7 +36,7 @@ namespace EduTesting.Web
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-
+            IocManager.Register<INotificationService, NotificationService>();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

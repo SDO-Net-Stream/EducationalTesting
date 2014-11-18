@@ -514,6 +514,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\NotificationService.cs" />
+    <Compile Include="Models\ResetPasswordEmailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\EduTestingWebViewPageBase.cs" />
   </ItemGroup>
@@ -537,6 +539,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
     <Content Include="Views\Emails\RegEmail.cshtml" />
+    <Content Include="Views\Emails\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,5 @@
 ﻿using EduTesting.Model;
+using EduTesting.Model.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace EduTesting.Service
     public interface ILoginService
     {
         LoginInfo GetUserInfo();
-        LoginInfo Login(LoginByEmailViewModel user);
+        LoginInfo Login(LoginByEmailModel user);
         LoginInfo NtlmLogin();
         LoginInfo LogOff();
     }

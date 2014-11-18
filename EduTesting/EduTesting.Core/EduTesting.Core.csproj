@@ -65,11 +65,13 @@
     <Compile Include="DataProvider\IUserProvider.cs" />
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
-    <Compile Include="Model\LoginByEmailViewModel.cs" />
-    <Compile Include="Model\LoginInfo.cs" />
+    <Compile Include="Model\Parameters\LostPasswordModel.cs" />
+    <Compile Include="Model\Parameters\RegisterUserModel.cs" />
+    <Compile Include="Model\Parameters\ResetPasswordModel.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ILoginService.cs" />
+    <Compile Include="Service\IAccountService.cs" />
+    <Compile Include="Service\INotificationService.cs" />
     <Compile Include="Service\ITestService.cs" />
     <Compile Include="Service\IWebUserManager.cs" />
   </ItemGroup>

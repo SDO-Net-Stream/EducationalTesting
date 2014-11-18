@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.Model
+namespace EduTesting.Model.Parameters
 {
-    public class User
+    public class RegisterUserModel
     {
-        public string Id { get; set; }
-        public string DomainName { get; set; }
-        public string Email { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
