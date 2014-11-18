@@ -4,6 +4,7 @@ using Abp.EntityFramework;
 using Abp.Modules;
 using EduTesting.EntityFramework;
 using EduTesting.DataProvider;
+using Abp.Domain.Uow;
 
 namespace EduTesting
 {
@@ -18,10 +19,9 @@ namespace EduTesting
         public override void Initialize()
         {
             //IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            IocManager.Register<IUserProvider, FakeUserProvider>();
+            IocManager.Register<IUserRepository, FakeUserProvider>();
+            IocManager.Register<IUnitOfWork, FakeUnitOfWork>();
             Database.SetInitializer<EduTestingDbContext>(null);
-
-
         }
     }
 }

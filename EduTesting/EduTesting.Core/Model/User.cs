@@ -12,5 +12,6 @@ namespace EduTesting.Model
         public string DomainName { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
+        public bool IsActive { get; set; }
     }
 }

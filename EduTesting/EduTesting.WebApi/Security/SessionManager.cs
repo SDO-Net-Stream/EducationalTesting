@@ -14,9 +14,9 @@ namespace EduTesting.Security
     public class SessionManager : ISessionManager
     {
         const int CookieExpirationTimeoutMinutes = 1000000;
-        private readonly IUserProvider _userProvider;
+        private readonly IUserRepository _userProvider;
         private readonly IHttpContextProvider _httpContext;
-        public SessionManager(IUserProvider userProvider, IHttpContextProvider httpContext)
+        public SessionManager(IUserRepository userProvider, IHttpContextProvider httpContext)
         {
             _userProvider = userProvider;
             _httpContext = httpContext;

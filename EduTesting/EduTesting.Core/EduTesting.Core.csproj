@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\IUserProvider.cs" />
+    <Compile Include="DataProvider\IUserRepository.cs" />
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
     <Compile Include="Model\Parameters\LostPasswordModel.cs" />

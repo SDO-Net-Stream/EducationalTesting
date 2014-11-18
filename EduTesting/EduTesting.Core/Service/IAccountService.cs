@@ -11,6 +11,7 @@ namespace EduTesting.Service
     public interface IAccountService
     {
         void RegisterByEmail(RegisterUserModel model);
-
+        void ResetPassword(LostPasswordModel model);
+        void ResetPasswordConfirm(ResetPasswordModel model);
     }
 }
