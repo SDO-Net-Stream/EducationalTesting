@@ -65,6 +65,7 @@
     <Compile Include="DataProvider\IUserRepository.cs" />
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
+    <Compile Include="Model\BusinessLogicException.cs" />
     <Compile Include="Model\Parameters\LostPasswordModel.cs" />
     <Compile Include="Model\Parameters\RegisterUserModel.cs" />
     <Compile Include="Model\Parameters\ResetPasswordModel.cs" />

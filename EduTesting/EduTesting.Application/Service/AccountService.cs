@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Uow;
 using EduTesting.DataProvider;
+using EduTesting.Model;
 using EduTesting.Model.Parameters;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace EduTesting.Service
         {
             var user = _userRepository.GetUserByEmail(model.Email);
             if (user == null)
-                throw new Exception("Email not found");
+                throw new BusinessLogicException("Email not found");
             var token = _userRepository.GenerateUserToken(user);
             //UnitOfWorkScope.Current.OnSuccess(() => _notificationService.SendResetPassword(user, token));
             _notificationService.SendResetPassword(user, token);
@@ -37,7 +38,7 @@ namespace EduTesting.Service
         {
             var user = _userRepository.GetUserByToken(model.Token);
             if (user == null)
-                throw new Exception("Invalid user token");
+                throw new BusinessLogicException("Invalid user token");
             _userRepository.ChangePassword(user, model.Password);
             _userRepository.DeleteUserToken(user, model.Token);
         }

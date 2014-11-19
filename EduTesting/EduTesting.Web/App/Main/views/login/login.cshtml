@@ -1,6 +1,7 @@
 ﻿<div ng-controller="app.views.login as vm">
     <div class="col-xs-6">
         <form ng-submit="submitLogin()" onsubmit="return false" name="login" class="form-horizontal">
+            <h2>Login</h2>
             <div class="form-group" ng-class="{'has-error': login.email.$dirty && login.email.$invalid, 'has-success': login.email.$dirty && !login.email.$invalid}">
                 <label for="login-email" class="control-label col-xs-2">Name:</label>
                 <div class="col-xs-10">
@@ -22,7 +23,7 @@
         </form>
         <a href="#/account/lostPassword" class="btn btn-link btn-sm">Forgot Password</a>
         <br />
-        <a href="#/account/login" class="btn btn-link btn-sm" title="Register">if you don't have an account.</a>
+        <a href="#/account/register" class="btn btn-link btn-sm" title="Register">if you don't have an account.</a>
     </div>
     <div class="col-xs-6">
         <h2>Instead of OAuth there will be Active Directory authorisation</h2>

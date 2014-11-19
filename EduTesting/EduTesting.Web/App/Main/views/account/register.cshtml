@@ -1,5 +1,6 @@
 ﻿<div ng-controller="app.views.account.register as vm">
     <form ng-submit="submit()" role="form" name="register" class="form-horizontal" novalidate>
+        <h2>Register</h2>
         <div class="form-group" ng-class="{'has-error': register.name.$dirty && register.name.$invalid, 'has-success': register.name.$dirty && !register.name.$invalid}">
             <label for="register-name" class="control-label col-xs-2">Name:</label>
             <div class="col-xs-10">

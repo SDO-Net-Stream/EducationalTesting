@@ -62,6 +62,8 @@ namespace EduTesting.DataProvider
 
         public User Register(string name, string email, string password)
         {
+            if (password != email)
+                throw new BusinessLogicException("Email and password must match");
             return FakeUser(email);
         }
 

@@ -57,5 +57,9 @@
     app.run(['user', 'abp.services.app.login', function(user, loginService) {
         loginService.getUserInfo().success(user.signIn);
     }]);
-
+    app.run(['message', function (message) {
+        abp.message.info = message.info;
+        abp.message.warn = message.warning;
+        abp.message.error = message.error;
+    }]);
 })();
