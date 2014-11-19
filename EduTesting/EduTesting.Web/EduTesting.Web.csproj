@@ -322,6 +322,7 @@
     <Content Include="App\Main\views\layout\layout.cshtml" />
     <Content Include="App\Main\views\login\login.cshtml" />
     <Content Include="App\Main\views\account\register.cshtml" />
+    <Content Include="App\Main\views\account\lostPassword.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />

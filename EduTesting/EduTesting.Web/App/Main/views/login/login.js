@@ -1,7 +1,8 @@
 ﻿(function () {
     var controllerId = 'app.views.login';
     angular.module('app').controller(controllerId, [
-        '$scope', 'user', 'abp.services.app.login', '$location', 'message', function ($scope, user, loginService, $location, message) {
+        '$scope', 'user', 'abp.services.app.login', '$state', 'message',
+        function ($scope, user, loginService, $state, message) {
             var vm = this;
             $scope.user = {
                 email: "",
@@ -10,7 +11,7 @@
             var signIn = function (info) {
                 user.signIn(info);
                 message.info('Login successfully completed.', 'Hello, ' + user.name() + '!');
-                $location.path('/');
+                $state.go('home');
             };
             $scope.submitLogin = function () {
                 var promise = loginService.login($scope.user);

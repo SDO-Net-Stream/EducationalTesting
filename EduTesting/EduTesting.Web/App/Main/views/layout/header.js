@@ -1,8 +1,8 @@
 ﻿(function () {
     var controllerId = 'app.views.layout.header';
     angular.module('app').controller(controllerId, [
-        '$rootScope', '$state', 'user', 'abp.services.app.login', '$location', 'message',
-        function ($rootScope, $state, user, loginService, $location, message) {
+        '$rootScope', '$state', 'user', 'abp.services.app.login', '$state', 'message',
+        function ($rootScope, $state, user, loginService, $state, message) {
             var vm = this;
 
             vm.languages = abp.localization.languages;
@@ -19,7 +19,7 @@
                 loginService.logOff().success(function () {
                     user.signIn(false);
                     message.info('Logout successfully completed.');
-                    $location.path('/');
+                    $state.go('home');
                 });
                 return false;
             };

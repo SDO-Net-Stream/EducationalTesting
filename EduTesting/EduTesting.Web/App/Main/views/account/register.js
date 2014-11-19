@@ -1,8 +1,8 @@
 ﻿(function () {
     var controllerId = 'app.views.account.register';
     angular.module('app').controller(controllerId, [
-        '$scope', 'user', 'abp.services.app.account', 'message', '$location',
-        function ($scope, user, accountService, message, $location) {
+        '$scope', 'user', 'abp.services.app.account', 'message', '$state',
+        function ($scope, user, accountService, message, $state) {
             var vm = this;
             $scope.user = {};
             $scope.password_c = "";
@@ -28,7 +28,7 @@
                 if (form.$valid) {
                     accountService.registerByEmail($scope.user).success(function () {
                         message.success('User successfully registered');
-                        $location.path('/login');
+                        $state.go('login');
                     });
                 }
                 return false;

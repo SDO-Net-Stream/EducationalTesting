@@ -21,9 +21,9 @@
 
             <button type="submit" class="btn btn-large btn-primary" ng-disabled="login.$invalid">Sign in</button>
         </form>
-        <a href="#/account/lostPassword" class="btn btn-link btn-sm">Forgot Password</a>
+        <a ui-sref="lostPassword" class="btn btn-link btn-sm">Forgot Password</a>
         <br />
-        <a href="#/account/register" class="btn btn-link btn-sm" title="Register">if you don't have an account.</a>
+        <a ui-sref="register" class="btn btn-link btn-sm" title="Register">if you don't have an account.</a>
     </div>
     <div class="col-xs-6">
         <h2>Instead of OAuth there will be Active Directory authorisation</h2>

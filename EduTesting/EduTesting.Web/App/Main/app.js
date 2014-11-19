@@ -14,8 +14,9 @@
 
     //Configuration for Angular UI routing.
     app.config([
-        '$stateProvider', '$urlRouterProvider',
-        function($stateProvider, $urlRouterProvider) {
+        '$stateProvider', '$urlRouterProvider', '$locationProvider',
+        function ($stateProvider, $urlRouterProvider, $locationProvider) {
+            //$locationProvider.html5Mode(false);
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
@@ -32,9 +33,17 @@
                     url: '/login',
                     templateUrl: '/App/Main/views/login/login.cshtml',
                 })
-                .state('account-register', {
+                .state('register', {
                     url: '/account/register',
                     templateUrl: '/App/Main/views/account/register.cshtml',
+                })
+                .state('lostPassword', {
+                    url: '/account/lostPassword',
+                    templateUrl: '/App/Main/views/account/lostPassword.cshtml',
+                })
+                .state('resetPassword', {
+                    url: '/account/resetPassword/:token',
+                    templateUrl: '/App/Main/views/account/resetPassword.cshtml',
                 });
         }
     ]);
