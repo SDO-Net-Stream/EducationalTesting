@@ -1,5 +1,5 @@
 ﻿<div ng-controller="app.views.login as vm">
-    <section class="col-xs-6">
+    <div class="col-xs-6">
         <form ng-submit="submitLogin()" onsubmit="return false" name="loginform" class="form-signin">
             <h2 class="form-signin-heading">Please sign in</h2>
             <input type="text" name="email" ng-model="login.email" class="input-block-level" placeholder="Email address" />
@@ -8,11 +8,11 @@
         </form>
         <a href="#/account/lostPassword" class="btn btn-link btn-sm">Forgot Password</a>
         <br />
-        <a href="#account/register" class="btn btn-link btn-sm">if you don't have an account.</a>
-    </section>
-    <section class="col-xs-6">
+        <a href="#/account/register" class="btn btn-link btn-sm">if you don't have an account.</a>
+    </div>
+    <div class="col-xs-6">
         <h2>Instead of OAuth there will be Active Directory authorisation</h2>
         <a class="btn btn-primary" ng-click="ntlmLogin()" onclick="return false">AD login</a>
-    </section>
+    </div>
     <div class="clearfix"></div>
 </div>

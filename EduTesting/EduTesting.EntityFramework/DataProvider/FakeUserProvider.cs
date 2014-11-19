@@ -19,8 +19,10 @@ namespace EduTesting.DataProvider
             return new User
             {
                 Id = key,
+                Name = name,
                 DomainName = "domain\\" + name,
-                Email = name + "@email.email"
+                Email = name + "@email.email",
+                IsActive = true
             };
         }
 

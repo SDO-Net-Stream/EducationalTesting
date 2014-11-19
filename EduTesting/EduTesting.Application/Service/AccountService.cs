@@ -29,7 +29,8 @@ namespace EduTesting.Service
             if (user == null)
                 throw new Exception("Email not found");
             var token = _userRepository.GenerateUserToken(user);
-            UnitOfWorkScope.Current.OnSuccess(() => _notificationService.SendResetPassword(user, token));
+            //UnitOfWorkScope.Current.OnSuccess(() => _notificationService.SendResetPassword(user, token));
+            _notificationService.SendResetPassword(user, token);
         }
 
         public void ResetPasswordConfirm(ResetPasswordModel model)

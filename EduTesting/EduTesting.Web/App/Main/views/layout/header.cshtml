@@ -20,10 +20,10 @@
                     <a href="#/account/register">Register</a>
                 </li>
                 <li ng-if="vm.user.isAuthenticated()==false">
-                    <a href="#/login/login">Log in</a>
+                    <a href="#/login">Log in</a>
                 </li>
                 <li ng-if="vm.user.isAuthenticated()">
-                    <a href="#/login/login">Hello, {{vm.user.name()}}!</a>
+                    <a href="#/login">Hello, {{vm.user.name()}}!</a>
                 </li>
                 <li ng-if="vm.user.isAuthenticated()">
                     <a ng-click="vm.logOff()">Log off</a>

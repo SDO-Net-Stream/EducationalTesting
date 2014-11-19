@@ -29,8 +29,12 @@
                     menu: 'About' //Matches to name of 'About' menu in EduTestingNavigationProvider
                 })
                 .state('login', {
-                    url: '/login/login',
+                    url: '/login',
                     templateUrl: '/App/Main/views/login/login.cshtml',
+                })
+                .state('account-register', {
+                    url: '/account/register',
+                    templateUrl: '/App/Main/views/account/register.cshtml',
                 });
         }
     ]);

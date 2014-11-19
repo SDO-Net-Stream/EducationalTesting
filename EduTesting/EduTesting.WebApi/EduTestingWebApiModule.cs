@@ -32,6 +32,8 @@ namespace EduTesting
             DynamicApiControllerBuilder.For<ILoginService>("app/login")
                 .WithFilters(authenticationFilter)
                 .Build();
+            DynamicApiControllerBuilder.For<IAccountService>("app/account")
+                .Build();
         }
     }
 }
