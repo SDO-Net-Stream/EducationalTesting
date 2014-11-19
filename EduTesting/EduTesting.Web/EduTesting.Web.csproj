@@ -192,6 +192,7 @@
     </Content>
     <Content Include="App\Main\infrastructure\message.js" />
     <Content Include="App\Main\infrastructure\validation.js" />
+    <Content Include="App\Main\views\account\lostPassword.js" />
     <Content Include="App\Main\views\account\register.js" />
     <Content Include="App\Main\views\layout\header.js" />
     <Content Include="App\Main\views\layout\layout.js" />
