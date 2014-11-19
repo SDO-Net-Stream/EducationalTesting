@@ -1,14 +1,28 @@
 ﻿<div ng-controller="app.views.login as vm">
     <div class="col-xs-6">
-        <form ng-submit="submitLogin()" onsubmit="return false" name="loginform" class="form-signin">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <input type="text" name="email" ng-model="login.email" class="input-block-level" placeholder="Email address" />
-            <input type="password" name="password" ng-model="login.password" class="input-block-level" placeholder="Password" />
-            <button type="submit" class="btn btn-large btn-primary">Sign in</button>
+        <form ng-submit="submitLogin()" onsubmit="return false" name="login" class="form-horizontal">
+            <div class="form-group" ng-class="{'has-error': login.email.$dirty && login.email.$invalid, 'has-success': login.email.$dirty && !login.email.$invalid}">
+                <label for="login-email" class="control-label col-xs-2">Name:</label>
+                <div class="col-xs-10">
+                    <input type="email" name="email" ng-model="user.email" id="login-email" class="form-control" required />
+                    <span ng-show="login.email.$dirty && login.email.$error.required" class="help-block">Enter email address.</span>
+                    <span ng-show="login.email.$dirty && login.email.$error.email" class="help-block">Please enter a valid email address.</span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': login.password.$dirty && login.password.$invalid, 'has-success': login.password.$dirty && !login.password.$invalid}">
+                <label for="login-password" class="control-label col-xs-2">Password:</label>
+                <div class="col-xs-10">
+                    <input type="password" name="password" ng-model="user.password" id="login-password" class="form-control" required />
+                    <span ng-show="login.password.$dirty && login.password.$error.required" class="help-block">Password is required.</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-large btn-primary" ng-disabled="login.$invalid">Sign in</button>
         </form>
         <a href="#/account/lostPassword" class="btn btn-link btn-sm">Forgot Password</a>
         <br />
-        <a href="#/account/register" class="btn btn-link btn-sm">if you don't have an account.</a>
+        <a href="#/account/login" class="btn btn-link btn-sm" title="Register">if you don't have an account.</a>
     </div>
     <div class="col-xs-6">
         <h2>Instead of OAuth there will be Active Directory authorisation</h2>

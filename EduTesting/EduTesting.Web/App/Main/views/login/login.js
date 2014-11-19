@@ -3,7 +3,7 @@
     angular.module('app').controller(controllerId, [
         '$scope', 'user', 'abp.services.app.login', '$location', 'message', function ($scope, user, loginService, $location, message) {
             var vm = this;
-            $scope.login = {
+            $scope.user = {
                 email: "",
                 password: ""
             };
@@ -13,7 +13,7 @@
                 $location.path('/');
             };
             $scope.submitLogin = function () {
-                var promise = loginService.login($scope.login);
+                var promise = loginService.login($scope.user);
                 promise.success(function (info) {
                     if (info) {
                         signIn(info);

@@ -28,11 +28,11 @@
         <div class="form-group" ng-class="{'has-error': register.password_c.$dirty && register.password_c.$invalid, 'has-success': register.password_c.$dirty && !register.password_c.$invalid}">
             <label for="register-password-c" class="control-label col-xs-2">Confirm:</label>
             <div class="col-xs-10">
-                <input type="text" name="password_c" ng-model="password_c" id="register-password-c" class="form-control" required/>
+                <input type="text" name="password_c" ng-model="password_c" id="register-password-c" class="form-control" required />
                 <span ng-show="register.password_c.$dirty && register.password_c.$error.required" class="help-block">Repeat password.</span>
                 <span ng-show="register.password_c.$dirty && register.password_c.$error.equal && !register.password_c.$error.required" class="help-block">Password and confirmation must match.</span>
             </div>
         </div>
-<button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">Register</button>
     </form>
 </div>
