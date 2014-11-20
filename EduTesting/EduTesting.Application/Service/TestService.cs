@@ -29,11 +29,6 @@ namespace EduTesting.Service
           return _Repository.GetTests();
         }
 
-        public Test GetTestById(int id)
-        {
-          return _Repository.GetTest(id);
-        }
-
         public Test InsertTest(Test test)
         {
           return _Repository.InsertTest(test);

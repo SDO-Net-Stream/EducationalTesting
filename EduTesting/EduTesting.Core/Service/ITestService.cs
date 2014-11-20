@@ -15,8 +15,6 @@ namespace EduTesting.Service
       Test GetTest(int testId);
       IEnumerable<Test> GetTests();
 
-      Test GetTestById(int id);
-
       Test InsertTest(Test test);
 
       bool UpdateTest(Test test);
