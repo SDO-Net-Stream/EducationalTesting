@@ -11,20 +11,13 @@ namespace EduTesting.Service
 
     public class TestService : EduTestingAppServiceBase, ITestService
     {
-      private ITestRepository _Repository;
+        private ITestRepository _Repository;
 
         public TestService(ITestRepository _repository)
         {
           _Repository = _repository;
         }
 
-        public List<string> GetNames()
-        {
-            return new List<string>
-            {
-                "first"
-            };
-        }
         public Test GetTest(int testId)
         {
           return _Repository.GetTest(testId);
