@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Model
 {
+  public enum TestType
+  {
+    Random, Ordered, Standard
+  }
+
   public class Test
   {
       public int TestId { get; set; }

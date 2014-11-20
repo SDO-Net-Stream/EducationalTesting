@@ -11,14 +11,16 @@ namespace EduTesting.Model
   public class Question : IQuestion
   {
     public int QuestionId { get; set; }
-    public virtual Test Test { get; set; }
     public string QuestionText { get; set; }
     public string Description { get; set; }
-    public string TestType { get; set; }
     public virtual ICollection<string> Answers { get; set; }
   }
 
   public class FixedQuestion : Question
+  {
+  }
+
+  public class EnterTextQuestion : Question
   {
   }
 }
