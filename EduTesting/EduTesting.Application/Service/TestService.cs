@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EduTesting.Controllers;
+using EduTesting.Interfaces;
 using EduTesting.Model;
 
 namespace EduTesting.Service
@@ -11,20 +12,13 @@ namespace EduTesting.Service
 
     public class TestService : EduTestingAppServiceBase, ITestService
     {
-      private ITestRepository _Repository;
+        private ITestRepository _Repository;
 
         public TestService(ITestRepository _repository)
         {
           _Repository = _repository;
         }
 
-        public List<string> GetNames()
-        {
-            return new List<string>
-            {
-                "first"
-            };
-        }
         public Test GetTest(int testId)
         {
           return _Repository.GetTest(testId);
@@ -58,6 +52,16 @@ namespace EduTesting.Service
         public IEnumerable<IQuestion> GetQuestions(int testId)
         {
           return _Repository.GetQuestions(testId);
+        }
+
+        public bool UpdateQuestion(IQuestion question)
+        {
+          return _Repository.UpdateQuestion(question);
+        }
+
+        public IQuestion InsertQuestion(IQuestion question, int testId)
+        {
+          return _Repository.InsertQuestion(question, testId);
         }
     }
 }
