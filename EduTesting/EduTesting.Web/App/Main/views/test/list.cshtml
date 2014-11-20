@@ -1,0 +1,20 @@
+﻿<div ng-controller="app.views.test.list as vm">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="test in tests">
+                <td>{{test.TestName}}</td>
+                <td>
+                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({id: test.testId})"></a>
+                    <a class="glyphicon glyphicon-remove" ng-click="delete(test)"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" ng-click="create()">Create new test</button>
+</div>

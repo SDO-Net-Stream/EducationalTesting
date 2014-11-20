@@ -200,6 +200,7 @@
     <Content Include="App\Main\views\home\home.js" />
     <Content Include="App\Main\views\about\about.js" />
     <Content Include="App\Main\views\login\login.js" />
+    <Content Include="App\Main\views\test\list.js" />
     <Content Include="Content\bootstrap-cosmo.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -326,6 +327,7 @@
     <Content Include="App\Main\views\account\register.cshtml" />
     <Content Include="App\Main\views\account\lostPassword.cshtml" />
     <Content Include="App\Main\views\account\resetPassword.cshtml" />
+    <Content Include="App\Main\views\test\list.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />

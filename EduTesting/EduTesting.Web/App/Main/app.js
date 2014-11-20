@@ -44,7 +44,12 @@
                 .state('resetPassword', {
                     url: '/account/resetPassword/:token',
                     templateUrl: '/App/Main/views/account/resetPassword.cshtml',
-                });
+                })
+                .state('test', {
+                    url: '/test',
+                    templateUrl: '/App/Main/views/test/list.cshtml',
+                })
+            ;
         }
     ]);
     (function () {

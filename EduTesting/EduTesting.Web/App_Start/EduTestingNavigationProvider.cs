@@ -28,6 +28,13 @@ namespace EduTesting.Web
                         url: "#/about",
                         icon: "fa fa-info"
                         )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "Test",
+                        new LocalizableString("Test", EduTestingConsts.LocalizationSourceName),
+                        url: "#/test",
+                        icon: "fa fa-briefcase"
+                        )
                 );
         }
     }
