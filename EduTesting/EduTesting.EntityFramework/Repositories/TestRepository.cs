@@ -18,7 +18,6 @@ namespace EduTesting.Repositories
     };
     private static List<string> _answers0_0 = new List<string>
     {
-       
       "another pants","other pants","the other ones","another pair"
     };
     private static Question _question00 = new Question
@@ -104,6 +103,8 @@ namespace EduTesting.Repositories
       Description = "Choose write answer from a to d"
     };
     private Test _englishTest0 = new Test{
+                                  TestId = 1,
+                                  TestName = "Pre-Intermediate",
                                   Questions = new List<IQuestion>
                                   {
                                     _question01, _question01, _question02, _question03, _question04, _question05, _question06
@@ -284,6 +285,8 @@ namespace EduTesting.Repositories
       Description = "Choose wrong part from words in italic a-d"
     };
     private Test _englishTest1 = new Test{
+                                  TestId = 2,
+                                  TestName = "Intermediate",
                                   Questions = new List<IQuestion>
                                   {
                                     _question10, _question11, _question12, _question13, _question14, _question15, _question16,
