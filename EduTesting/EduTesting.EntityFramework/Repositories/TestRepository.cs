@@ -102,7 +102,7 @@ namespace EduTesting.Repositories
       QuestionType = QuestionType.Radio,
       Description = "Choose write answer from a to d"
     };
-    private Test _englishTest0 = new Test{
+    private static Test _englishTest0 = new Test{
                                   TestId = 1,
                                   TestName = "Pre-Intermediate",
                                   Questions = new List<IQuestion>
@@ -284,7 +284,7 @@ namespace EduTesting.Repositories
       QuestionType = QuestionType.Radio,
       Description = "Choose wrong part from words in italic a-d"
     };
-    private Test _englishTest1 = new Test{
+    private static Test _englishTest1 = new Test{
                                   TestId = 2,
                                   TestName = "Intermediate",
                                   Questions = new List<IQuestion>
@@ -300,7 +300,10 @@ namespace EduTesting.Repositories
                                     _question10, _question11, _question12, _question13, _question14, _question15, _question16,
                                     _question17, _question18, _question19, _question1_10, _question1_11, _question1_12, _question1_13
                                   };
-
+    private IEnumerable<Test> _allTests = new List<Test>
+      {
+        _englishTest0, _englishTest1
+      };
     private static Role student = new Role
     {
       RoleName = "Student"
@@ -329,28 +332,12 @@ namespace EduTesting.Repositories
 
     public IEnumerable<Test> GetTests()
     {
-      var listOfTests = new List<Test>
-      {
-        _englishTest0, _englishTest1
-      };
-      return listOfTests;
+      return _allTests;
     }
 
     public Test GetTest(int id)
     {
-      switch (id)
-      {
-        case 1:
-        {
-          return _englishTest0;
-        }
-        case 2:
-        {
-          return _englishTest1;
-        }
-        default:
-        return _englishTest0;
-      }
+      return GetTests().SingleOrDefault(q => q.TestId == id);
     }
 
     public Test InsertTest(Test test)
