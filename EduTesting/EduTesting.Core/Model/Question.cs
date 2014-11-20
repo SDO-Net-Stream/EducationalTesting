@@ -5,14 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using EduTesting.Interfaces;
 
 namespace EduTesting.Model
 {
+  public enum QuestionType
+  {
+    Radio, Checkbox, Textbox
+  }
+
   public class Question : IQuestion
   {
     public int QuestionId { get; set; }
     public string QuestionText { get; set; }
     public string Description { get; set; }
+    public QuestionType QuestionType { get; set; }
     public virtual ICollection<string> Answers { get; set; }
   }
 

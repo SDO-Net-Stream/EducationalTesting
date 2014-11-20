@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EduTesting.Interfaces;
 using EduTesting.Model;
 
 namespace EduTesting.Controllers
@@ -14,7 +15,7 @@ namespace EduTesting.Controllers
     IEnumerable<IQuestion> GetAllQuestions();
     IEnumerable<IQuestion> GetQuestions(int testId);
     IQuestion GetQuestion(int id);
-    IQuestion InsertQuestion(IQuestion test);
+    IQuestion InsertQuestion(IQuestion test, int testId);
     bool UpdateQuestion(IQuestion question);
 
     IEnumerable<User> GetUsers();
