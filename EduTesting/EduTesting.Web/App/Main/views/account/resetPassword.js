@@ -7,6 +7,15 @@
             $scope.model = {
                 token: $stateParams.token
             };
+            $scope.password_c = "";
+            var comparePassword = function () {
+                $scope.form.password_c.$setValidity('equal', $scope.model.password == $scope.password_c);
+            };
+
+            $scope.$watch('model.password', comparePassword);
+            $scope.$watch('password_c', comparePassword);
+
+
             $scope.submit = function () {
                 if ($scope.form.$valid) {
                     accountService.resetPasswordConfirm($scope.model).success(function () {
