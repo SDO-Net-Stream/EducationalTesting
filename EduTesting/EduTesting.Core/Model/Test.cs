@@ -19,6 +19,6 @@ namespace EduTesting.Model
       public int TestId { get; set; }
       public string TestName { get; set; }
       public int UserId { get; set; }
-      public virtual ICollection<IQuestion> Questions { get; set; }
+      public virtual List<IQuestion> Questions { get; set; }
     }
 }
