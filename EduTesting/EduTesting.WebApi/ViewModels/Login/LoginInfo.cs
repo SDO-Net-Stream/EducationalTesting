@@ -1,10 +1,11 @@
-﻿using System;
+﻿using EduTesting.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.Model
+namespace EduTesting.ViewModels.Login
 {
     public class LoginInfo
     {

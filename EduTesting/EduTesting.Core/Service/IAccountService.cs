@@ -1,5 +1,5 @@
 ﻿using EduTesting.Model;
-using EduTesting.Model.Parameters;
+using EduTesting.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,8 @@ namespace EduTesting.Service
 {
     public interface IAccountService
     {
-        void RegisterByEmail(RegisterUserModel model);
-        void ResetPassword(LostPasswordModel model);
-        void ResetPasswordConfirm(ResetPasswordModel model);
+        void RegisterByEmail(RegisterUserViewModel model);
+        void ResetPassword(LostPasswordViewModel model);
+        void ResetPasswordConfirm(ResetPasswordViewModel model);
     }
 }

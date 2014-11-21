@@ -1,5 +1,6 @@
 ﻿using EduTesting.Model;
-using EduTesting.Model.Parameters;
+using EduTesting.ViewModels.Account;
+using EduTesting.ViewModels.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -68,9 +68,9 @@
     <Compile Include="Interfaces\IQuestion.cs" />
     <Compile Include="Interfaces\ITestRepository.cs" />
     <Compile Include="Model\BusinessLogicException.cs" />
-    <Compile Include="Model\Parameters\LostPasswordModel.cs" />
-    <Compile Include="Model\Parameters\RegisterUserModel.cs" />
-    <Compile Include="Model\Parameters\ResetPasswordModel.cs" />
+    <Compile Include="ViewModels\Account\LostPasswordViewModel.cs" />
+    <Compile Include="ViewModels\Account\RegisterUserViewModel.cs" />
+    <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\Test.cs" />

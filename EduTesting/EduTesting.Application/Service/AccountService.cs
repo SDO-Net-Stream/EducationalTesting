@@ -1,7 +1,7 @@
 ﻿using Abp.Domain.Uow;
 using EduTesting.DataProvider;
 using EduTesting.Model;
-using EduTesting.Model.Parameters;
+using EduTesting.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +19,12 @@ namespace EduTesting.Service
             _userRepository = userRepository;
             _notificationService = notificationService;
         }
-        public void RegisterByEmail(RegisterUserModel model)
+        public void RegisterByEmail(RegisterUserViewModel model)
         {
             var user = _userRepository.Register(model.Name, model.Email, model.Password);
         }
 
-        public void ResetPassword(LostPasswordModel model)
+        public void ResetPassword(LostPasswordViewModel model)
         {
             var user = _userRepository.GetUserByEmail(model.Email);
             if (user == null)
@@ -34,7 +34,7 @@ namespace EduTesting.Service
             _notificationService.SendResetPassword(user, token);
         }
 
-        public void ResetPasswordConfirm(ResetPasswordModel model)
+        public void ResetPasswordConfirm(ResetPasswordViewModel model)
         {
             var user = _userRepository.GetUserByToken(model.Token);
             if (user == null)

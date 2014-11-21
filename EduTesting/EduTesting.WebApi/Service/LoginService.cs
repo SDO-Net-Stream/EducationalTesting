@@ -1,8 +1,9 @@
 ﻿using Abp.Domain.Uow;
 using EduTesting.DataProvider;
 using EduTesting.Model;
-using EduTesting.Model.Parameters;
 using EduTesting.Security;
+using EduTesting.ViewModels.Account;
+using EduTesting.ViewModels.Login;
 using EduTesting.WebRequestParameters;
 using System;
 using System.Collections.Generic;

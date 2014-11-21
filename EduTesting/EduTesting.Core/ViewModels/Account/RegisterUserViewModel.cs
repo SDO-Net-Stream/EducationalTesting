@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.Model.Parameters
+namespace EduTesting.ViewModels.Account
 {
-    public class RegisterUserModel
+    public class RegisterUserViewModel
     {
         public string Name { get; set; }
         public string Email { get; set; }

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.Model.Parameters
+namespace EduTesting.ViewModels.Account
 {
-    public class LoginByEmailModel
+    public class LostPasswordViewModel
     {
         public string Email { get; set; }
-        public string Password { get; set; }
     }
 }
