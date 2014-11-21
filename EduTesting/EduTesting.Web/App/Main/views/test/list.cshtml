@@ -8,9 +8,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="test in tests">
-                <td>{{test.TestName}}</td>
+                <td>{{test.name}}</td>
                 <td>
-                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({id: test.testId})"></a>
+                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.id})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="delete(test)"></a>
                 </td>
             </tr>
