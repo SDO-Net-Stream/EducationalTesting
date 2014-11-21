@@ -50,7 +50,7 @@
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('test.edit', {
-                    url: '^/test/edit/:test/:question',
+                    url: '^/test/edit/:test',
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
             ;

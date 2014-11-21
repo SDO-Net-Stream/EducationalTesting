@@ -45,7 +45,7 @@ namespace EduTesting.Web
                         "~/Scripts/angular/angular-animate.min.js",
                         "~/Scripts/angular/angular-sanitize.min.js",
                         "~/Scripts/angular/angular-ui-router.min.js",
-                        "~/Scripts/angular/angular-ui/ui-bootstrap.min.js",
+                        //"~/Scripts/angular/angular-ui/ui-bootstrap.min.js",
                         "~/Scripts/angular/angular-ui/ui-bootstrap-tpls.min.js",
                         "~/Scripts/angular/angular-ui/ui-utils.min.js",
 

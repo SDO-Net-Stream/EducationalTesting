@@ -360,6 +360,9 @@ namespace EduTesting.Repositories
 
         public Test InsertTest(Test test)
         {
+            if (_allTests.Any(t => t.TestName == test.TestName))
+                throw new BusinessLogicException("Duplicate test name");
+            test.TestId = _allTests.Any() ? _allTests.Max(t => t.TestId) + 1 : 1;
             _allTests.Add(test);
             return _allTests.Last();
         }
