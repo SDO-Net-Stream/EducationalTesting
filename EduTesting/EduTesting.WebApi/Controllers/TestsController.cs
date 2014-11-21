@@ -60,9 +60,15 @@ namespace EduTesting.Controllers
     // DELETE api/Tests/5
     public HttpResponseMessage Delete(int id)
     {
-      var status = testService.DeleteTest(id);
-      if (status) return new HttpResponseMessage(HttpStatusCode.OK);
-      throw new HttpResponseException(HttpStatusCode.NotFound);
+        try
+        {
+            testService.DeleteTest(new ViewModels.Test.TestListItemViewModel { TestId = id });
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+        catch (BusinessLogicException)
+        {
+            throw new HttpResponseException(HttpStatusCode.NotFound);
+        }
     }
 
     [HttpGet]

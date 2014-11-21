@@ -19,7 +19,7 @@ namespace EduTesting.Service
 
       bool UpdateTest(Test test);
 
-      bool DeleteTest(int id);
+      void DeleteTest(TestListItemViewModel test);
 
       IEnumerable<IQuestion> GetQuestions(int testId);
     }

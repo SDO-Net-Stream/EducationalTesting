@@ -8,9 +8,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="test in tests">
-                <td>{{test.name}}</td>
+                <td>{{test.testName}}</td>
                 <td>
-                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.id})"></a>
+                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="delete(test)"></a>
                 </td>
             </tr>
@@ -23,19 +23,32 @@
                 <h3 class="modal-title">Create test</h3>
             </div>
             <div class="modal-body">
-                <div class="form-group" ng-class="{'has-error': form.name.$dirty && form.name.$invalid, 'has-success': form.name.$dirty && !form.name.$invalid}">
+                <div class="form-group" ng-class="{'has-error': form.testName.$dirty && form.testName.$invalid, 'has-success': form.name.$dirty && !form.name.$invalid}">
                     <label for="test-add-name" class="control-label col-xs-2">Name:</label>
                     <div class="col-xs-10">
-                        <input type="text" name="name" ng-model="model.name" id="test-add-name" class="form-control" required />
-                        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Enter name.</span>
+                        <input type="text" name="testName" ng-model="model.testName" id="test-add-name" class="form-control" required />
+                        <span ng-show="form.testName.$dirty && form.testName.$error.required" class="help-block">Enter name.</span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Create</button>
-                <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
             </div>
         </form>
     </script>
-
+    <script id="app.views.test.list.delete.html" style="display: none" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete test</h3>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete test '{{model.testName}}'?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
 </div>

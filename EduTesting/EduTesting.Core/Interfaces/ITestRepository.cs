@@ -10,7 +10,7 @@ namespace EduTesting.Controllers
         Test GetTest(int id);
         Test InsertTest(Test test);
         bool UpdateTest(Test test);
-        bool DeleteTest(int id);
+        void DeleteTest(int id);
 
         IEnumerable<IQuestion> GetAllQuestions();
         IEnumerable<IQuestion> GetQuestions(int testId);

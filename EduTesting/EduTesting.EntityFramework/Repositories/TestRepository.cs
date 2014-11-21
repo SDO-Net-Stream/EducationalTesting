@@ -377,9 +377,12 @@ namespace EduTesting.Repositories
             return true;
         }
 
-        public bool DeleteTest(int id)
+        public void DeleteTest(int id)
         {
-            throw new System.NotImplementedException();
+            var test = _allTests.FirstOrDefault(t => t.TestId == id);
+            if (test == null)
+                throw new BusinessLogicException("Test not found");
+            _allTests.Remove(test);
         }
 
         public IEnumerable<IQuestion> GetAllQuestions()

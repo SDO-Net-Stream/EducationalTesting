@@ -5,17 +5,20 @@
         '$scope', 'abp.services.app.test', 'message', '$state', '$modal',
         function ($scope, testService, message, $state, $modal) {
             $scope.tests = [];
-            testService.getTests().success(function (list) {
-                $scope.tests = list;
-            });
+            var loadTests = function () {
+                testService.getTests().success(function (list) {
+                    $scope.tests = list;
+                });
+            };
+            loadTests();
             $scope.create = function () {
-                var modalInstance = $modal.open({
+                var dialog = $modal.open({
                     templateUrl: 'app.views.test.list.add.html',
                     controller: function ($scope) {
-                        $scope.model = { name: "" };
+                        $scope.model = { testName: "" };
                         $scope.ok = function () {
                             testService
-                                .insertTest({ testName: $scope.model.name })
+                                .insertTest($scope.model)
                                 .success(function (test) {
                                     message.success("Test '" + test.testName + "' successfully created");
                                     $scope.$close(test);
@@ -28,17 +31,24 @@
                     }
                 });
             };
-        }
-    ]);
-    app.controller('app.views.test.list.add', [
-        '$scope',
-        function ($scope) {
-            $scope.model = { name: "" };
-            $scope.ok = function () {
-                $scope.$close($scope.model);
-            };
-            $scope.cancel = function () {
-                $scope.$dismiss
+            $scope.delete = function (test) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.test.list.delete.html',
+                    controller: function ($scope) {
+                        $scope.model = test;
+                        $scope.ok = function () {
+                            testService.deleteTest(test)
+                                .success(function () {
+                                    message.success("Test '" + test.testName + "' successfully deleted");
+                                    loadTests();
+                                    $scope.$close(test);
+                                });
+                        };
+                        $scope.cancel = function () {
+                            $scope.$dismiss('cancel');
+                        };
+                    }
+                });
             };
         }
     ]);

@@ -8,6 +8,8 @@ using EduTesting.Security;
 using Abp.Dependency;
 using Castle.MicroKernel.Registration;
 using EduTesting.WebRequestParameters;
+using Abp.Events.Bus;
+using Abp.Events.Bus.Exceptions;
 namespace EduTesting
 {
     [DependsOn(typeof(AbpWebApiModule), typeof(EduTestingApplicationModule))]
@@ -34,6 +36,13 @@ namespace EduTesting
                 .Build();
             DynamicApiControllerBuilder.For<IAccountService>("app/account")
                 .Build();
+
+#if DEBUG
+            EventBus.Default.Register<AbpHandledExceptionData>(eventData =>
+            { 
+                // The point for catching exceptions
+            });
+#endif
         }
     }
 }

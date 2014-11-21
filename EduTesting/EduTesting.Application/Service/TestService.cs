@@ -30,8 +30,8 @@ namespace EduTesting.Service
             return _Repository.GetTests()
                 .Select(t => new TestListItemViewModel
                 {
-                    Id = t.TestId,
-                    Name = t.TestName
+                    TestId = t.TestId,
+                    TestName = t.TestName
                 })
                 .ToArray();
         }
@@ -46,9 +46,9 @@ namespace EduTesting.Service
             return _Repository.UpdateTest(test);
         }
 
-        public bool DeleteTest(int id)
+        public void DeleteTest(TestListItemViewModel test)
         {
-            return _Repository.DeleteTest(id);
+            _Repository.DeleteTest(test.TestId);
         }
 
         public IEnumerable<IQuestion> GetQuestions(int testId)
