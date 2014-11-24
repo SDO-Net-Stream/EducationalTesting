@@ -14,9 +14,8 @@
 
     //Configuration for Angular UI routing.
     app.config([
-        '$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
-            //$locationProvider.html5Mode(false);
+        '$stateProvider', '$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
@@ -50,7 +49,7 @@
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('test.edit', {
-                    url: '^/test/edit/:test',
+                    url: '^/test/:test/edit',
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('question', {
@@ -60,6 +59,30 @@
                 .state('question.edit', {
                     url: '^/question/edit/:test/:question',
                     templateUrl: '/App/Main/views/question/list.cshtml',
+                })
+
+
+                .state('test.answer', { // answering test
+                    url: '/:test/answer',
+                    abstract: true,
+                    resolve: {
+                        testResult: [
+                            'abp.services.app.testResult', '$stateParams',
+                            function (resultService, $stateParams) {
+                                return resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                            }
+                        ]
+                    }
+                })
+                .state('test.answer.question', {
+                    url: '/:question',
+                    templateUrl: '/App/Main/views/test/answer.cshtml',
+                })
+                .state('test.result', { // test results
+                    url: '/:test/result',
+                })
+                .state('test.result.details', {
+                    url: '/:user'
                 })
             ;
         }
@@ -80,7 +103,7 @@
             }
         });
     })();
-    app.run(['user', 'abp.services.app.login', function(user, loginService) {
+    app.run(['user', 'abp.services.app.login', function (user, loginService) {
         loginService.getUserInfo().success(user.signIn);
     }]);
     app.run(['message', function (message) {

@@ -11,6 +11,7 @@ namespace EduTesting.Interfaces
     {
         TestResult[] GetTestResults(int testId);
         TestResult GetTestResult(int testResultId);
+        TestResult FindActiveUserTestResult(int testId, int userId);
         void CreateTestResult(TestResult testResult);
         void SaveUserAnswers(int testResultId, int questionId, UserAnswer[] answers);
         /// <summary>

@@ -32,10 +32,13 @@ namespace EduTesting.Service
             }).ToArray();
         }
 
-        public TestResultViewModel StartTest(StartTestViewModel startModel)
+        public void StartTest(StartTestViewModel startModel)
         {
+            var exam = _testResultRepository.FindActiveUserTestResult(startModel.TestId, _webUser.CurrentUser.UserId);
+            if (exam != null)
+                throw new BusinessLogicException("Test already started. Complete previous before starting new one.");
             var test = _testRepository.GetTest(startModel.TestId);
-            var testResult = new TestResult
+            exam = new TestResult
             {
                 UserId = _webUser.CurrentUser.UserId,
                 TestId = test.TestId,
@@ -44,8 +47,16 @@ namespace EduTesting.Service
                 TestResultScore = 0,
                 UserAnswers = new UserAnswer[0]
             };
-            testResult.Questions = test.Questions;
-            return null;
+            exam.Questions = test.Questions;
+            _testResultRepository.CreateTestResult(exam);
+        }
+
+        public TestResultViewModel GetActiveUserTestResult(StartTestViewModel startModel)
+        {
+            var exam = _testResultRepository.FindActiveUserTestResult(startModel.TestId, _webUser.CurrentUser.UserId);
+            if (exam == null)
+                throw new BusinessLogicException("No active test found");
+            return ToTestResultViewModel(exam);
         }
 
         public TestResultViewModel GetTestResult(TestResultParameterViewModel key)
@@ -53,6 +64,11 @@ namespace EduTesting.Service
             var exam = _testResultRepository.GetTestResult(key.TestResultId);
             if (exam == null)
                 throw new BusinessLogicException("Test result not found");
+            return ToTestResultViewModel(exam);
+        }
+
+        private TestResultViewModel ToTestResultViewModel(TestResult exam)
+        {
             var test = _testRepository.GetTest(exam.TestId);
             var result = new TestResultViewModel
             {

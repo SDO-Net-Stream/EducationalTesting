@@ -60,5 +60,11 @@ namespace EduTesting.Repositories
             });
             exam.UserAnswers = exam.UserAnswers.Where(ua => ua.QuestionId != questionId).Union(newAnswers).ToArray();
         }
+
+
+        public TestResult FindActiveUserTestResult(int testId, int userId)
+        {
+            return _testResults.FirstOrDefault(tr => tr.TestId == testId && tr.UserId == userId && tr.TestResultIsCompleted == false);
+        }
     }
 }
