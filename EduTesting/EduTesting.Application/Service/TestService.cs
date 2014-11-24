@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EduTesting.Controllers;
 using EduTesting.Model;
 using EduTesting.ViewModels.Test;
+using EduTesting.Interfaces;
 
 namespace EduTesting.Service
 {
@@ -39,9 +39,9 @@ namespace EduTesting.Service
             return _Repository.InsertTest(test);
         }
 
-        public bool UpdateTest(Test test)
+        public void UpdateTest(Test test)
         {
-            return _Repository.UpdateTest(test);
+            _Repository.UpdateTest(test);
         }
 
         public void DeleteTest(TestListItemViewModel test)
@@ -54,9 +54,9 @@ namespace EduTesting.Service
             return _Repository.GetQuestions(testId);
         }
 
-        public bool UpdateQuestion(Question question)
+        public void UpdateQuestion(Question question)
         {
-            return _Repository.UpdateQuestion(question);
+            _Repository.UpdateQuestion(question);
         }
 
         public Question InsertQuestion(Question question)

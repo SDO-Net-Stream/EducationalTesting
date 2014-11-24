@@ -18,6 +18,6 @@ namespace EduTesting.Model
       public int TestId { get; set; }
       public string TestName { get; set; }
       public int UserId { get; set; }
-      public virtual List<Question> Questions { get; set; }
+      public Question[] Questions { get; set; }
     }
 }

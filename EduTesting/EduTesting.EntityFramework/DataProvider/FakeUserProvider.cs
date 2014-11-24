@@ -18,11 +18,11 @@ namespace EduTesting.DataProvider
                 name = name.Split('\\')[1];
             return new User
             {
-                Id = key,
-                Name = name,
-                DomainName = "domain\\" + name,
-                Email = name + "@email.email",
-                IsActive = true
+                UserId = 1,
+                UserName = name,
+                UserDomainName = "domain\\" + name,
+                UserEmail = name + "@email.email",
+                UserIsActive = true
             };
         }
 
@@ -43,9 +43,9 @@ namespace EduTesting.DataProvider
             }
         }
 
-        public User GetUserById(string id)
+        public User GetUserById(int id)
         {
-            return FakeUser(id);
+            return FakeUser(id.ToString());
         }
 
         public User GetUserByEmail(string email)
@@ -74,7 +74,7 @@ namespace EduTesting.DataProvider
 
         public string GenerateUserToken(User user)
         {
-            var key = string.IsNullOrWhiteSpace(user.Email) ? user.DomainName : user.Email;
+            var key = string.IsNullOrWhiteSpace(user.UserEmail) ? user.UserDomainName : user.UserEmail;
             return key + " " + Guid.NewGuid().ToString();
         }
 

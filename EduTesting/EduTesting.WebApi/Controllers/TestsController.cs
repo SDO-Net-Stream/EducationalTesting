@@ -51,9 +51,15 @@ namespace EduTesting.Controllers
     // PUT api/Tests/5
     public HttpResponseMessage Put(int id, [FromBody] Test test)
     {
-      var status = testService.UpdateTest(test);
-      if (status) return new HttpResponseMessage(HttpStatusCode.OK);
-      throw new HttpResponseException(HttpStatusCode.NotFound);
+        try
+        {
+            testService.UpdateTest(test);
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+        catch (BusinessLogicException)
+        {
+            throw new HttpResponseException(HttpStatusCode.NotFound);
+        }
     }
 
     // DELETE api/Tests/5

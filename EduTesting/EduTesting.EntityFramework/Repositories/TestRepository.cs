@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EduTesting.Controllers;
 using EduTesting.Model;
+using EduTesting.Interfaces;
 
 namespace EduTesting.Repositories
 {
@@ -112,7 +112,7 @@ namespace EduTesting.Repositories
         {
             TestId = 1,
             TestName = "Pre-Intermediate",
-            Questions = new List<Question>
+            Questions = new Question[]
                                     {
                                         _question01, _question01, _question02, _question03, _question04, _question05, _question06
                                     }
@@ -307,7 +307,7 @@ namespace EduTesting.Repositories
         {
             TestId = 2,
             TestName = "Intermediate",
-            Questions = new List<Question>
+            Questions = new Question[]
                                     {
                                         _question10, _question11, _question12, _question13, _question14, _question15, _question16,
                                         _question17, _question18, _question19, _question1_10, _question1_11, _question1_12, _question1_13
@@ -366,14 +366,12 @@ namespace EduTesting.Repositories
             return _allTests.Last();
         }
 
-        public bool UpdateTest(Test test)
+        public void UpdateTest(Test test)
         {
             var index = _allTests.FindIndex(t => t.TestId == test.TestId);
-            if (index != -1)
-            {
-                _allTests[index] = test;
-            }
-            return true;
+            if (index == -1)
+                throw new BusinessLogicException("test not found");
+            _allTests[index] = test;
         }
 
         public void DeleteTest(int id)
@@ -403,33 +401,29 @@ namespace EduTesting.Repositories
         public Question InsertQuestion(Question question, int testId)
         {
             var test = _allTests.SingleOrDefault(t => t.TestId == testId);
-            if (test != null)
-            {
-                test.Questions.Add(question);
-                return test.Questions.Last();
-            }
-            return null;
+            if (test == null)
+                throw new BusinessLogicException("Test not found");
+            question.TestId = testId;
+            question.QuestionId = test.Questions.Any() ? test.Questions.Max(q => q.QuestionId) + 1 : 1;
+            test.Questions = test.Questions.Union(new[] { question }).ToArray();
+            return test.Questions.Last();
         }
 
-        public bool UpdateQuestion(Question newQuestion)
+        public void UpdateQuestion(Question newQuestion)
         {
-            var question =
-                _allTests.SelectMany(t => t.Questions).SingleOrDefault(q => q.QuestionId == newQuestion.QuestionId);
-            if (question != null)
+            var question = _allTests.SelectMany(t => t.Questions).SingleOrDefault(q => q.QuestionId == newQuestion.QuestionId);
+            if (question == null)
+                throw new BusinessLogicException("Question not found");
+            var test = _allTests.SingleOrDefault(t => t.TestId == question.TestId);
+            if (test != null)
             {
-                var test = _allTests.SingleOrDefault(t => t.TestId == question.TestId);
-                if (test != null)
-                {
-                    var index = test.Questions.FindIndex(t => t.TestId == test.TestId);
-                    if (index != -1)
+                for (var index = 0; index < test.Questions.Length; index++)
+                    if (test.Questions[index].QuestionId == newQuestion.QuestionId)
                     {
                         test.Questions[index] = newQuestion;
+                        break;
                     }
-
-                    return true;
-                }
             }
-            return false;
         }
 
         public IEnumerable<User> GetUsers()
@@ -442,7 +436,7 @@ namespace EduTesting.Repositories
             throw new System.NotImplementedException();
         }
 
-        public bool UpdateUser(User user)
+        public void UpdateUser(User user)
         {
             throw new System.NotImplementedException();
         }
@@ -468,14 +462,17 @@ namespace EduTesting.Repositories
             return _allRoles.Last();
         }
 
-        public bool UpdateRole(Role role)
+        public void UpdateRole(Role role)
         {
             var index = _allTests.FindIndex(t => t.TestId == role.RoleId);
             if (index != -1)
             {
                 _allRoles[index] = role;
             }
-            return true;
+            else
+            {
+                throw new BusinessLogicException("Role not found");
+            }
         }
 
         public void DeleteQuestion(int questionId)
@@ -483,10 +480,11 @@ namespace EduTesting.Repositories
             var question = _allTests.SelectMany(t => t.Questions).FirstOrDefault(t => t.QuestionId == questionId);
             if (question == null)
                 throw new BusinessLogicException("Question not found");
-            _allTests.Single(t => t.TestId == question.TestId).Questions.Remove(question);
+            var test =             _allTests.Single(t => t.TestId == question.TestId);
+            test.Questions = test.Questions.Where(q => q.QuestionId != questionId).ToArray();
         }
 
-        public bool DeleteRole(int id)
+        public void DeleteRole(int id)
         {
             throw new System.NotImplementedException();
         }
