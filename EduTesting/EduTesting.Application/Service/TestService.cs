@@ -9,7 +9,6 @@ using EduTesting.ViewModels.Test;
 
 namespace EduTesting.Service
 {
-
     public class TestService : EduTestingAppServiceBase, ITestService
     {
         private ITestRepository _Repository;
@@ -62,7 +61,6 @@ namespace EduTesting.Service
 
         public Question InsertQuestion(Question question)
         {
-            //if (question.TestId )
             return _Repository.InsertQuestion(question, 2);
         }
 
