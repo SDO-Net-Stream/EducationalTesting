@@ -10,17 +10,16 @@ namespace EduTesting.Model
 {
     public enum QuestionType
     {
-        Radio, Checkbox, Textbox
+        SingleAnswer, MultipleAnswers, TextAnswer
     }
 
     public class Question
     {
         public int QuestionId { get; set; }
         public int TestId { get; set; }
-        public string QuestionText { get; set; }
-        public string Description { get; set; }
         public QuestionType QuestionType { get; set; }
-        public virtual List<string> Answers { get; set; }
-        public int RightAnswer { get; set; }
+        public string QuestionText { get; set; }
+        public string QuestionDescription { get; set; }
+        public virtual List<Answer> Answers { get; set; }
     }
 }

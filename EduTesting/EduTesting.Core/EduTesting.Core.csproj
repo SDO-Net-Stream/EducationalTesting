@@ -66,6 +66,7 @@
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
     <Compile Include="Interfaces\ITestRepository.cs" />
+    <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\BusinessLogicException.cs" />
     <Compile Include="ViewModels\Account\LostPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterUserViewModel.cs" />
