@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EduTesting.Controllers;
-using EduTesting.Interfaces;
 using EduTesting.Model;
 using EduTesting.ViewModels.Test;
 
@@ -51,19 +50,36 @@ namespace EduTesting.Service
             _Repository.DeleteTest(test.TestId);
         }
 
-        public IEnumerable<IQuestion> GetQuestions(int testId)
+        public IEnumerable<Question> GetQuestions(int testId)
         {
             return _Repository.GetQuestions(testId);
         }
 
-        public bool UpdateQuestion(IQuestion question)
+        public bool UpdateQuestion(Question question)
         {
             return _Repository.UpdateQuestion(question);
         }
 
-        public IQuestion InsertQuestion(IQuestion question, int testId)
+        public Question InsertQuestion(Question question)
         {
-            return _Repository.InsertQuestion(question, testId);
+            //if (question.TestId )
+            return _Repository.InsertQuestion(question, 2);
+        }
+
+        public void DeleteQuestion(QuestionListItemViewModel question)
+        {
+            _Repository.DeleteQuestion(question.QuestionId);
+        }
+
+        public IEnumerable<QuestionListItemViewModel> GetAllQuestions()
+        {
+            return _Repository.GetAllQuestions()
+                .Select(q => new QuestionListItemViewModel
+                {
+                    QuestionId = q.QuestionId,
+                    QuestionText = q.QuestionText
+                })
+                .ToArray();
         }
     }
 }

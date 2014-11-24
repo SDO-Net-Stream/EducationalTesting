@@ -53,6 +53,14 @@
                     url: '^/test/edit/:test',
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
+                .state('question', {
+                    url: '/question',
+                    templateUrl: '/App/Main/views/question/list.cshtml',
+                })
+                .state('question.edit', {
+                    url: '^/question/edit/:test/:question',
+                    templateUrl: '/App/Main/views/question/list.cshtml',
+                })
             ;
         }
     ]);

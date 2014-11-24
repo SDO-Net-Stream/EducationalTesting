@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
-using EduTesting.Interfaces;
 
 namespace EduTesting.Model
 {
@@ -14,7 +13,7 @@ namespace EduTesting.Model
         Radio, Checkbox, Textbox
     }
 
-    public class Question : IQuestion
+    public class Question
     {
         public int QuestionId { get; set; }
         public int TestId { get; set; }
@@ -22,13 +21,6 @@ namespace EduTesting.Model
         public string Description { get; set; }
         public QuestionType QuestionType { get; set; }
         public virtual List<string> Answers { get; set; }
-    }
-
-    public class FixedQuestion : Question
-    {
-    }
-
-    public class EnterTextQuestion : Question
-    {
+        public int RightAnswer { get; set; }
     }
 }

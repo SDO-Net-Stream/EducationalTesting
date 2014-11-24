@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using EduTesting.Interfaces;
 using EduTesting.Model;
 using EduTesting.Service;
 
@@ -72,7 +71,7 @@ namespace EduTesting.Controllers
     }
 
     [HttpGet]
-    public IEnumerable<IQuestion> Questions(int testId)
+    public IEnumerable<Question> Questions(int testId)
     {
       var questions = testService.GetQuestions(testId);
       if (questions == null)

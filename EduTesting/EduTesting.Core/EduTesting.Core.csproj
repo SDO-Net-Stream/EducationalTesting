@@ -65,7 +65,6 @@
     <Compile Include="DataProvider\IUserRepository.cs" />
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
-    <Compile Include="Interfaces\IQuestion.cs" />
     <Compile Include="Interfaces\ITestRepository.cs" />
     <Compile Include="Model\BusinessLogicException.cs" />
     <Compile Include="ViewModels\Account\LostPasswordViewModel.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Service\INotificationService.cs" />
     <Compile Include="Service\ITestService.cs" />
     <Compile Include="Service\IWebUserManager.cs" />
+    <Compile Include="ViewModels\Question\QuestionListItemViewModel.cs" />
     <Compile Include="ViewModels\Test\TestListItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EduTesting.Controllers;
-using EduTesting.Interfaces;
 using EduTesting.Model;
 
 namespace EduTesting.Repositories
@@ -113,7 +112,7 @@ namespace EduTesting.Repositories
         {
             TestId = 1,
             TestName = "Pre-Intermediate",
-            Questions = new List<IQuestion>
+            Questions = new List<Question>
                                     {
                                         _question01, _question01, _question02, _question03, _question04, _question05, _question06
                                     }
@@ -269,7 +268,7 @@ namespace EduTesting.Repositories
         {
             "The","softly","gray matter","that"
         };
-        private static IQuestion _question1_11 = new FixedQuestion
+        private static Question _question1_11 = new Question
         {
             QuestionId = 19,
             TestId = 2,
@@ -308,7 +307,7 @@ namespace EduTesting.Repositories
         {
             TestId = 2,
             TestName = "Intermediate",
-            Questions = new List<IQuestion>
+            Questions = new List<Question>
                                     {
                                         _question10, _question11, _question12, _question13, _question14, _question15, _question16,
                                         _question17, _question18, _question19, _question1_10, _question1_11, _question1_12, _question1_13
@@ -355,7 +354,7 @@ namespace EduTesting.Repositories
 
         public Test GetTest(int id)
         {
-            return GetTests().SingleOrDefault(q => q.TestId == id);
+            return _allTests.SingleOrDefault(q => q.TestId == id);
         }
 
         public Test InsertTest(Test test)
@@ -385,23 +384,23 @@ namespace EduTesting.Repositories
             _allTests.Remove(test);
         }
 
-        public IEnumerable<IQuestion> GetAllQuestions()
+        public IEnumerable<Question> GetAllQuestions()
         {
             return _allTests.SelectMany(t => t.Questions);
         }
 
-        public IEnumerable<IQuestion> GetQuestions(int testId)
+        public IEnumerable<Question> GetQuestions(int testId)
         {
             var test = _allTests.SingleOrDefault(t => t.TestId == testId);
             return test != null ? test.Questions : null;
         }
 
-        public IQuestion GetQuestion(int id)
+        public Question GetQuestion(int id)
         {
             return _allTests.SelectMany(t => t.Questions).SingleOrDefault(q => q.QuestionId == id);
         }
 
-        public IQuestion InsertQuestion(IQuestion question, int testId)
+        public Question InsertQuestion(Question question, int testId)
         {
             var test = _allTests.SingleOrDefault(t => t.TestId == testId);
             if (test != null)
@@ -412,7 +411,7 @@ namespace EduTesting.Repositories
             return null;
         }
 
-        public bool UpdateQuestion(IQuestion newQuestion)
+        public bool UpdateQuestion(Question newQuestion)
         {
             var question =
                 _allTests.SelectMany(t => t.Questions).SingleOrDefault(q => q.QuestionId == newQuestion.QuestionId);
@@ -477,6 +476,14 @@ namespace EduTesting.Repositories
                 _allRoles[index] = role;
             }
             return true;
+        }
+
+        public void DeleteQuestion(int questionId)
+        {
+            var question = _allTests.SelectMany(t => t.Questions).FirstOrDefault(t => t.QuestionId == questionId);
+            if (question == null)
+                throw new BusinessLogicException("Question not found");
+            _allTests.Single(t => t.TestId == question.TestId).Questions.Remove(question);
         }
 
         public bool DeleteRole(int id)
