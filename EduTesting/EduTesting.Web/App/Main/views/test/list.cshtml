@@ -12,7 +12,8 @@
                 <td>
                     <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="delete(test)"></a>
-                    <a ui-sref="test.answer.question({test: test.testId})">Answer</a>
+                    <a ui-sref="test.pass.question({test: test.testId, question: 1})">Answer</a>
+                    <a class="glyphicon glyphicon-play" ng-click="start(test)">Start</a>
                 </td>
             </tr>
         </tbody>

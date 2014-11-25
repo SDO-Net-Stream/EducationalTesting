@@ -4,6 +4,7 @@
     {
         public Answer(int answerPosition, string answerText)
         {
+            AnswerId = answerPosition;
             AnswerPosition = answerPosition;
             AnswerText = answerText;
         }

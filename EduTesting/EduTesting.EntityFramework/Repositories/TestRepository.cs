@@ -114,7 +114,7 @@ namespace EduTesting.Repositories
             TestName = "Pre-Intermediate",
             Questions = new Question[]
                                     {
-                                        _question01, _question01, _question02, _question03, _question04, _question05, _question06
+                                        _question01, _question02, _question03, _question04, _question05, _question06
                                     }
         };
 
