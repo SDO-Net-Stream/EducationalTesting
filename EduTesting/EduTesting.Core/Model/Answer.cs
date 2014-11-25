@@ -4,6 +4,7 @@
     {
         public Answer(int answerPosition, string answerText, bool isRight = false)
         {
+            AnswerId = answerPosition;
             AnswerPosition = answerPosition;
             AnswerText = answerText;
             AnswerIsRight = isRight;

@@ -13,7 +13,8 @@
                 <div style="float: right; border-color: gray;">
                     <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: question.questionId})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="deleteQuestion(question)"></a>
-                    <a ui-sref="test.answer.question({test: test.testId})">Answer</a>
+                    <a ui-sref="test.pass.question({test: test.testId, question: 1})">Answer</a>
+                    <a class="glyphicon glyphicon-play" ng-click="start(test)">Start</a>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" ng-click="createQuestion()">Create new Question</button>
