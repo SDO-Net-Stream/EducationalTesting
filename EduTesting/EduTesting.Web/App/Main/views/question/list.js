@@ -4,6 +4,7 @@
     app.controller(controllerId, [
         '$scope', 'abp.services.app.test', 'message', '$state', '$modal',
         function ($scope, testService, message, $state, $modal) {
+            $scope.oneAtATime = true;
             $scope.questions = [];
             var loadQuestions = function () {
                 testService.getAllQuestions().success(function (list) {

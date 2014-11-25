@@ -11,7 +11,7 @@
                 });
             };
             loadTests();
-            $scope.create = function () {
+            $scope.createTest = function () {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.test.list.add.html',
                     controller: function ($scope) {
@@ -31,7 +31,27 @@
                     }
                 });
             };
-            $scope.delete = function (test) {
+            $scope.createQuestion = function () {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.question.list.add.html',
+                    controller: function ($scope) {
+                        $scope.model = { questionText: "" };
+                        $scope.ok = function () {
+                            testService
+                                .insertQuestion($scope.model)
+                                .success(function (question) {
+                                    message.success("Question '" + question.questionText + "' successfully created");
+                                    $scope.$close(question);
+                                    $state.go('question.edit', { question: question.questionId });
+                                });
+                        };
+                        $scope.cancel = function () {
+                            $scope.$dismiss('cancel');
+                        };
+                    }
+                });
+            };
+            $scope.deleteTest = function (test) {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.test.list.delete.html',
                     controller: function ($scope) {
@@ -42,6 +62,25 @@
                                     message.success("Test '" + test.testName + "' successfully deleted");
                                     loadTests();
                                     $scope.$close(test);
+                                });
+                        };
+                        $scope.cancel = function () {
+                            $scope.$dismiss('cancel');
+                        };
+                    }
+                });
+            };
+            $scope.deleteQuestion = function (question) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.question.list.delete.html',
+                    controller: function ($scope) {
+                        $scope.model = question;
+                        $scope.ok = function () {
+                            testService.deleteQuestion(question)
+                                .success(function () {
+                                    message.success("Question '" + question.questionText + "' successfully deleted");
+                                    loadQuestions();
+                                    $scope.$close(question);
                                 });
                         };
                         $scope.cancel = function () {

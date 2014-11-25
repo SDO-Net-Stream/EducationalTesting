@@ -2,10 +2,11 @@
 {
     public class Answer
     {
-        public Answer(int answerPosition, string answerText)
+        public Answer(int answerPosition, string answerText, bool isRight = false)
         {
             AnswerPosition = answerPosition;
             AnswerText = answerText;
+            AnswerIsRight = isRight;
         }
 
         public int AnswerId { get; set; }
