@@ -1,0 +1,10 @@
+﻿<h3>Question # {{questionN}} / {{examination.questions.length}}</h3>
+<div>{{question.questionDescription}}</div>
+<ul ng-if="questionType == 'SingleAnswer'">
+    <li ng-repeat="answer in question.answers">
+        <input type="radio" value="{{answer.answerId}}" ng-model="$parent.$parent.answerId" name="question{{question.questionId}}" />
+        {{answer.answerText}}
+
+    </li>
+</ul>
+<button ng-click="next()">next</button>

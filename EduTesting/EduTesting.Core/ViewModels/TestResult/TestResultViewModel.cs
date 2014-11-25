@@ -9,6 +9,7 @@ namespace EduTesting.ViewModels.TestResult
     public class TestResultViewModel
     {
         public int TestResultId { get; set; }
+        public int TestId { get; set; }
         public int UserId { get; set; }
         public DateTime TestResultTimestamp { get; set; }
         public DateTime? TestResultEndTime { get; set; }

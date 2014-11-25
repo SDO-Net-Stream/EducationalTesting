@@ -73,6 +73,7 @@ namespace EduTesting.Service
             var result = new TestResultViewModel
             {
                 TestResultId = exam.TestResultId,
+                TestId = test.TestId,
                 UserId = exam.UserId,
                 TestResultTimestamp = exam.TestResultTimestamp,
                 TestResultEndTime = null,// exam.TestResultTimestamp.AddMinutes(test.MaxDuration)

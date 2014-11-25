@@ -184,6 +184,7 @@
     <Content Include="Abp\Framework\styles\utils\ie10fix.css" />
     <Content Include="App\Main\app.js" />
     <Content Include="App\Main\images\abp-logo.png" />
+    <Content Include="App\Main\infrastructure\enumConverter.js" />
     <Content Include="App\Main\main.css">
       <DependentUpon>main.less</DependentUpon>
     </Content>
@@ -202,6 +203,7 @@
     <Content Include="App\Main\views\login\login.js" />
     <Content Include="App\Main\views\question\list.js" />
     <Content Include="App\Main\views\test\list.js" />
+    <Content Include="App\Main\views\test\pass.js" />
     <Content Include="Content\bootstrap-cosmo.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -330,7 +332,7 @@
     <Content Include="App\Main\views\account\resetPassword.cshtml" />
     <Content Include="App\Main\views\test\list.cshtml" />
     <Content Include="App\Main\views\question\list.cshtml" />
-    <Content Include="App\Main\views\test\answer.cshtml" />
+    <Content Include="App\Main\views\test\pass.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />

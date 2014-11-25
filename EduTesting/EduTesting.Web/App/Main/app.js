@@ -44,8 +44,14 @@
                     url: '/account/resetPassword/:token',
                     templateUrl: '/App/Main/views/account/resetPassword.cshtml',
                 })
+
                 .state('test', {
+                    abstract: true,
                     url: '/test',
+                    template: '<ui-view/>'
+                })
+                .state('test.list', {
+                    url: '/list',
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('test.edit', {
@@ -62,21 +68,30 @@
                 })
 
 
-                .state('test.answer', { // answering test
-                    url: '/:test/answer',
+                .state('test.pass', { // answering test
+                    url: '/:test/pass',
                     abstract: true,
                     resolve: {
                         testResult: [
-                            'abp.services.app.testResult', '$stateParams',
-                            function (resultService, $stateParams) {
-                                return resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                            'abp.services.app.testResult', '$stateParams', '$q', '$state',
+                            function (resultService, $stateParams, $q, $state) {
+                                var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                                var defer = $q.defer();
+                                result.success(function (testResult) { defer.resolve(testResult); });
+                                result.error(function () {
+                                    $state.go('test.list');
+                                    defer.reject();
+                                });
+                                return defer.promise;
                             }
                         ]
-                    }
+                    },
+                    template: '<ui-view/>'
                 })
-                .state('test.answer.question', {
+                .state('test.pass.question', {
                     url: '/:question',
-                    templateUrl: '/App/Main/views/test/answer.cshtml',
+                    templateUrl: '/App/Main/views/test/pass.cshtml',
+                    controller: 'app.views.test.pass'
                 })
                 .state('test.result', { // test results
                     url: '/:test/result',

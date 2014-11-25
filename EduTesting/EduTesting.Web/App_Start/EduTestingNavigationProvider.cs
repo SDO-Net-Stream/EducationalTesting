@@ -32,7 +32,7 @@ namespace EduTesting.Web
                     new MenuItemDefinition(
                         "Test",
                         new LocalizableString("Test", EduTestingConsts.LocalizationSourceName),
-                        url: "#/test",
+                        url: "#/test/list",
                         icon: "fa fa-briefcase"
                         )
                 );
