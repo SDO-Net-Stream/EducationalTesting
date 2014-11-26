@@ -35,14 +35,12 @@
                 var dialog = $modal.open({
                     templateUrl: 'app.views.question.list.add.html',
                     controller: function ($scope) {
-                        debugger;
                         $scope.model = { questionText: "" };
                         $scope.model.testId = testId;
                         $scope.ok = function () {
                             testService
                                 .insertQuestion($scope.model)
                                 .success(function (question) {
-                                    debugger;
                                     message.success("Question '" + question.questionText + "' successfully created");
                                     $scope.$close(question);
                                     $state.go('question.edit', { question: question.questionId });
