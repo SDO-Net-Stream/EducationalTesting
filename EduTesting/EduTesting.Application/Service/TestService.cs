@@ -56,7 +56,7 @@ namespace EduTesting.Service
 
         public Question InsertQuestion(Question question)
         {
-            return _Repository.InsertQuestion(question, 2);
+            return _Repository.InsertQuestion(question, question.TestId);
         }
 
         public void DeleteQuestion(QuestionListItemViewModel question)

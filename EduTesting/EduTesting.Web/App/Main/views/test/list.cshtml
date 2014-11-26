@@ -6,18 +6,18 @@
                 <div style="float: right">
                     <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="deleteTest(test)"></a>
+                    <a ui-sref="test.pass.question({test: test.testId, question: 1})">Answer</a>
+                    <a class="glyphicon glyphicon-play" ng-click="start(test)">Start</a>
                 </div>
             </accordion-heading>
-            <div ng-repeat="question in test.questions">
+            <div ng-repeat="question in test.questions" style="margin-bottom: 8px">
                 <a ui-sref="question({test: test.testId})">{{question.questionText.substr(0, 65)+"..."}}</a>
                 <div style="float: right; border-color: gray;">
                     <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: question.questionId})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="deleteQuestion(question)"></a>
-                    <a ui-sref="test.pass.question({test: test.testId, question: 1})">Answer</a>
-                    <a class="glyphicon glyphicon-play" ng-click="start(test)">Start</a>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" ng-click="createQuestion()">Create new Question</button>
+            <button type="button" class="btn btn-primary" ng-click="createQuestion(test.testId)">Create new Question</button>
         </accordion-group>
     </accordion>
     <button type="button" class="btn btn-primary" ng-click="createTest()">Create new test</button>
