@@ -86,8 +86,8 @@
                             testService.deleteQuestion(question)
                                 .success(function () {
                                     message.success("Question '" + question.questionText + "' successfully deleted");
-                                    loadQuestions();
-                                    $scope.$close(question);
+                                    loadTests();
+                                    $scope.$close();
                                 });
                         };
                         $scope.cancel = function () {
