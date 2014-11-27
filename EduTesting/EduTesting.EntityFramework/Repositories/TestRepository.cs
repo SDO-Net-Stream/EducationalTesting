@@ -404,8 +404,12 @@ namespace EduTesting.Repositories
             if (test == null)
                 throw new BusinessLogicException("Test not found");
             question.TestId = testId;
-            question.QuestionId = test.Questions.Any() ? test.Questions.Max(q => q.QuestionId) + 1 : 1;
-            test.Questions = test.Questions.Union(new[] { question }).ToArray();
+            question.QuestionId = test.Questions != null && test.Questions.Any() 
+                ? test.Questions.Max(q => q.QuestionId) + 1 
+                : 1;
+            test.Questions = question.QuestionId != 1
+                ? test.Questions.Union(new[] {question}).ToArray()
+                : new[] {question};
             return test.Questions.Last();
         }
 
