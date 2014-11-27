@@ -43,7 +43,7 @@
                                 .success(function (question) {
                                     message.success("Question '" + question.questionText + "' successfully created");
                                     $scope.$close(question);
-                                    $state.go('question.edit', { question: question.questionId });
+                                    $state.go('test.list', { question: question.questionId });
                                 });
                         };
                         $scope.cancel = function () {
