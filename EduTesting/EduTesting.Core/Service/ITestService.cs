@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EduTesting.Model;
+using EduTesting.ViewModels.Question;
 using EduTesting.ViewModels.Test;
 
 namespace EduTesting.Service
@@ -11,7 +12,7 @@ namespace EduTesting.Service
     public interface ITestService
     {
         Test GetTest(int testId);
-        IEnumerable<TestListItemViewModel> GetTests();
+        IEnumerable<Test> GetTests();
 
         Test InsertTest(Test test);
 

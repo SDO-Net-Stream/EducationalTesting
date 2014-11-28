@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EduTesting.Model;
+using EduTesting.ViewModels.Question;
 using EduTesting.ViewModels.Test;
 using EduTesting.Interfaces;
 
@@ -23,15 +24,9 @@ namespace EduTesting.Service
             return _Repository.GetTest(testId);
         }
 
-        public IEnumerable<TestListItemViewModel> GetTests()
+        public IEnumerable<Test> GetTests()
         {
-            return _Repository.GetTests()
-                .Select(t => new TestListItemViewModel
-                {
-                    TestId = t.TestId,
-                    TestName = t.TestName
-                })
-                .ToArray();
+            return _Repository.GetTests().ToArray();
         }
 
         public Test InsertTest(Test test)
@@ -61,7 +56,7 @@ namespace EduTesting.Service
 
         public Question InsertQuestion(Question question)
         {
-            return _Repository.InsertQuestion(question, 2);
+            return _Repository.InsertQuestion(question, question.TestId);
         }
 
         public void DeleteQuestion(QuestionListItemViewModel question)

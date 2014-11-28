@@ -1,23 +1,26 @@
 ﻿<div ng-controller="app.views.test.list as vm">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="test in tests">
-                <td>{{test.testName}}</td>
-                <td>
+    <accordion close-others="oneAtATime">
+        <accordion-group ng-repeat="test in tests">
+            <accordion-heading>
+                {{test.testName}}
+                <div style="float: right">
                     <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})"></a>
-                    <a class="glyphicon glyphicon-remove" ng-click="delete(test)"></a>
-                    <a ui-sref="test.answer.question({test: test.testId})">Answer</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-primary" ng-click="create()">Create new test</button>
+                    <a class="glyphicon glyphicon-remove" ng-click="deleteTest(test)"></a>
+                    <a ui-sref="test.pass.question({test: test.testId, question: 1})">Answer</a>
+                    <a class="glyphicon glyphicon-play" ng-click="start(test)">Start</a>
+                </div>
+            </accordion-heading>
+            <div ng-repeat="question in test.questions" style="margin-bottom: 8px">
+                <a ui-sref="question({test: test.testId})" ng-bind-html="question.questionText"></a>
+                <div style="float: right; border-color: gray;">
+                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: question.questionId})"></a>
+                    <a class="glyphicon glyphicon-remove" ng-click="deleteQuestion(question)"></a>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="createQuestion(test.testId)">Create new Question</button>
+        </accordion-group>
+    </accordion>
+    <button type="button" class="btn btn-primary" ng-click="createTest()">Create new test</button>
     <script id="app.views.test.list.add.html" style="display: none" type="text/ng-template">
         <form ng-submit="ok()" name="form" class="form-horizontal">
             <div class="modal-header">
@@ -38,6 +41,80 @@
             </div>
         </form>
     </script>
+    <script id="app.views.question.list.add.html" style="display: none" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">Create question</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{'has-error': form.questionText.$dirty && form.questionText.$invalid, 'has-success': form.questionText.$dirty && !form.questionText.$invalid}">
+                    <label for="question-add-text" class="control-label col-xs-2">Text:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="questionText" ng-model="model.questionText" id="question-add-text" class="form-control" required>{{model.questionText}}</input>
+                        <span ng-show="form.questionText.$dirty && form.questionText.$error.required" class="help-block">Enter text.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answer0.$dirty && form.answer0.$invalid, 'has-success': form.answer0.$dirty && !form.answer0.$invalid}">
+                    <label for="question-add-answer0" class="control-label col-xs-2">Answer 1:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="answer0" ng-model="model.answer0" id="question-add-answer0" class="form-control" required />
+                        <span ng-show="form.answer0.$dirty && form.answer0.$error.required" class="help-block">Enter answer.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answer1.$dirty && form.answer1.$invalid, 'has-success': form.answer1.$dirty && !form.answer1.$invalid}">
+                    <label for="question-add-answer1" class="control-label col-xs-2">Answer 2:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="answer1" ng-model="model.answer1" id="question-add-answer1" class="form-control" required />
+                        <span ng-show="form.answer1.$dirty && form.answer1.$error.required" class="help-block">Enter answer.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answer2.$dirty && form.answer2.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
+                    <label for="question-add-answer2" class="control-label col-xs-2">Answer 3:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="answer2" ng-model="model.answer2" id="question-add-answer2" class="form-control" required />
+                        <span ng-show="form.answer2.$dirty && form.answer2.$error.required" class="help-block">Enter text.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answer3.$dirty && form.answer3.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
+                    <label for="question-add-answer3" class="control-label col-xs-2">Answer 4:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="answer3" ng-model="model.answer3" id="question-add-answer3" class="form-control" required />
+                        <span ng-show="form.answer3.$dirty && form.answer3.$error.required" class="help-block">Enter text.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answer3.$dirty && form.answer3.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
+                    <label for="question-add-rightAnswer" class="control-label col-xs-2">Right answer:</label>
+                    <select ng-change="" ng-model="model.rightAnwser" id="question-add-rightAnswer" required>
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                    </select>
+                    <span ng-show="form.rightAnwser.$dirty && form.rightAnwser.$error.required" class="help-block">Choose right answer.</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answer3.$dirty && form.answer3.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
+                    <label for="question-add-questionType" class="control-label col-xs-2">Question's type:</label>
+                    <select ng-change="" ng-model="model.questionType" id="question-add-questionType" required>
+                        <option value="0">Radio</option>
+                        <option value="1">Checkbox</option>
+                        <option value="2">Textbox</option>
+                    </select>
+                    <span ng-show="form.rightAnwser.$dirty && form.rightAnwser.$error.required" class="help-block">Choose question's type.</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.description.$dirty && form.description.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
+                    <label for="question-add-discription" class="control-label col-xs-2">Description:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="description" ng-model="model.description" id="question-add-discription" class="form-control" required />
+                        <span ng-show="form.description.$dirty && form.description.$error.required" class="help-block">Enter discription.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Create</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
     <script id="app.views.test.list.delete.html" style="display: none" type="text/ng-template">
         <form ng-submit="ok()" name="form" class="form-horizontal">
             <div class="modal-header">
@@ -45,6 +122,20 @@
             </div>
             <div class="modal-body">
                 Are you sure you want to delete test '{{model.testName}}'?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
+    <script id="app.views.question.list.delete.html" style="display: none" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete question</h3>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete question '{{model.questionText}}'?
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Delete</button>

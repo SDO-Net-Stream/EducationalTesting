@@ -10,7 +10,8 @@
             <tr ng-repeat="question in questions">
                 <td>{{question.questionText}}</td>
                 <td>
-                    <a class="glyphicon glyphicon-pencil" ui-sref="question.edit({question: question.questionId})"></a>
+                    @*<a class="glyphicon glyphicon-pencil" ui-sref="question.edit({question: question.questionId})"></a>*@
+                    <a class="glyphicon glyphicon-pencil" ng-click="create(question)"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="delete(question)"></a>
                 </td>
             </tr>
@@ -26,7 +27,7 @@
                 <div class="form-group" ng-class="{'has-error': form.questionText.$dirty && form.questionText.$invalid, 'has-success': form.questionText.$dirty && !form.questionText.$invalid}">
                     <label for="question-add-text" class="control-label col-xs-2">Text:</label>
                     <div class="col-xs-10">
-                        <input type="text" name="questionText" ng-model="model.questionText" id="question-add-text" class="form-control" required />
+                        <input type="text" name="questionText" ng-model="model.questionText" id="question-add-text" class="form-control" required>{{model.questionText}}</input>
                         <span ng-show="form.questionText.$dirty && form.questionText.$error.required" class="help-block">Enter text.</span>
                     </div>
                     </div>
