@@ -11,7 +11,7 @@
                 </div>
             </accordion-heading>
             <div ng-repeat="question in test.questions" style="margin-bottom: 8px">
-                <a ui-sref="question({test: test.testId})">{{question.questionText.substr(0, 65)+"..."}}</a>
+                <a ui-sref="question({test: test.testId})" ng-bind-html="question.questionText"></a>
                 <div style="float: right; border-color: gray;">
                     <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: question.questionId})"></a>
                     <a class="glyphicon glyphicon-remove" ng-click="deleteQuestion(question)"></a>
