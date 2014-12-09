@@ -1,19 +1,19 @@
+using System;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
+
 namespace EduTesting.Model.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<EduTesting.Model.EduTestingDB>
+    internal sealed class Configuration : DbMigrationsConfiguration<EduTestingContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "EduTesting.Model.EduTestingDB";
+            ContextKey = "EduTesting.Model.EduTestingContext";
         }
 
-        protected override void Seed(EduTesting.Model.EduTestingDB context)
+		protected override void Seed(EduTestingContext context)
         {
             //  This method will be called after migrating to the latest version.
 

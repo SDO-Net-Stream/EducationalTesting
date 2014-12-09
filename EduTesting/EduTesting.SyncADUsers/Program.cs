@@ -82,7 +82,7 @@ namespace EduTesting.SyncADUsers
 
 		private static void Main(string[] args)
 		{
-			using (var dbContext = new EduTestingDB())
+			using (var dbContext = new EduTestingContext())
 			{
 				dbContext.Users.Load();
 				var ADUsers = GetActiveDirectoryUsers();

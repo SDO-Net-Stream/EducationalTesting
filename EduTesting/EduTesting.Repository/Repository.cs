@@ -20,7 +20,7 @@ namespace EduTesting.Repository
 
 		public Repository()
 		{
-			DBContext = new EduTestingDB();
+			DBContext = new EduTestingContext();
 		}
 
 		public void Dispose()
@@ -59,7 +59,7 @@ namespace EduTesting.Repository
 
 		#region Members
 
-		protected EduTestingDB DBContext { get; private set; }
+		protected EduTestingContext DBContext { get; private set; }
 
 		#endregion
 	}
