@@ -1,10 +1,15 @@
-﻿(function () {
+﻿var inputCounter = 0;
+(function () {
     var controllerId = 'app.views.test.list';
     var app = angular.module('app');
     app.controller(controllerId, [
         '$scope', 'abp.services.app.test', 'message', '$state', '$modal',
         function ($scope, testService, message, $state, $modal) {
             $scope.tests = [];
+            $scope.answers = [];
+            $scope.$watch('answers', function (value) {
+                console.log(value);
+            }, true);
             var loadTests = function () {
                 testService.getTests().success(function (list) {
                     $scope.tests = list;
@@ -96,6 +101,21 @@
                     }
                 });
             };
+        }
+    ]);
+    app.directive('addAnswer', [
+        '$compile', function($compile) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attrs) {
+                    element.find('button').bind('click', function() {
+                        var input = angular.element('<div><input type="text" ng-model="model.answers[' + inputCounter + ']"></div>');
+                        var compile = $compile(input)(scope);
+                        element.append(input);
+                        inputCounter++;
+                    });
+                }
+            }
         }
     ]);
 })();

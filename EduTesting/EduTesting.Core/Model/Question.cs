@@ -15,7 +15,16 @@ namespace EduTesting.Model
 
     public class Question
     {
-        public int QuestionId { get; set; }
+	    public Question()
+	    {
+			//TODO: remove for testing purpose
+		    Answers = new List<Answer>();
+			Answers.Add(new Answer());
+			Answers.Add(new Answer());
+			Answers.Add(new Answer());
+	    }
+
+	    public int QuestionId { get; set; }
         public int TestId { get; set; }
         public QuestionType QuestionType { get; set; }
         public string QuestionText { get; set; }
