@@ -7,12 +7,14 @@ namespace EduTesting.Model
 {
     public class UserGroup
     {
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GroupID { get; set; }
+
         public string GroupName { get; set; }
-    
+
         public virtual ICollection<Test> Tests { get; set; }
+
         public virtual ICollection<User> Users { get; set; }
     }
 }

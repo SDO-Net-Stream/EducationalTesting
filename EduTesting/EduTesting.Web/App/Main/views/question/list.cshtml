@@ -7,8 +7,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="question in questions">
-                <td>{{question.questionText}}</td>
+            <tr ng-repeat="question in questions" >
+                <td ng-bind-html="question.questionText"></td>
                 <td>
                     @*<a class="glyphicon glyphicon-pencil" ui-sref="question.edit({question: question.questionId})"></a>*@
                     <a class="glyphicon glyphicon-pencil" ng-click="create(question)"></a>
@@ -73,13 +73,13 @@
                         </select>
                         <span ng-show="form.rightAnwser.$dirty && form.rightAnwser.$error.required" class="help-block">Choose question's type.</span>
                     </div>
-                    <div class="form-group" ng-class="{'has-error': form.description.$dirty && form.description.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
-                            <label for="question-add-discription" class="control-label col-xs-2">Description:</label>
-                            <div class="col-xs-10">
-                                <input type="text" name="description" ng-model="model.description" id="question-add-discription" class="form-control" required />
-                                <span ng-show="form.description.$dirty && form.description.$error.required" class="help-block">Enter discription.</span>
-                            </div>
+                <div class="form-group" ng-class="{'has-error': form.questionDescription.$dirty && form.questionDescription.$invalid, 'has-success': form.text.$dirty && !form.text.$invalid}">
+                    <label for="question-add-questionDescription" class="control-label col-xs-2">Description:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="questionDescription" ng-model="model.questionDescription" id="question-add-questionDescription" class="form-control" required />
+                        <span ng-show="form.questionDescription.$dirty && form.questionDescription.$error.required" class="help-block">Enter description.</span>
                     </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Create</button>
