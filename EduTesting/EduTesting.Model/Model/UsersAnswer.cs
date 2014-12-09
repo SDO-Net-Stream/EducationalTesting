@@ -7,20 +7,20 @@ namespace EduTesting.Model
 {
     public class UsersAnswer
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TestResultID { get; set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int TestResultID { get; set; }
 
-        public int QuestionID { get; set; }
+		public int QuestionID { get; set; }
 
-        public int? AnswerID { get; set; }
+		public int? AnswerID { get; set; }
 
-        public string CustomAnswerText { get; set; }
+		public string CustomAnswerText { get; set; }
     
-        public virtual Answer Answers { get; set; }
+		public virtual Answer Answers { get; set; }
 
-        public virtual Question Questions { get; set; }
+		public virtual Question Questions { get; set; }
 
-        public virtual TestsResult TestsResults { get; set; }
+		public virtual TestsResult TestsResults { get; set; }
     }
 }

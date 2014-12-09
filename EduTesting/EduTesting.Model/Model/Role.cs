@@ -7,12 +7,12 @@ namespace EduTesting.Model
 {
     public class Role
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RoleID { get; set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int RoleID { get; set; }
 
-        public string RoleName { get; set; }
+		public string RoleName { get; set; }
     
-        public virtual ICollection<User> Users { get; set; }
+		public virtual ICollection<User> Users { get; set; }
     }
 }
