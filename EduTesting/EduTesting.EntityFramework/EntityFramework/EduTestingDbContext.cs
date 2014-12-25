@@ -1,21 +1,19 @@
-﻿using Abp.EntityFramework;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using Abp.EntityFramework;
+using EduTesting.Model;
 
 namespace EduTesting.EntityFramework
 {
     public class EduTestingDbContext : AbpDbContext
     {
-        //TODO: Define an IDbSet for each Entity...
-
-        //Example:
-        //public virtual IDbSet<User> Users { get; set; }
-
         /* NOTE: 
          *   Setting "Default" to base class helps us when working migration commands on Package Manager Console.
          *   But it may cause problems when working Migrate.exe of EF. If you will apply migrations on command line, do not
          *   pass connection string name to base classes. ABP works either way.
          */
         public EduTestingDbContext()
-            : base("Default")
+            : base()
         {
 
         }
@@ -29,6 +27,22 @@ namespace EduTesting.EntityFramework
         {
 
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            
+        }
+
+        public virtual IDbSet<Answer> Answers { get; set; }
+        public virtual IDbSet<CustomAttribute> Attributes { get; set; }
+        public virtual IDbSet<QuestionAttribute> QuestionAttributes { get; set; }
+        public virtual IDbSet<Question> Questions { get; set; }
+        public virtual IDbSet<Role> Roles { get; set; }
+        public virtual IDbSet<Test> Tests { get; set; }
+        public virtual IDbSet<TestResult> TestResults { get; set; }
+        public virtual IDbSet<UserGroup> UserGroups { get; set; }
+        public virtual IDbSet<User> Users { get; set; }
+        public virtual IDbSet<UserAnswer> UsersAnswers { get; set; }
     }
 
     //Example:

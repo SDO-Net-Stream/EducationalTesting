@@ -12,61 +12,81 @@ namespace EduTesting.Service
 {
     public class TestService : EduTestingAppServiceBase, ITestService
     {
-        private ITestRepository _Repository;
+        private IEduTestingRepository _Repository;
 
-        public TestService(ITestRepository _repository)
+        public TestService()
+        {
+
+        }
+
+        public TestService(IEduTestingRepository _repository)
         {
             _Repository = _repository;
         }
 
-        public Test GetTest(int testId)
+        public TestListItemViewModel GetTest(int testId)
         {
-            return _Repository.GetTest(testId);
+            var test = _Repository.SelectById<Test>(testId);
+            if (test == null)
+                throw new BusinessLogicException("Test not found. ID = " + testId);
+            return new TestListItemViewModel { TestId = test.TestId, TestName = test.TestName, Questions = GetQuestions(testId).ToArray() };
         }
 
-        public IEnumerable<Test> GetTests()
+        public IEnumerable<TestListItemViewModel> GetTests()
         {
-            return _Repository.GetTests().ToArray();
+            var tests = _Repository.SelectAll<Test>();
+            var result = new List<TestListItemViewModel>();
+            foreach(var test in tests)
+            {
+                result.Add(new TestListItemViewModel { TestId = test.TestId, TestName = test.TestName, Questions = GetQuestions(test.TestId).ToArray() });
+            }
+            return result;
         }
 
         public Test InsertTest(Test test)
         {
-            return _Repository.InsertTest(test);
+            return _Repository.Insert<Test>(test);
         }
 
         public void UpdateTest(Test test)
         {
-            _Repository.UpdateTest(test);
+            _Repository.Update<Test>(test);
         }
 
         public void DeleteTest(TestListItemViewModel test)
         {
-            _Repository.DeleteTest(test.TestId);
+            _Repository.Delete<Test>(test.TestId);
         }
 
-        public IEnumerable<Question> GetQuestions(int testId)
+        public IEnumerable<QuestionListItemViewModel> GetQuestions(int testId)
         {
-            return _Repository.GetQuestions(testId);
+            var questions = _Repository.GetQuestionsByTest(testId);
+            var result = new List<QuestionListItemViewModel>();
+            foreach(var question in questions)
+            {
+                result.Add(new QuestionListItemViewModel { QuestionId = question.QuestionId, QuestionText = question.QuestionText });
+            }
+            return result;
         }
 
         public void UpdateQuestion(Question question)
         {
-            _Repository.UpdateQuestion(question);
+            _Repository.Update<Question>(question);
         }
 
         public Question InsertQuestion(Question question)
         {
-            return _Repository.InsertQuestion(question, question.TestId);
+            return _Repository.Insert<Question>(question);
         }
 
         public void DeleteQuestion(QuestionListItemViewModel question)
         {
-            _Repository.DeleteQuestion(question.QuestionId);
+            _Repository.Delete<Question>(question.QuestionId);
         }
 
         public IEnumerable<QuestionListItemViewModel> GetAllQuestions()
         {
-            return _Repository.GetAllQuestions()
+            return _Repository.SelectAll<Question>()
                 .Select(q => new QuestionListItemViewModel
                 {
                     QuestionId = q.QuestionId,

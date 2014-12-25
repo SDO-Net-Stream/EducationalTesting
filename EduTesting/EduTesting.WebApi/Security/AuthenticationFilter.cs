@@ -26,7 +26,7 @@ namespace EduTesting.Security
             {
                 var session = _iocManager.Resolve<ISessionManager>();
                 var user = session.GetUserFromSession();
-                if (user != null && user.UserIsActive)
+                if (user != null && user.Activated)
                 {
                     userManager.SetCurrent(user);
                 }

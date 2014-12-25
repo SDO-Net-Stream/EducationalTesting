@@ -11,8 +11,8 @@ namespace EduTesting.Service
 {
     public interface ITestService
     {
-        Test GetTest(int testId);
-        IEnumerable<Test> GetTests();
+        TestListItemViewModel GetTest(int testId);
+        IEnumerable<TestListItemViewModel> GetTests();
 
         Test InsertTest(Test test);
 
@@ -20,7 +20,7 @@ namespace EduTesting.Service
 
         void DeleteTest(TestListItemViewModel test);
 
-        IEnumerable<Question> GetQuestions(int testId);
+        IEnumerable<QuestionListItemViewModel> GetQuestions(int testId);
 
         IEnumerable<QuestionListItemViewModel> GetAllQuestions();
 

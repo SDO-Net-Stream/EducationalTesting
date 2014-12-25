@@ -7,13 +7,13 @@ namespace EduTesting.Model
 {
     public class QuestionAttribute
     {
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Key, Column(Order = 0)]
         public int QuestionID { get; set; }
+        [Key, Column(Order = 1)]
         public int AttributeID { get; set; }
         public string Value { get; set; }
     
-        public virtual CustomAttribute Attributes { get; set; }
-        public virtual Question Questions { get; set; }
+        public virtual CustomAttribute Attribute { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

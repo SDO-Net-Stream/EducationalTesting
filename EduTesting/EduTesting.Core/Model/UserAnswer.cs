@@ -1,15 +1,21 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduTesting.Model
 {
     public class UserAnswer
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserAnswerId { get; set; }
+        [Required]
         public int TestResultId { get; set; }
-        public int QuestionId { get; set; }
-        public int? AnswerId { get; set; }
+		public string CustomAnswerText { get; set; }
+
+        public virtual TestResult TestResult { get; set; }
+        public virtual Question Question { get; set; }
+        public virtual Answer Answer { get; set; }
     }
 }

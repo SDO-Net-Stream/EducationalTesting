@@ -10,7 +10,7 @@ namespace EduTesting.ViewModels.TestResult
     {
         public int TestResultId { get; set; }
         public int QuestionId { get; set; }
-        public int[] AnswersId { get; set; }
+        public int[] AnswerIds { get; set; }
         public string AnswerText { get; set; }
     }
 }

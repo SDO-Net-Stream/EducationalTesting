@@ -1,17 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduTesting.Model
 {
     public class User
     {
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-        public string UserDomainName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string UserEmail { get; set; }
-        public string UserName { get; set; }
-        public bool UserIsActive { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
+        public bool Activated { get; set; }
+        public bool Deleted { get; set; }
+        public string DomainName { get; set; }
+        public string Password { get; set; }
+        public string PasswordSalt { get; set; }
+        public string PasswordVerificationToken { get; set; }
+    
+        public virtual ICollection<TestResult> TestsResults { get; set; }
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

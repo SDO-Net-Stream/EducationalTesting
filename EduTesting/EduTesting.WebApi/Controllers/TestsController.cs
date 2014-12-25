@@ -76,14 +76,13 @@ namespace EduTesting.Controllers
         }
     }
 
-    [HttpGet]
-    public IEnumerable<Question> Questions(int testId)
-    {
-      var questions = testService.GetQuestions(testId);
-      if (questions == null)
-
-        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
-      return questions;
-    }
+    //[HttpGet]
+    //public IEnumerable<Question> Questions(int testId)
+    //{
+    //  var questions = testService.GetQuestions(testId);
+    //  if (questions == null)
+    //    throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
+    //  return questions;
+    //}
   }
 }

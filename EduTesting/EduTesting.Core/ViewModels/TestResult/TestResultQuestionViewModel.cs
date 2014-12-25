@@ -6,6 +6,11 @@ using System.Text;
 
 namespace EduTesting.ViewModels.TestResult
 {
+    public enum QuestionType
+    {
+        SingleAnswer, MultipleAnswers, TextAnswer
+    }
+
     public class TestResultQuestionViewModel
     {
         public int QuestionId { get; set; }

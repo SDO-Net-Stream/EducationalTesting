@@ -11,49 +11,43 @@ namespace EduTesting.Service
 {
     public class TestResultService : ITestResultService
     {
-        private readonly ITestResultRepository _testResultRepository;
-        private readonly ITestRepository _testRepository;
+        private readonly IEduTestingRepository _Repository;
         private readonly IWebUserManager _webUser;
-        public TestResultService(ITestResultRepository testResultRepository, ITestRepository testRepository, IWebUserManager webUser)
+        public TestResultService(IEduTestingRepository repository, IWebUserManager webUser)
         {
-            _testResultRepository = testResultRepository;
-            _testRepository = testRepository;
+            _Repository = repository;
             _webUser = webUser;
         }
         public TestResultListItemViewModel[] GetTestResults(TestResultsFilterViewModel filter)
         {
-            var results = _testResultRepository.GetTestResults(filter.TestId);
+            var results = _Repository.GetTestResultsByTest(filter.TestId);
             return results.Select(r => new TestResultListItemViewModel
             {
                 UserFirstName = r.UserId.ToString(),
                 UserLastName = r.UserId.ToString(),
-                TestResultIsCompleted = r.TestResultIsCompleted,
-                TestResultScore = r.TestResultScore
+                TestResultIsCompleted = r.IsCompleted
             }).ToArray();
         }
 
         public void StartTest(StartTestViewModel startModel)
         {
-            var exam = _testResultRepository.FindActiveUserTestResult(startModel.TestId, _webUser.CurrentUser.UserId);
+            var exam = _Repository.GetActiveTestResultByUser(startModel.TestId, _webUser.CurrentUser.UserId);
             if (exam != null)
                 throw new BusinessLogicException("Test already started. Complete previous before starting new one.");
-            var test = _testRepository.GetTest(startModel.TestId);
+            var test = _Repository.SelectById<Test>(startModel.TestId);
             exam = new TestResult
             {
                 UserId = _webUser.CurrentUser.UserId,
                 TestId = test.TestId,
-                TestResultTimestamp = DateTime.UtcNow,
-                TestResultIsCompleted = false,
-                TestResultScore = 0,
-                UserAnswers = new UserAnswer[0]
+                Timestamp = DateTime.UtcNow,
+                IsCompleted = false,
             };
-            exam.Questions = test.Questions;
-            _testResultRepository.CreateTestResult(exam);
+            _Repository.Insert<TestResult>(exam);
         }
 
         public TestResultViewModel GetActiveUserTestResult(StartTestViewModel startModel)
         {
-            var exam = _testResultRepository.FindActiveUserTestResult(startModel.TestId, _webUser.CurrentUser.UserId);
+            var exam = _Repository.GetActiveTestResultByUser(startModel.TestId, _webUser.CurrentUser.UserId);
             if (exam == null)
                 throw new BusinessLogicException("No active test found");
             return ToTestResultViewModel(exam);
@@ -61,29 +55,36 @@ namespace EduTesting.Service
 
         public TestResultViewModel GetTestResult(TestResultParameterViewModel key)
         {
-            var exam = _testResultRepository.GetTestResult(key.TestResultId);
+            var exam = _Repository.SelectById<TestResult>(key.TestResultId);
             if (exam == null)
                 throw new BusinessLogicException("Test result not found");
             return ToTestResultViewModel(exam);
         }
 
+        private QuestionType GetQuestionType(int questionId)
+        {
+            var attr = _Repository.SelectById<QuestionAttribute>(questionId, EduTestingConsts.AttributeId_QuestionType);
+            if (attr == null)
+                throw new BusinessLogicException("Question Type not founds");
+            return (QuestionType)(Int32.Parse(attr.Value));
+        }
+
         private TestResultViewModel ToTestResultViewModel(TestResult exam)
         {
-            var test = _testRepository.GetTest(exam.TestId);
+            var test = _Repository.SelectById<Test>(exam.TestId);
             var result = new TestResultViewModel
             {
                 TestResultId = exam.TestResultId,
                 TestId = test.TestId,
                 UserId = exam.UserId,
-                TestResultTimestamp = exam.TestResultTimestamp,
+                TestResultTimestamp = exam.Timestamp,
                 TestResultEndTime = null,// exam.TestResultTimestamp.AddMinutes(test.MaxDuration)
-                TestResultIsCompleted = exam.TestResultIsCompleted,
-                TestResultScore = exam.TestResultScore
+                TestResultIsCompleted = exam.IsCompleted,
             };
-            result.Questions = exam.Questions.Select(q => new TestResultQuestionViewModel
+            result.Questions = _Repository.GetQuestionsByTest(result.TestId).Select(q => new TestResultQuestionViewModel
             {
                 QuestionId = q.QuestionId,
-                QuestionType = q.QuestionType,
+                QuestionType = GetQuestionType(q.QuestionId),
                 QuestionDescription = q.QuestionDescription,
                 Answers = q.Answers.Select(a => new TestResultAnswerViewModel
                 {
@@ -95,7 +96,8 @@ namespace EduTesting.Service
                     //TODO: AnswerText
                     QuestionId = q.QuestionId,
                     TestResultId = exam.TestResultId,
-                    AnswersId = exam.UserAnswers.Where(ua => ua.QuestionId == q.QuestionId && ua.AnswerId.HasValue).Select(ua => ua.AnswerId.Value).ToArray()
+                    AnswerIds = _Repository.GetUserAnswersByTestResultId(exam.TestResultId).Where(
+                        ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null)).Select(ua => ua.Answer.AnswerId).ToArray()
                 }
             }).ToArray();
             return result;
@@ -103,21 +105,30 @@ namespace EduTesting.Service
 
         public void SaveUserAnswer(UserAnswerViewModel answer)
         {
-            var answers = answer.AnswersId.Select(id => new UserAnswer
+            if (_Repository.SelectById<TestResult>(answer.TestResultId) == null)
+                throw new BusinessLogicException("Test result not found by id " + answer.TestResultId);
+            var question = _Repository.SelectById<Question>(answer.QuestionId);
+            if (question == null)
+                throw new BusinessLogicException("Question not found by id " + answer.QuestionId);
+            foreach(var answerId in answer.AnswerIds)
             {
-                AnswerId = id,
-                QuestionId = answer.QuestionId,
-                TestResultId = answer.TestResultId
-            }).ToArray();
-            _testResultRepository.SaveUserAnswers(answer.TestResultId, answer.QuestionId, answers);
+                var answerModel = _Repository.SelectById<Answer>(answerId);
+                if (answerModel == null)
+                    throw new BusinessLogicException("Answer not found by id " + answerId);
+                _Repository.Insert<UserAnswer>(new UserAnswer
+                {
+                    TestResultId = answer.TestResultId,
+                    Question = question,
+                    Answer = answerModel
+                });
+            }
         }
 
         public void CompleteTestResult(TestResultParameterViewModel key)
         {
-            var exam = _testResultRepository.GetTestResult(key.TestResultId);
-            exam.TestResultIsCompleted = true;
-            exam.TestResultScore = 2;// TODO: calculate
-            _testResultRepository.UpdateTestResult(exam);
+            var exam = _Repository.SelectById<TestResult>(key.TestResultId);
+            exam.IsCompleted = true;
+            _Repository.Update<TestResult>(exam);
         }
     }
 }

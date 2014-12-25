@@ -58,12 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EduTesting.Model\EduTesting.Model.csproj">
-      <Project>{bedcaf7b-a84c-4571-baf4-f1f6e8e6a6f2}</Project>
-      <Name>EduTesting.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>

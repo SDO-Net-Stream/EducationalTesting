@@ -1,23 +1,23 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EduTesting.Model
 {
-  public enum TestType
-  {
-    Random, Ordered, Standard
-  }
+    public class Test
+    {
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TestId { get; set; }
+        public string TestName { get; set; }
+        public string TestDescription { get; set; }
+        public int NumberOfQuestions { get; set; }
+        public Nullable<int> GroupId { get; set; }
 
-  public class Test
-  {
-      public int TestId { get; set; }
-      public string TestName { get; set; }
-      public int UserId { get; set; }
-      public Question[] Questions { get; set; }
+		public virtual UserGroup UserGroup { get; set; }
+		public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<TestResult> TestsResults { get; set; }
+        public virtual ICollection<CustomAttribute> Attributes { get; set; }
     }
 }

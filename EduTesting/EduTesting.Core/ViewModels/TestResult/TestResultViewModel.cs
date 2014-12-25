@@ -14,7 +14,8 @@ namespace EduTesting.ViewModels.TestResult
         public DateTime TestResultTimestamp { get; set; }
         public DateTime? TestResultEndTime { get; set; }
         public bool TestResultIsCompleted { get; set; }
-        public decimal TestResultScore { get; set; }
+        /* for now - not nessesary
+        public decimal TestResultScore { get; set; }       */
         public TestResultQuestionViewModel[] Questions { get; set; }
     }
 }

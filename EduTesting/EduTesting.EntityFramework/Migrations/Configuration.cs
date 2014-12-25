@@ -9,7 +9,7 @@ namespace EduTesting.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "EduTesting";
         }
 

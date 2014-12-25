@@ -23,9 +23,12 @@ namespace EduTesting
             //IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
             IocManager.Register<IUserRepository, FakeUserProvider>();
             IocManager.Register<IUnitOfWork, FakeUnitOfWork>();
-            IocManager.Register<ITestRepository, TestRepository>();
-            IocManager.Register<ITestResultRepository, TestResultRepository>();
-            Database.SetInitializer<EduTestingDbContext>(null);
+            IocManager.Register<IEduTestingRepository, EduTestingRepository>();
+            // Forces initialization of database on model changes.
+            using (var context = new EduTestingDbContext())
+            {
+                context.Database.Initialize(force: true);
+            }
         }
     }
 }
