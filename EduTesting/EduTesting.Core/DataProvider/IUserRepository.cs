@@ -9,7 +9,7 @@ namespace EduTesting.DataProvider
 {
     public interface IUserRepository
     {
-        User GetUserById(string id);
+        User GetUserById(int userId);
         User GetUserByDomainName(string domainName);
         User GetUserByEmail(string email);
         User GetUserByEmailPassword(string email, string password);

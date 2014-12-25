@@ -14,9 +14,8 @@
 
     //Configuration for Angular UI routing.
     app.config([
-        '$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
-            //$locationProvider.html5Mode(false);
+        '$stateProvider', '$urlRouterProvider',
+        function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
@@ -45,12 +44,18 @@
                     url: '/account/resetPassword/:token',
                     templateUrl: '/App/Main/views/account/resetPassword.cshtml',
                 })
+
                 .state('test', {
+                    abstract: true,
                     url: '/test',
+                    template: '<ui-view/>'
+                })
+                .state('test.list', {
+                    url: '/list',
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('test.edit', {
-                    url: '^/test/edit/:test',
+                    url: '^/test/:test/edit',
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('question', {
@@ -60,6 +65,39 @@
                 .state('question.edit', {
                     url: '^/question/edit/:test/:question',
                     templateUrl: '/App/Main/views/question/list.cshtml',
+                })
+
+
+                .state('test.pass', { // answering test
+                    url: '/:test/pass',
+                    abstract: true,
+                    resolve: {
+                        testResult: [
+                            'abp.services.app.testResult', '$stateParams', '$q', '$state',
+                            function (resultService, $stateParams, $q, $state) {
+                                var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                                var defer = $q.defer();
+                                result.success(function (testResult) { defer.resolve(testResult); });
+                                result.error(function () {
+                                    $state.go('test.list');
+                                    defer.reject();
+                                });
+                                return defer.promise;
+                            }
+                        ]
+                    },
+                    template: '<ui-view/>'
+                })
+                .state('test.pass.question', {
+                    url: '/:question',
+                    templateUrl: '/App/Main/views/test/pass.cshtml',
+                    controller: 'app.views.test.pass'
+                })
+                .state('test.result', { // test results
+                    url: '/:test/result',
+                })
+                .state('test.result.details', {
+                    url: '/:user'
                 })
             ;
         }
@@ -80,7 +118,7 @@
             }
         });
     })();
-    app.run(['user', 'abp.services.app.login', function(user, loginService) {
+    app.run(['user', 'abp.services.app.login', function (user, loginService) {
         loginService.getUserInfo().success(user.signIn);
     }]);
     app.run(['message', function (message) {

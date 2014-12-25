@@ -66,7 +66,15 @@
     <Compile Include="EduTestingConsts.cs" />
     <Compile Include="EduTestingCoreModule.cs" />
     <Compile Include="Interfaces\ITestRepository.cs" />
+    <Compile Include="Interfaces\ITestResultRepository.cs" />
+    <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\BusinessLogicException.cs" />
+    <Compile Include="Model\TestResult.cs" />
+    <Compile Include="Model\UserAnswer.cs" />
+    <Compile Include="Service\ITestResultService.cs" />
+    <Compile Include="ViewModels\TestResult\StartTestViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\TestResultAnswerViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\TestResultListItemViewModel.cs" />
     <Compile Include="ViewModels\Account\LostPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterUserViewModel.cs" />
     <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
@@ -80,6 +88,11 @@
     <Compile Include="Service\ITestService.cs" />
     <Compile Include="Service\IWebUserManager.cs" />
     <Compile Include="ViewModels\Question\QuestionListItemViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\TestResultParameterViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\TestResultQuestionViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\TestResultsFilterViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\TestResultViewModel.cs" />
+    <Compile Include="ViewModels\TestResult\UserAnswerViewModel.cs" />
     <Compile Include="ViewModels\Test\TestListItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

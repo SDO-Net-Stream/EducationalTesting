@@ -1,17 +1,22 @@
-﻿(function () {
+﻿var inputCounter = 0;
+(function () {
     var controllerId = 'app.views.test.list';
     var app = angular.module('app');
     app.controller(controllerId, [
         '$scope', 'abp.services.app.test', 'message', '$state', '$modal',
         function ($scope, testService, message, $state, $modal) {
             $scope.tests = [];
+            $scope.answers = [];
+            $scope.$watch('answers', function (value) {
+                console.log(value);
+            }, true);
             var loadTests = function () {
                 testService.getTests().success(function (list) {
                     $scope.tests = list;
                 });
             };
             loadTests();
-            $scope.create = function () {
+            $scope.createTest = function () {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.test.list.add.html',
                     controller: function ($scope) {
@@ -31,7 +36,28 @@
                     }
                 });
             };
-            $scope.delete = function (test) {
+            $scope.createQuestion = function (testId) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.question.list.add.html',
+                    controller: function ($scope) {
+                        $scope.model = { questionText: "" };
+                        $scope.model.testId = testId;
+                        $scope.ok = function () {
+                            testService
+                                .insertQuestion($scope.model)
+                                .success(function (question) {
+                                    message.success("Question '" + question.questionText + "' successfully created");
+                                    $scope.$close(question);
+                                    $state.go('test.list', { question: question.questionId });
+                                });
+                        };
+                        $scope.cancel = function () {
+                            $scope.$dismiss('cancel');
+                        };
+                    }
+                });
+            };
+            $scope.deleteTest = function (test) {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.test.list.delete.html',
                     controller: function ($scope) {
@@ -50,6 +76,46 @@
                     }
                 });
             };
+			$scope.start = function (test) {
+                testResultService.startTest({ testId: test.testId }).success(function () {
+                    message.success("Test '" + test.testName + "' successfully started");
+                    $state.go('test.pass.question', { test: test.testId, question: 1 });
+                });
+            };
+            $scope.deleteQuestion = function (question) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.question.list.delete.html',
+                    controller: function ($scope) {
+                        $scope.model = question;
+                        $scope.ok = function () {
+                            testService.deleteQuestion(question)
+                                .success(function () {
+                                    message.success("Question '" + question.questionText + "' successfully deleted");
+                                    loadTests();
+                                    $scope.$close();
+                                });
+                        };
+                        $scope.cancel = function () {
+                            $scope.$dismiss('cancel');
+                        };
+                    }
+                });
+            };
+        }
+    ]);
+    app.directive('addAnswer', [
+        '$compile', function($compile) {
+            return {
+                restrict: 'A',
+                link: function(scope, element, attrs) {
+                    element.find('button').bind('click', function() {
+                        var input = angular.element('<div><input type="text" ng-model="model.answers[' + inputCounter + ']"></div>');
+                        var compile = $compile(input)(scope);
+                        element.append(input);
+                        inputCounter++;
+                    });
+                }
+            }
         }
     ]);
 })();

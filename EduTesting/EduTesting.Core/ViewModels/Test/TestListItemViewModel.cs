@@ -10,5 +10,7 @@ namespace EduTesting.ViewModels.Test
     {
         public int TestId { get; set; }
         public string TestName { get; set; }
+        public int UserId { get; set; }
+        public Model.Question[] Questions { get; set; }
     }
 }

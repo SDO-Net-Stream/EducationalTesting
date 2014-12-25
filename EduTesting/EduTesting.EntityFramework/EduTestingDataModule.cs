@@ -5,8 +5,8 @@ using Abp.Modules;
 using EduTesting.EntityFramework;
 using EduTesting.DataProvider;
 using Abp.Domain.Uow;
-using EduTesting.Controllers;
 using EduTesting.Repositories;
+using EduTesting.Interfaces;
 
 namespace EduTesting
 {
@@ -24,6 +24,7 @@ namespace EduTesting
             IocManager.Register<IUserRepository, FakeUserProvider>();
             IocManager.Register<IUnitOfWork, FakeUnitOfWork>();
             IocManager.Register<ITestRepository, TestRepository>();
+            IocManager.Register<ITestResultRepository, TestResultRepository>();
             Database.SetInitializer<EduTestingDbContext>(null);
         }
     }

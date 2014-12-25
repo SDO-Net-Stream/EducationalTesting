@@ -18,13 +18,13 @@ namespace EduTesting.ViewModels.Login
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(currentUser.DomainName))
+                if (!string.IsNullOrWhiteSpace(currentUser.UserDomainName))
                 {
-                    UserName = currentUser.DomainName.Split('\\')[1];
+                    UserName = currentUser.UserDomainName.Split('\\')[1];
                 }
                 else
                 {
-                    UserName = (currentUser.Email ?? "anonymous").Split('@')[0];
+                    UserName = (currentUser.UserEmail ?? "anonymous").Split('@')[0];
                 }
             }
         }

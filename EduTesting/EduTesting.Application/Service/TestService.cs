@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EduTesting.Controllers;
 using EduTesting.Model;
+using EduTesting.ViewModels.Question;
 using EduTesting.ViewModels.Test;
+using EduTesting.Interfaces;
 
 namespace EduTesting.Service
 {
-
     public class TestService : EduTestingAppServiceBase, ITestService
     {
         private ITestRepository _Repository;
@@ -24,15 +24,9 @@ namespace EduTesting.Service
             return _Repository.GetTest(testId);
         }
 
-        public IEnumerable<TestListItemViewModel> GetTests()
+        public IEnumerable<Test> GetTests()
         {
-            return _Repository.GetTests()
-                .Select(t => new TestListItemViewModel
-                {
-                    TestId = t.TestId,
-                    TestName = t.TestName
-                })
-                .ToArray();
+            return _Repository.GetTests().ToArray();
         }
 
         public Test InsertTest(Test test)
@@ -40,9 +34,9 @@ namespace EduTesting.Service
             return _Repository.InsertTest(test);
         }
 
-        public bool UpdateTest(Test test)
+        public void UpdateTest(Test test)
         {
-            return _Repository.UpdateTest(test);
+            _Repository.UpdateTest(test);
         }
 
         public void DeleteTest(TestListItemViewModel test)
@@ -55,15 +49,15 @@ namespace EduTesting.Service
             return _Repository.GetQuestions(testId);
         }
 
-        public bool UpdateQuestion(Question question)
+        public void UpdateQuestion(Question question)
         {
-            return _Repository.UpdateQuestion(question);
+            _Repository.UpdateQuestion(question);
         }
 
         public Question InsertQuestion(Question question)
         {
-            //if (question.TestId )
-            return _Repository.InsertQuestion(question, 2);
+
+            return _Repository.InsertQuestion(question, question.TestId);
         }
 
         public void DeleteQuestion(QuestionListItemViewModel question)

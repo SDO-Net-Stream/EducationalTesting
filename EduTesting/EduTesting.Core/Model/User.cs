@@ -8,10 +8,10 @@ namespace EduTesting.Model
 {
     public class User
     {
-        public string Id { get; set; }
-        public string DomainName { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
+        public int UserId { get; set; }
+        public string UserDomainName { get; set; }
+        public string UserEmail { get; set; }
+        public string UserName { get; set; }
+        public bool UserIsActive { get; set; }
     }
 }
