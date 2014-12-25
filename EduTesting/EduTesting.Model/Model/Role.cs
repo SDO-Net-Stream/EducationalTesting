@@ -5,16 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduTesting.Model
 {
-    public class UserGroup
+    public class Role
     {
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int GroupID { get; set; }
+		public int RoleID { get; set; }
 
-		public string GroupName { get; set; }
-
-		public virtual ICollection<Test> Tests { get; set; }
-
+		public string RoleName { get; set; }
+    
 		public virtual ICollection<User> Users { get; set; }
     }
 }
