@@ -6,7 +6,7 @@ using EduTesting.Model;
 
 namespace EduTesting.EntityFramework
 {
-    public class EduTestingDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<EduTestingDbContext>
+    public class EduTestingDbInitializer : System.Data.Entity.CreateDatabaseIfNotExists<EduTestingDbContext>
     {
         protected override void Seed(EduTestingDbContext context)
         {
@@ -132,7 +132,7 @@ namespace EduTesting.EntityFramework
             context.Attributes.Add(new CustomAttribute { AttributeID = 1, AttributeName = "Question Type" });
             context.SaveChanges();
 
-            var singleAnswerTypeValue = EduTesting.ViewModels.TestResult.QuestionType.SingleAnswer.GetTypeCode().ToString(); 
+            var singleAnswerTypeValue = ((int)(EduTesting.ViewModels.TestResult.QuestionType.SingleAnswer)).ToString();
             var questionAttributes = new List<QuestionAttribute>
             {
                 new QuestionAttribute{QuestionID = 1, AttributeID = 1, Value = singleAnswerTypeValue},

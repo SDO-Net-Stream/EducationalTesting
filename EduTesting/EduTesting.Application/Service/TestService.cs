@@ -43,14 +43,16 @@ namespace EduTesting.Service
             return result;
         }
 
-        public Test InsertTest(Test test)
+        public TestListItemViewModel InsertTest(TestListItemViewModel test)
         {
-            return _Repository.Insert<Test>(test);
+            var t = _Repository.Insert<Test>(new Test { TestId = test.TestId, TestName = test.TestName });
+            test.TestId = t.TestId;
+            return test;
         }
 
-        public void UpdateTest(Test test)
+        public void UpdateTest(TestListItemViewModel test)
         {
-            _Repository.Update<Test>(test);
+            _Repository.Update<Test>(new Test { TestId = test.TestId, TestName = test.TestName });
         }
 
         public void DeleteTest(TestListItemViewModel test)
@@ -64,7 +66,12 @@ namespace EduTesting.Service
             var result = new List<QuestionListItemViewModel>();
             foreach(var question in questions)
             {
-                result.Add(new QuestionListItemViewModel { QuestionId = question.QuestionId, QuestionText = question.QuestionText });
+                result.Add(new QuestionListItemViewModel 
+                {
+                    TestId = testId,
+                    QuestionId = question.QuestionId, 
+                    QuestionText = question.QuestionText 
+                });
             }
             return result;
         }
@@ -74,9 +81,22 @@ namespace EduTesting.Service
             _Repository.Update<Question>(question);
         }
 
-        public Question InsertQuestion(Question question)
+        public QuestionListItemViewModel InsertQuestion(QuestionListItemViewModel question)
         {
-            return _Repository.Insert<Question>(question);
+            var q = _Repository.Insert<Question>(new Question
+            {
+                TestId = question.TestId,
+                QuestionText = question.QuestionText,
+                QuestionDescription = question.QuestionDescription
+            });
+            question.QuestionId = q.QuestionId;
+            _Repository.Insert<QuestionAttribute>(new QuestionAttribute
+            {
+                QuestionID = q.QuestionId, 
+                AttributeID = EduTestingConsts.AttributeId_QuestionType, 
+                Value = ((int)(question.QuestionType)).ToString()
+            });
+            return question;
         }
 
         public void DeleteQuestion(QuestionListItemViewModel question)
@@ -89,6 +109,7 @@ namespace EduTesting.Service
             return _Repository.SelectAll<Question>()
                 .Select(q => new QuestionListItemViewModel
                 {
+                    TestId = q.TestId,
                     QuestionId = q.QuestionId,
                     QuestionText = q.QuestionText
                 })

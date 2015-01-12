@@ -10,16 +10,16 @@ using EduTesting.Model;
 
 namespace EduTesting.Repositories
 {
-    public class EduTestingRepository : IEduTestingRepository
-	{
+    public class EduTestingGenericRepository : IEduTestingGenericRepository
+    {
 		#region Constructor_Dispose
 
-		public EduTestingRepository()
+		public EduTestingGenericRepository()
 		{
 			DBContext = new EduTestingDbContext();
 		}
 
-        public EduTestingRepository(EduTestingDbContext db)
+        public EduTestingGenericRepository(EduTestingDbContext db)
 		{
 			DBContext = db;
 		}
@@ -60,26 +60,37 @@ namespace EduTesting.Repositories
 
         public TEntity Insert<TEntity>(TEntity item) where TEntity : class
         {
-            return DBContext.Set<TEntity>().Add(item);
+            var entity = DBContext.Set<TEntity>().Add(item);
+            DBContext.SaveChanges();
+            return entity;
         }
 
         public IEnumerable<TEntity> Insert<TEntity>(IEnumerable<TEntity> items) where TEntity : class
         {
-            return DBContext.Set<TEntity>().AddRange(items);
+            var entities = DBContext.Set<TEntity>().AddRange(items);
+            DBContext.SaveChanges();
+            return entities;
+        }
+
+        private void UpdateInternal<TEntity>(TEntity item) where TEntity : class
+        {
+            DBContext.Set<TEntity>().Attach(item);
+            DBContext.Entry(item).State = EntityState.Modified;
         }
 
         public void Update<TEntity>(TEntity item) where TEntity : class
         {
-            DBContext.Set<TEntity>().Attach(item);
-            DBContext.Entry(item).State = EntityState.Modified;
+            UpdateInternal<TEntity>(item);
+            DBContext.SaveChanges();
         }
 
         public void Update<TEntity>(IEnumerable<TEntity> items) where TEntity : class
 		{
             foreach(var item in items)
             {
-                Update(item);
+                UpdateInternal<TEntity>(item);
             }
+            DBContext.SaveChanges();
 		}
 
         public void Delete<TEntity>(int itemId) where TEntity : class
@@ -87,16 +98,27 @@ namespace EduTesting.Repositories
             var table = DBContext.Set<TEntity>();
             var item = table.Find(itemId);
             table.Remove(item);
+            DBContext.SaveChanges();
         }
 
         public void Delete<TEntity>(IEnumerable<TEntity> items) where TEntity : class
 		{
             DBContext.Set<TEntity>().RemoveRange(items);
+            DBContext.SaveChanges();
 		}
 
         #endregion
 
-        #region Specifuc Methods
+        #region Properties
+
+        protected EduTestingDbContext DBContext { get; private set; }
+
+		#endregion
+    }
+
+    public class EduTestingRepository : EduTestingGenericRepository, IEduTestingRepository
+	{
+        #region Methods
 
         public IEnumerable<Question> GetQuestionsByTest(int testId)
         {
@@ -129,11 +151,5 @@ namespace EduTesting.Repositories
         }
 
         #endregion
-
-        #region Members
-
-        protected EduTestingDbContext DBContext { get; private set; }
-
-		#endregion
 	}
 }

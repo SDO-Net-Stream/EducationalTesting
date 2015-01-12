@@ -14,18 +14,13 @@ namespace EduTesting.Service
         TestListItemViewModel GetTest(int testId);
         IEnumerable<TestListItemViewModel> GetTests();
 
-        Test InsertTest(Test test);
-
-        void UpdateTest(Test test);
-
+        TestListItemViewModel InsertTest(TestListItemViewModel test);
+        void UpdateTest(TestListItemViewModel test);
         void DeleteTest(TestListItemViewModel test);
 
         IEnumerable<QuestionListItemViewModel> GetQuestions(int testId);
-
         IEnumerable<QuestionListItemViewModel> GetAllQuestions();
-
-        Question InsertQuestion(Question test);
-
+        QuestionListItemViewModel InsertQuestion(QuestionListItemViewModel test);
         void DeleteQuestion(QuestionListItemViewModel question);
     }
 }

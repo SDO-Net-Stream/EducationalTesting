@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using EduTesting.Model;
 using EduTesting.Service;
+using EduTesting.ViewModels.Test;
 
 namespace EduTesting.Controllers
 {
@@ -36,7 +37,7 @@ namespace EduTesting.Controllers
     }
 
     // POST api/Tests
-    public HttpResponseMessage Post([FromBody] Test test)
+    public HttpResponseMessage Post([FromBody] TestListItemViewModel test)
     {
       var newTest = testService.InsertTest(test);
       if (newTest != null)
@@ -49,7 +50,7 @@ namespace EduTesting.Controllers
     }
 
     // PUT api/Tests/5
-    public HttpResponseMessage Put(int id, [FromBody] Test test)
+    public HttpResponseMessage Put(int id, [FromBody] TestListItemViewModel test)
     {
         try
         {
