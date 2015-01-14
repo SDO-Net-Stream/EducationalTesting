@@ -35,6 +35,13 @@ namespace EduTesting.Web
                         url: "#/test/list",
                         icon: "fa fa-briefcase"
                         )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "Exam",
+                        new LocalizableString("PassingTest", EduTestingConsts.LocalizationSourceName),
+                        url: "#/test/list",
+                        icon: "fa fa-briefcase"
+                        )
                 );
         }
     }

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
-using EducationalProject.Models;
 
 namespace EduTesting.Web.Controllers
 {

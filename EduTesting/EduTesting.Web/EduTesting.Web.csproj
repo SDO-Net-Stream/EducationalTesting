@@ -215,6 +215,7 @@
     <Content Include="App\Main\views\about\about.js" />
     <Content Include="App\Main\views\login\login.js" />
     <Content Include="App\Main\views\question\list.js" />
+    <Content Include="App\Main\views\test\edit.js" />
     <Content Include="App\Main\views\test\list.js" />
     <Content Include="App\Main\views\test\pass.js" />
     <Content Include="Content\bootstrap-cosmo.min.css" />
@@ -348,6 +349,7 @@
     <Content Include="App\Main\views\test\list.cshtml" />
     <Content Include="App\Main\views\question\list.cshtml" />
     <Content Include="App\Main\views\test\pass.cshtml" />
+    <Content Include="App\Main\views\test\edit.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />
@@ -539,13 +541,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EduTestingControllerBase.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\NotificationService.cs" />
     <Compile Include="Models\ResetPasswordEmailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -559,15 +559,6 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Account\ConfirmationFailure.cshtml" />
-    <Content Include="Views\Account\ConfirmationSuccess.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\LostPassword.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
     <Content Include="Views\Emails\RegEmail.cshtml" />
