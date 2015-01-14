@@ -1,8 +1,8 @@
 ﻿<div ng-controller="app.views.test.edit as vm">
-    <form ng-submit="ok()" name="form" class="form-horizontal">
-        <h3 class="modal-title" ng-if="id == 'new'">Create test</h3>
-        <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
-    </form>
+    <h3 class="modal-title" ng-if="id == 'new'">Create test</h3>
+    <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
+    <h4>{{model.testName}}<a class="glyphicon glyphicon-pencil" ng-click="editTestName()"></a></h4>
+    {{model.testDescription}}
     <accordion close-others="oneAtATime">
         <accordion-group ng-repeat="question in model.questions">
             <accordion-heading>
@@ -19,11 +19,20 @@
                     <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer)"></button>
                     <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer)"></button>
                 </div>
+                <div style="float: right;">
+                    <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct</button>
+                    <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="!answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong</button>
+                </div>
             </div>
-            <button type="button" class="btn btn-primary" ng-click="addAnswer(question)">Create new Answer</button>
+            <button type="button" class="btn" ng-click="addAnswer(question)">Create new Answer</button>
         </accordion-group>
     </accordion>
-    <button type="button" class="btn btn-primary" ng-click="editQuestion(null)">Create new Question</button>
+    <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
+    <div class="clearfix"></div>
+    <div class="pull-right">
+        <button class="btn btn-primary" ng-click="save()">{{id == 'new'? "Create" : "Update"}}</button>
+        <a class="btn" ui-sref="test.list">Cancel</a>
+    </div>
     <script id="app.views.test.edit.question.html" style="display: none" type="text/ng-template">
         <form ng-submit="ok()" name="form" class="form-horizontal">
             <div class="modal-header">

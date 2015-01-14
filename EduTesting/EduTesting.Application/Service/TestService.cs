@@ -31,7 +31,17 @@ namespace EduTesting.Service
                 {
                     TestId = entity.TestId,
                     QuestionId = question.QuestionId,
-                    QuestionText = question.QuestionText
+                    QuestionText = question.QuestionText,
+                    Answers = question.Answers.Select(a =>
+                    {
+                        var attr = a.Attributes.FirstOrDefault(x => x.AttributeName == EduTestingConsts.AttributeName_AnswerIsRight);
+                        var answer = new AnswerViewModel
+                        {
+                            AnswerText = a.AnswerText,
+                            AnswerIsRight = attr != null // TODO: attr.value == 1
+                        };
+                        return answer;
+                    }).ToArray()
                 }).ToArray()
             };
         }
@@ -56,7 +66,28 @@ namespace EduTesting.Service
 
         public void UpdateTest(TestViewModel test)
         {
-            _Repository.Update<Test>(new Test { TestId = test.TestId, TestName = test.TestName });
+            var entity = new Test();
+            UpdateEntityFromViewModel(test, entity);
+            _Repository.Update(entity);
+        }
+
+        private void UpdateEntityFromViewModel(TestViewModel model, Test entity)
+        {
+            entity.TestId = model.TestId;
+            entity.TestName = model.TestName;
+            entity.TestDescription = model.TestDescription;
+            entity.Questions = model.Questions.Select(q => new Question
+            {
+                QuestionText = q.QuestionText,
+                QuestionDescription = q.QuestionDescription,
+                // TODO: QuestionAttributes
+                Answers = q.Answers.Select(a => new Answer
+                {
+                    AnswerText = a.AnswerText
+                    //TODO: answer attributes
+                }).ToArray()
+            }).ToArray();
+
         }
 
         public void DeleteTest(TestViewModel test)

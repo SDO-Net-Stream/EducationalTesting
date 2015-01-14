@@ -6,7 +6,7 @@
         function ($scope, testService, message, $state, $stateParams, $modal, enumConverter) {
             var vm = this;
             $scope.id = $stateParams.test;
-            $scope.model = {};
+            $scope.model = { testId: 0 };
             if ($scope.id != 'new') {
                 testService.getTest({ testId: $scope.id }).success(function (test) {
                     for (var i = 0; i < test.questions.length; i++)
@@ -28,25 +28,14 @@
                         };
                         $scopeModal.model = model;
                         $scopeModal.ok = function () {
-                            var result = {
-                                questionId: source.questionId,
-                                questionText: model.questionText,
-                                questionTypeCode: model.questionType,
-                                questionType: enumConverter.stringToQuestionType(model.questionType),
-                                questionDescription: model.questionDescription
-                            };
-                            var questions = $scope.model.questions;
-                            if (!$scopeModal.model.isNew) {
-                                for (var i = 0; i < questions.length; i++) {
-                                    if (questions[i] == question) {
-                                        questions[i] = result;
-                                        break;
-                                    }
-                                }
-                            } else {
-                                questions.push(result);
+                            source.questionText = model.questionText;
+                            source.questionDescription = model.questionDescription;
+                            source.questionTypeCode = model.questionType;
+                            source.questionType = enumConverter.stringToQuestionType(model.questionType);
+                            if (model.isNew) {
+                                $scope.model.questions.push(source);
                             }
-                            $scopeModal.$close(result);
+                            $scopeModal.$close(source);
                         };
                         $scopeModal.cancel = function () {
                             $scopeModal.$dismiss('cancel');
@@ -73,6 +62,37 @@
                             $scopeModal.$dismiss('cancel');
                         };
                     }]
+                });
+            };
+
+            vm.toggleAnswerRight = function (question, answer) {
+                switch (question.questionTypeCode) {
+                    case "SingleAnswer":
+                        for (var i = 0; i < question.answers.length; i++)
+                            question.answers[i].answerIsRight = false;
+                        answer.answerIsRight = true;
+                        break;
+                    case "MultipleAnswers":
+                        answer.answerIsRight = !answer.answerIsRight;
+                        break;
+                    default:
+                        throw "Invalid question type";
+                }
+            };
+            $scope.save = function () {
+                // TODO: validate
+                var result;
+                if ($scope.id == 'new') {
+                    result = testService.insertTest($scope.model);
+                } else {
+                    result = testService.updateTest($scope.model);
+                }
+                result.success(function (response) {
+                    if ($scope.id == 'new')
+                        message.success("Test successfully created");
+                    else
+                        message.success("Test successfully updated");
+                    $state.go('test.list');
                 });
             };
         }

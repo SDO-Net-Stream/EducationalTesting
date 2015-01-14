@@ -14,6 +14,6 @@ namespace EduTesting.ViewModels.Test
         public QuestionType QuestionType { get; set; }
         public string QuestionText { get; set; }
         public string QuestionDescription { get; set; }
-
+        public AnswerViewModel[] Answers { get; set; }
     }
 }
