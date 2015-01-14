@@ -10,8 +10,8 @@ namespace EduTesting.DataProvider
     public class FakeUserProvider : IUserRepository
     {
         private readonly Role[] _fakeRoles = new Role[]{
-            new Role { RoleID=1, RoleName=EduTestingConsts.RoleName_Teacher },
-            new Role { RoleID=2, RoleName=EduTestingConsts.RoleName_User }
+            new Role { RoleID=1, RoleName = EduTestingConsts.RoleName_Teacher },
+            new Role { RoleID=2, RoleName = EduTestingConsts.RoleName_User }
         };
         private User FakeUser(string key)
         {
@@ -22,7 +22,7 @@ namespace EduTesting.DataProvider
                 name = name.Split('\\')[1];
             return new User
             {
-                UserId = 1,
+                UserId = 2,
                 FirstName = name,
                 LastName = name, //!! split first & last name
                 DomainName = "domain\\" + name,

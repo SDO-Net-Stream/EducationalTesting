@@ -62,7 +62,7 @@
 
                 .state('test.available', {
                     url: '/available',
-                    templateUrl: '/App/Main/views/test/available.cshtml',
+                    templateUrl: '/App/Main/views/test/exams.cshtml',
                 })
                 .state('test.pass', { // answering test
                     url: '/:test/pass',

@@ -9,6 +9,8 @@ namespace EduTesting.Service
 {
     public interface ITestResultService
     {
+        TestResultListItemViewModel[] GetTestResultsForCurrentUser();
+
         TestResultListItemViewModel[] GetTestResults(TestResultsFilterViewModel filter);
         /// <summary>
         /// Continue if not completed or start new

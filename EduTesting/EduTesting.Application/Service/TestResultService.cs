@@ -81,24 +81,30 @@ namespace EduTesting.Service
                 TestResultEndTime = null,// exam.TestResultTimestamp.AddMinutes(test.MaxDuration)
                 TestResultIsCompleted = exam.IsCompleted,
             };
-            result.Questions = _Repository.GetQuestionsByTest(result.TestId).Select(q => new TestResultQuestionViewModel
+            result.Questions = _Repository.GetQuestionsByTest(result.TestId).ToArray()
+                .Select(q =>
             {
-                QuestionId = q.QuestionId,
-                QuestionType = GetQuestionType(q.QuestionId),
-                QuestionDescription = q.QuestionDescription,
-                Answers = q.Answers.Select(a => new TestResultAnswerViewModel
+                var qtAttribute = q.QuestionAttributes.First(a => a.AttributeID == EduTestingConsts.AttributeId_QuestionType);
+                var item = new TestResultQuestionViewModel
                 {
-                    AnswerId = a.AnswerId,
-                    AnswerText = a.AnswerText
-                }).ToArray(),
-                UserAnswer = new UserAnswerViewModel
-                {
-                    //TODO: AnswerText
                     QuestionId = q.QuestionId,
-                    TestResultId = exam.TestResultId,
-                    AnswerIds = _Repository.GetUserAnswersByTestResultId(exam.TestResultId).Where(
-                        ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null)).Select(ua => ua.Answer.AnswerId).ToArray()
-                }
+                    QuestionType = (QuestionType)(Int32.Parse(qtAttribute.Value)),
+                    QuestionDescription = q.QuestionDescription,
+                    Answers = q.Answers.Select(a => new TestResultAnswerViewModel
+                    {
+                        AnswerId = a.AnswerId,
+                        AnswerText = a.AnswerText
+                    }).ToArray(),
+                    UserAnswer = new UserAnswerViewModel
+                    {
+                        //TODO: AnswerText
+                        QuestionId = q.QuestionId,
+                        TestResultId = exam.TestResultId,
+                        AnswerIds = _Repository.GetUserAnswersByTestResultId(exam.TestResultId).Where(
+                            ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null)).Select(ua => ua.Answer.AnswerId).ToArray()
+                    }
+               };
+                return item;
             }).ToArray();
             return result;
         }
@@ -110,7 +116,7 @@ namespace EduTesting.Service
             var question = _Repository.SelectById<Question>(answer.QuestionId);
             if (question == null)
                 throw new BusinessLogicException("Question not found by id " + answer.QuestionId);
-            foreach(var answerId in answer.AnswerIds)
+            foreach (var answerId in answer.AnswerIds)
             {
                 var answerModel = _Repository.SelectById<Answer>(answerId);
                 if (answerModel == null)
@@ -129,6 +135,24 @@ namespace EduTesting.Service
             var exam = _Repository.SelectById<TestResult>(key.TestResultId);
             exam.IsCompleted = true;
             _Repository.Update<TestResult>(exam);
+        }
+
+
+        public TestResultListItemViewModel[] GetTestResultsForCurrentUser()
+        {
+            var userId = _webUser.CurrentUser.UserId;
+            var results = _Repository.GetTestResultsByUser(userId);
+            //TODO: should be executed in repository
+            var lastResults = results
+                .GroupBy(r => r.TestId, (testId, testResults) => testResults.OrderByDescending(r => r.Timestamp).First())
+                .ToArray();
+            return lastResults.Select(r => new TestResultListItemViewModel
+            {
+                TestId = r.TestId,
+                TestResultIsCompleted = r.IsCompleted,
+                //TODO: test result score
+                TestResultScore = 0
+            }).ToArray();
         }
     }
 }

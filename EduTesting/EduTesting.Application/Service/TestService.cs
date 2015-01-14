@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EduTesting.Model;
-using EduTesting.ViewModels.Question;
 using EduTesting.ViewModels.Test;
 using EduTesting.Interfaces;
 
@@ -14,52 +13,57 @@ namespace EduTesting.Service
     {
         private IEduTestingRepository _Repository;
 
-        public TestService()
-        {
-
-        }
-
         public TestService(IEduTestingRepository _repository)
         {
             _Repository = _repository;
         }
 
-        public TestListItemViewModel GetTest(int testId)
+        public TestViewModel GetTest(int testId)
         {
             var test = _Repository.SelectById<Test>(testId);
             if (test == null)
                 throw new BusinessLogicException("Test not found. ID = " + testId);
-            return new TestListItemViewModel { TestId = test.TestId, TestName = test.TestName, Questions = GetQuestions(testId).ToArray() };
+            return new TestViewModel
+            {
+                TestId = test.TestId,
+                TestName = test.TestName,
+                Questions = test.Questions.Select(question => new QuestionViewModel
+                {
+                    TestId = testId,
+                    QuestionId = question.QuestionId,
+                    QuestionText = question.QuestionText
+                }).ToArray()
+            };
         }
 
         public IEnumerable<TestListItemViewModel> GetTests()
         {
             var tests = _Repository.SelectAll<Test>();
             var result = new List<TestListItemViewModel>();
-            foreach(var test in tests)
+            foreach (var test in tests)
             {
-                result.Add(new TestListItemViewModel { TestId = test.TestId, TestName = test.TestName, Questions = GetQuestions(test.TestId).ToArray() });
+                result.Add(new TestListItemViewModel { TestId = test.TestId, TestName = test.TestName });
             }
             return result;
         }
 
-        public TestListItemViewModel InsertTest(TestListItemViewModel test)
+        public TestViewModel InsertTest(TestViewModel test)
         {
             var t = _Repository.Insert<Test>(new Test { TestId = test.TestId, TestName = test.TestName });
             test.TestId = t.TestId;
             return test;
         }
 
-        public void UpdateTest(TestListItemViewModel test)
+        public void UpdateTest(TestViewModel test)
         {
             _Repository.Update<Test>(new Test { TestId = test.TestId, TestName = test.TestName });
         }
 
-        public void DeleteTest(TestListItemViewModel test)
+        public void DeleteTest(TestViewModel test)
         {
             _Repository.Delete<Test>(test.TestId);
         }
-
+        /*
         public IEnumerable<QuestionListItemViewModel> GetQuestions(int testId)
         {
             var questions = _Repository.GetQuestionsByTest(testId);
@@ -115,5 +119,6 @@ namespace EduTesting.Service
                 })
                 .ToArray();
         }
+         */
     }
 }

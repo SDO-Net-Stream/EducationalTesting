@@ -31,12 +31,6 @@
                     }
                 });
             };
-            $scope.start = function (test) {
-                testResultService.startTest({ testId: test.testId }).success(function () {
-                    message.success("Test '" + test.testName + "' successfully started");
-                    $state.go('test.pass.question', { test: test.testId, question: 1 });
-                });
-            };
         }
     ]);
 })();

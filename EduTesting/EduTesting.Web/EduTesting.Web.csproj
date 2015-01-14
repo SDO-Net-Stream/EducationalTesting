@@ -215,6 +215,7 @@
     <Content Include="App\Main\views\about\about.js" />
     <Content Include="App\Main\views\login\login.js" />
     <Content Include="App\Main\views\question\list.js" />
+    <Content Include="App\Main\views\test\exams.js" />
     <Content Include="App\Main\views\test\edit.js" />
     <Content Include="App\Main\views\test\list.js" />
     <Content Include="App\Main\views\test\pass.js" />
@@ -350,6 +351,7 @@
     <Content Include="App\Main\views\question\list.cshtml" />
     <Content Include="App\Main\views\test\pass.cshtml" />
     <Content Include="App\Main\views\test\edit.cshtml" />
+    <Content Include="App\Main\views\test\exams.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />

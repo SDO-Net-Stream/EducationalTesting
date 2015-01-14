@@ -19,17 +19,17 @@
             $scope.question = testResult.questions[$scope.questionN - 1];
             $scope.questionType = enumConverter.questionTypeToString($scope.question.questionType);
             if ($scope.question.questionType == 0) { // single answer
-                if ($scope.question.userAnswer.answersId.length > 0) {
-                    $scope.answerId = $scope.question.userAnswer.answersId[0];
+                if ($scope.question.userAnswer.answerIds.length > 0) {
+                    $scope.answerId = $scope.question.userAnswer.answerIds[0];
                 } else {
                     $scope.answerId = -1;
                 }
                 $scope.$watch('answerId', function (newValue) {
                     if ($scope.answerId >= 0) {
-                        $scope.question.userAnswer.answersId = [newValue];
+                        $scope.question.userAnswer.answerIds = [newValue];
                         message.info('Answer detected: ' + newValue);
                     } else {
-                        $scope.question.userAnswer.answersId = [];
+                        $scope.question.userAnswer.answerIds = [];
                     }
                 });
             }
@@ -40,11 +40,11 @@
                 examService.saveUserAnswer($scope.question.userAnswer).success(function () {
                     message.success('Answer saved');
                     // go to next unanswered question
-                    for (var i = $scope.questionN; i != $scope.questionN - 1 ; i = (i + 1) % $scope.examination.questions.length) {
+                    for (var i = $scope.questionN % $scope.examination.questions.length; i != $scope.questionN - 1 ; i = (i + 1) % $scope.examination.questions.length) {
                         var question = $scope.examination.questions[i];
                         switch (enumConverter.questionTypeToString(question.questionType)) {
                             case "SingleAnswer":
-                                if (question.userAnswer.answersId.length == 0) {
+                                if (question.userAnswer.answerIds.length == 0) {
                                     $scope.goToQuestion(i + 1);
                                     return;
                                 }

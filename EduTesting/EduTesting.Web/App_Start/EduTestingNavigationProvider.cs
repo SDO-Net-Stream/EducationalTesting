@@ -39,7 +39,7 @@ namespace EduTesting.Web
                     new MenuItemDefinition(
                         "Exam",
                         new LocalizableString("PassingTest", EduTestingConsts.LocalizationSourceName),
-                        url: "#/test/list",
+                        url: "#/test/available",
                         icon: "fa fa-briefcase"
                         )
                 );
