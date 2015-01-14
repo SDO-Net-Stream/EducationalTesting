@@ -10,7 +10,7 @@ namespace EduTesting.Service
 {
     public interface ITestService
     {
-        TestViewModel GetTest(int testId);
+        TestViewModel GetTest(TestListItemViewModel test);
         IEnumerable<TestListItemViewModel> GetTests();
 
         TestViewModel InsertTest(TestViewModel test);

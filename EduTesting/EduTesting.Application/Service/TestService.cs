@@ -18,18 +18,18 @@ namespace EduTesting.Service
             _Repository = _repository;
         }
 
-        public TestViewModel GetTest(int testId)
+        public TestViewModel GetTest(TestListItemViewModel test)
         {
-            var test = _Repository.SelectById<Test>(testId);
-            if (test == null)
-                throw new BusinessLogicException("Test not found. ID = " + testId);
+            var entity = _Repository.SelectById<Test>(test.TestId);
+            if (entity == null)
+                throw new BusinessLogicException("Test not found. ID = " + test.TestId);
             return new TestViewModel
             {
-                TestId = test.TestId,
-                TestName = test.TestName,
-                Questions = test.Questions.Select(question => new QuestionViewModel
+                TestId = entity.TestId,
+                TestName = entity.TestName,
+                Questions = entity.Questions.Select(question => new QuestionViewModel
                 {
-                    TestId = testId,
+                    TestId = entity.TestId,
                     QuestionId = question.QuestionId,
                     QuestionText = question.QuestionText
                 }).ToArray()
