@@ -116,6 +116,8 @@ namespace EduTesting.Service
             var question = _Repository.SelectById<Question>(answer.QuestionId);
             if (question == null)
                 throw new BusinessLogicException("Question not found by id " + answer.QuestionId);
+            var testResult = _Repository.SelectById<TestResult>(answer.TestResultId);
+            _Repository.Delete(testResult.UsersAnswers.Where(a => a.Question.QuestionId == answer.QuestionId));
             foreach (var answerId in answer.AnswerIds)
             {
                 var answerModel = _Repository.SelectById<Answer>(answerId);
