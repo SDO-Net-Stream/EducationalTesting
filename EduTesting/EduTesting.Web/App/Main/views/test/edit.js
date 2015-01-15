@@ -6,7 +6,10 @@
         function ($scope, testService, message, $state, $stateParams, $modal, enumConverter) {
             var vm = this;
             $scope.id = $stateParams.test;
-            $scope.model = { testId: 0 };
+            $scope.model = {
+                testId: 0,
+                questions: []
+            };
             if ($scope.id != 'new') {
                 testService.getTest({ testId: $scope.id }).success(function (test) {
                     for (var i = 0; i < test.questions.length; i++)
@@ -15,11 +18,39 @@
                 });
             }
 
+            $scope.editTestName = function () {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.test.edit.name.html',
+                    controller: ['$scope', function ($scopeModal) {
+                        var source = $scope.model;
+                        var model = {
+                            testName: source.testName,
+                            testDescription: source.testDescription,
+                            testType: source.testType
+                        };
+                        $scopeModal.model = model;
+                        $scopeModal.ok = function () {
+                            source.testName = model.testName;
+                            source.testDescription = model.testDescription;
+                            source.testType = model.testType;
+                            $scopeModal.$close(source);
+                        };
+                        $scopeModal.cancel = function () {
+                            $scopeModal.$dismiss('cancel');
+                        };
+                    }]
+                });
+            };
+
             $scope.editQuestion = function (question) {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.test.edit.question.html',
                     controller: ['$scope', function ($scopeModal) {
-                        var source = question || { questionId: 0, questionTypeCode: 'SingleAnswer' };
+                        var source = question || {
+                            questionId: 0,
+                            questionTypeCode: 'SingleAnswer',
+                            answers: []
+                        };
                         var model = {
                             isNew: !question,
                             questionText: source.questionText,

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EduTesting.Model;
 using EduTesting.ViewModels.Test;
 using EduTesting.Interfaces;
+using EduTesting.ViewModels.TestResult;
 
 namespace EduTesting.Service
 {
@@ -23,27 +24,48 @@ namespace EduTesting.Service
             var entity = _Repository.SelectById<Test>(test.TestId);
             if (entity == null)
                 throw new BusinessLogicException("Test not found. ID = " + test.TestId);
-            return new TestViewModel
+            var result = new TestViewModel
             {
                 TestId = entity.TestId,
-                TestName = entity.TestName,
-                Questions = entity.Questions.Select(question => new QuestionViewModel
-                {
-                    TestId = entity.TestId,
-                    QuestionId = question.QuestionId,
-                    QuestionText = question.QuestionText,
-                    Answers = question.Answers.Select(a =>
-                    {
-                        var attr = a.Attributes.FirstOrDefault(x => x.AttributeName == EduTestingConsts.AttributeName_AnswerIsRight);
-                        var answer = new AnswerViewModel
-                        {
-                            AnswerText = a.AnswerText,
-                            AnswerIsRight = attr != null // TODO: attr.value == 1
-                        };
-                        return answer;
-                    }).ToArray()
-                }).ToArray()
+                TestName = entity.TestName
             };
+            if (entity.Questions == null)
+            {
+                result.Questions = new QuestionViewModel[0];
+            }
+            else
+            {
+                result.Questions = entity.Questions.Select(question =>
+                {
+                    var model = new QuestionViewModel
+                    {
+                        TestId = entity.TestId,
+                        QuestionId = question.QuestionId,
+                        QuestionText = question.QuestionText,
+                        QuestionDescription = question.QuestionDescription
+                    };
+                    var typeAttribute = question.QuestionAttributes.FirstOrDefault(a => a.AttributeID == EduTestingConsts.AttributeId_QuestionType);
+                    // TODO: throw error when missing
+                    if (typeAttribute != null)
+                        model.QuestionType = (QuestionType)int.Parse(typeAttribute.Value);
+                    if (question.Answers == null)
+                        model.Answers = new AnswerViewModel[0];
+                    else
+                        model.Answers = question.Answers.Select(a =>
+                        {
+                            var attr = a.Attributes.FirstOrDefault(x => x.AttributeName == EduTestingConsts.AttributeName_AnswerIsRight);
+                            var answer = new AnswerViewModel
+                            {
+                                AnswerId = a.AnswerId,
+                                AnswerText = a.AnswerText,
+                                AnswerIsRight = attr != null // TODO: && attr.value == 1
+                            };
+                            return answer;
+                        }).ToArray();
+                    return model;
+                }).ToArray();
+            }
+            return result;
         }
 
         public IEnumerable<TestListItemViewModel> GetTests()
@@ -59,36 +81,60 @@ namespace EduTesting.Service
 
         public TestViewModel InsertTest(TestViewModel test)
         {
-            var t = _Repository.Insert<Test>(new Test { TestId = test.TestId, TestName = test.TestName });
-            test.TestId = t.TestId;
+            var entity = new Test();
+            UpdateTestPropertiesFromViewModel(test, entity);
+            entity = _Repository.Insert<Test>(entity);
+            UpdateTestQuestionsFromViewModel(test, entity);
+            test.TestId = entity.TestId;
             return test;
         }
 
         public void UpdateTest(TestViewModel test)
         {
-            var entity = new Test();
-            UpdateEntityFromViewModel(test, entity);
+            var entity = _Repository.SelectById<Test>(test.TestId);
+            UpdateTestPropertiesFromViewModel(test, entity);
             _Repository.Update(entity);
+            UpdateTestQuestionsFromViewModel(test, entity);
         }
-
-        private void UpdateEntityFromViewModel(TestViewModel model, Test entity)
+        #region Update Test
+        private void UpdateTestPropertiesFromViewModel(TestViewModel model, Test entity)
         {
             entity.TestId = model.TestId;
             entity.TestName = model.TestName;
             entity.TestDescription = model.TestDescription;
-            entity.Questions = model.Questions.Select(q => new Question
-            {
-                QuestionText = q.QuestionText,
-                QuestionDescription = q.QuestionDescription,
-                // TODO: QuestionAttributes
-                Answers = q.Answers.Select(a => new Answer
-                {
-                    AnswerText = a.AnswerText
-                    //TODO: answer attributes
-                }).ToArray()
-            }).ToArray();
-
         }
+        private void UpdateTestQuestionsFromViewModel(TestViewModel model, Test entity)
+        {
+            var questions = entity.Questions ?? new List<Question>();
+            var toUpdate = questions.ToDictionary(q => q.QuestionId);
+            var toInsert = model.Questions.ToArray();
+            foreach (var question in toInsert)
+            {
+                Question newQuestion;
+                if (toUpdate.ContainsKey(question.QuestionId))
+                {
+                    newQuestion = toUpdate[question.QuestionId];
+                    toUpdate.Remove(question.QuestionId);
+                }
+                else
+                {
+                    newQuestion = new Question();
+                    newQuestion.TestId = entity.TestId;
+                    _Repository.Insert(newQuestion);
+                    entity.Questions.Add(newQuestion);
+                }
+                newQuestion.QuestionText = question.QuestionText;
+                newQuestion.QuestionDescription = question.QuestionDescription;
+                _Repository.UpdateQuestionType(newQuestion.QuestionId, (int)question.QuestionType);
+                //TODO: update answers
+            }
+            foreach (var question in toUpdate)
+            {
+                entity.Questions.Remove(question.Value);
+                _Repository.Delete<Question>(question.Value.QuestionId);
+            }
+        }
+        #endregion
 
         public void DeleteTest(TestViewModel test)
         {

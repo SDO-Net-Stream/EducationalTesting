@@ -8,6 +8,7 @@ namespace EduTesting.ViewModels.Test
 {
     public class AnswerViewModel
     {
+        public int AnswerId { get; set; }
         public string AnswerText { get; set; }
         public bool AnswerIsRight { get; set; }
     }
