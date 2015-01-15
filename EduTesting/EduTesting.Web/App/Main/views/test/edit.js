@@ -152,10 +152,12 @@
             vm.toggleAnswerRight = function (question, answer) {
                 switch (question.questionTypeCode) {
                     case "SingleAnswer":
+                        /*
                         for (var i = 0; i < question.answers.length; i++)
                             question.answers[i].answerIsRight = false;
                         answer.answerIsRight = true;
                         break;
+                        */
                     case "MultipleAnswers":
                         answer.answerIsRight = !answer.answerIsRight;
                         break;
@@ -163,8 +165,72 @@
                         throw "Invalid question type";
                 }
             };
+            $scope.highlightQuestion = function (question) {
+                var questions = $scope.model.questions;
+                for (var i = 0; i < questions.length; i++)
+                    if (questions[i] != question)
+                        questions[i].$isopen = false;
+                if (question) {
+                    question.$isopen = true;
+                    question.$error = true;
+                }
+            };
+            $scope.validate = function () {
+                var test = $scope.model;
+                if (!test.testName) {
+                    message.error("Please enter name of the test");
+                    return false;
+                }
+                for (var i = 0; i < test.questions.length; i++) {
+                    test.questions[i].$error = false;
+                }
+                for (var i = 0; i < test.questions.length; i++) {
+                    var question = test.questions[i];
+                    var questionTitle = question.questionText || question.questionDescription;
+                    if (!questionTitle) {
+                        message.error("Please enter question text");
+                        $scope.highlightQuestion(question);
+                        return false;
+                    }
+                    switch (question.questionTypeCode) {
+                        case 'TextAnswer':
+                            if (question.answers.length != 0) {
+                                message.error(questionTitle, "Question with type 'Custom answer' should not contain predefined answers");
+                                $scope.highlightQuestion(question);
+                                return false;
+                            }
+                            break;
+                        case 'SingleAnswer':
+                        case 'MultipleAnswers':
+                            if (question.answers.length == 0) {
+                                message.error(questionTitle, "Question should contain answers");
+                                $scope.highlightQuestion(question);
+                                return false;
+                            }
+                            var right = 0;
+                            for (var j = 0; j < question.answers.length; j++) {
+                                var answer = question.answers[j];
+                                if (!answer.answerText) {
+                                    message.error(questionTitle, "Answer text should be not empty");
+                                    $scope.highlightQuestion(question);
+                                    return false;
+                                }
+                                if (answer.answerIsRight)
+                                    right++;
+                            }
+                            if (right == 0) {
+                                message.error(questionTitle, "No answers marked as right");
+                                $scope.highlightQuestion(question);
+                                return false;
+                            }
+                            break;
+                    }
+                }
+                return true;
+            };
             $scope.save = function () {
-                // TODO: validate
+                if (!$scope.validate())
+                    return;
                 var result;
                 if ($scope.id == 'new') {
                     result = testService.insertTest($scope.model);
