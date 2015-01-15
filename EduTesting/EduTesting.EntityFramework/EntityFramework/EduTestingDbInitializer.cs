@@ -234,7 +234,7 @@ namespace EduTesting.EntityFramework
             roles.ForEach(r => context.Roles.Add(r));
             var users = new List<User>
             {
-                new User { UserId = 1, FirstName = "Default", LastName = "User", Activated = true, Deleted = false, DomainName = "eleks-software\\maryan.provashynskyy" }
+                new User { UserId = 1, UserFirstName = "Default", UserLastName = "User", UserActivated = true, UserDeleted = false, UserDomainName = "eleks-software\\maryan.provashynskyy" }
             };
             users.ForEach(u => context.Users.Add(u));
             context.SaveChanges();

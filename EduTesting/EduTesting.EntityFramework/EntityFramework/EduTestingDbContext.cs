@@ -33,6 +33,11 @@ namespace EduTesting.EntityFramework
             
         }
 
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+
         public virtual IDbSet<Answer> Answers { get; set; }
         public virtual IDbSet<CustomAttribute> Attributes { get; set; }
         public virtual IDbSet<QuestionAttribute> QuestionAttributes { get; set; }

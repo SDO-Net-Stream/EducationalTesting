@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201501121441130_initial_migr.Designer.cs">
       <DependentUpon>201501121441130_initial_migr.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501151659196_UserFieldsRename.cs" />
+    <Compile Include="Migrations\201501151659196_UserFieldsRename.Designer.cs">
+      <DependentUpon>201501151659196_UserFieldsRename.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="EduTestingDataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501121441130_initial_migr.resx">
       <DependentUpon>201501121441130_initial_migr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501151659196_UserFieldsRename.resx">
+      <DependentUpon>201501151659196_UserFieldsRename.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
