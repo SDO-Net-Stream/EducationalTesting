@@ -6,7 +6,6 @@ using Abp.Dependency;
 using Abp.Web;
 using Castle.Facilities.Logging;
 using Castle.MicroKernel.Registration;
-using EducationalProject.Models;
 
 namespace EduTesting.Web
 {

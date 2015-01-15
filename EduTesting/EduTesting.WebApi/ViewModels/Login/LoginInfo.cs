@@ -10,11 +10,13 @@ namespace EduTesting.ViewModels.Login
     public class LoginInfo
     {
         public string UserName { get; set; }
+        public string[] UserRoles { get; set; }
         public LoginInfo(User currentUser)
         {
             if (currentUser == null)
             {
                 UserName = "";
+                UserRoles = new string[0];
             }
             else
             {
@@ -26,6 +28,7 @@ namespace EduTesting.ViewModels.Login
                 {
                     UserName = (currentUser.UserEmail ?? "anonymous").Split('@')[0];
                 }
+                UserRoles = currentUser.Roles.Select(r => r.RoleName).ToArray();
             }
         }
     }

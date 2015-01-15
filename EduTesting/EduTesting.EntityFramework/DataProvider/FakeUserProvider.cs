@@ -9,6 +9,10 @@ namespace EduTesting.DataProvider
 {
     public class FakeUserProvider : IUserRepository
     {
+        private readonly Role[] _fakeRoles = new Role[]{
+            new Role { RoleID=2, RoleName = EduTestingConsts.RoleName_Teacher },
+            new Role { RoleID=1, RoleName = EduTestingConsts.RoleName_User }
+        };
         private User FakeUser(string key)
         {
             var name = key;
@@ -23,7 +27,12 @@ namespace EduTesting.DataProvider
                 UserLastName = name, //!! split first & last name
                 UserDomainName = "domain\\" + name,
                 UserEmail = name + "@email.email",
+<<<<<<< HEAD
                 UserActivated = true
+=======
+                Activated = true,
+                Roles = _fakeRoles
+>>>>>>> 00113088cdc4d56dd0a31f87a16305c21c6a5b90
             };
         }
 

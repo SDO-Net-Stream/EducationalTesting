@@ -94,7 +94,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="EduTestingWebApiModule.cs" />
     <Compile Include="ViewModels\Login\LoginInfo.cs" />
     <Compile Include="ViewModels\Login\LoginByEmailModel.cs" />

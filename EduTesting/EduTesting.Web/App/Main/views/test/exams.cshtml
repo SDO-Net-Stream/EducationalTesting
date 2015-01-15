@@ -1,11 +1,11 @@
-﻿<div ng-controller="app.views.test.list as vm">
+﻿<div ng-controller="app.views.test.exams as vm">
     <accordion close-others="oneAtATime">
         <accordion-group ng-repeat="test in tests">
             <accordion-heading>
                 {{test.testName}}
                 <div style="float: right">
-                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})"></a>
-                    <a class="glyphicon glyphicon-remove" ng-click="deleteTest(test)"></a>
+                    <a ui-sref="test.pass.question({test: test.testId, question: 1})" ng-if="vm.results[test.testId].testResultIsCompleted === false">Answer</a>
+                    <a class="glyphicon glyphicon-play" ng-click="start(test)" ng-if="!vm.results[test.testId] || vm.results[test.testId].testResultIsCompleted">Start</a>
                 </div>
             </accordion-heading>
             <div style="margin-bottom: 8px">

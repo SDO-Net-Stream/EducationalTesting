@@ -12,41 +12,41 @@ namespace EduTesting.Repositories
 {
     public class EduTestingGenericRepository : IEduTestingGenericRepository
     {
-		#region Constructor_Dispose
+        #region Constructor_Dispose
 
-		public EduTestingGenericRepository()
-		{
-			DBContext = new EduTestingDbContext();
-		}
+        public EduTestingGenericRepository()
+        {
+            DBContext = new EduTestingDbContext();
+        }
 
         public EduTestingGenericRepository(EduTestingDbContext db)
-		{
-			DBContext = db;
-		}
+        {
+            DBContext = db;
+        }
 
         public void Dispose()
-		{
-			if (DBContext != null)
-			{
-				DBContext.Dispose();
-			}
-		}
+        {
+            if (DBContext != null)
+            {
+                DBContext.Dispose();
+            }
+        }
 
-		#endregion
+        #endregion
 
         #region Generic Methods
 
         public IQueryable<TEntity> SelectAll<TEntity>(params Expression<Func<TEntity, object>>[] includeObjects) where TEntity : class
-		{
+        {
             IQueryable<TEntity> resultList = DBContext.Set<TEntity>();
 
-			foreach (var includeItem in includeObjects)
-			{
-				resultList = resultList.Include(includeItem);
-			}
+            foreach (var includeItem in includeObjects)
+            {
+                resultList = resultList.Include(includeItem);
+            }
 
-			return resultList;
-		}
+            return resultList;
+        }
 
         public IEnumerable<TEntity> SelectAll<TEntity>() where TEntity : class
         {
@@ -85,13 +85,13 @@ namespace EduTesting.Repositories
         }
 
         public void Update<TEntity>(IEnumerable<TEntity> items) where TEntity : class
-		{
+        {
             foreach(var item in items)
             {
                 UpdateInternal<TEntity>(item);
             }
             DBContext.SaveChanges();
-		}
+        }
 
         public void Delete<TEntity>(int itemId) where TEntity : class
         {
@@ -102,10 +102,10 @@ namespace EduTesting.Repositories
         }
 
         public void Delete<TEntity>(IEnumerable<TEntity> items) where TEntity : class
-		{
+        {
             DBContext.Set<TEntity>().RemoveRange(items);
             DBContext.SaveChanges();
-		}
+        }
 
         #endregion
 
@@ -113,11 +113,11 @@ namespace EduTesting.Repositories
 
         protected EduTestingDbContext DBContext { get; private set; }
 
-		#endregion
+        #endregion
     }
 
     public class EduTestingRepository : EduTestingGenericRepository, IEduTestingRepository
-	{
+    {
         #region Methods
 
         public IEnumerable<Question> GetQuestionsByTest(int testId)
@@ -150,6 +150,40 @@ namespace EduTesting.Repositories
             return DBContext.UsersAnswers.Where(ua => ua.TestResult.TestResultId == testsResultId);
         }
 
+        public void UpdateQuestionType(int questionId, int questionTypeId)
+        {
+            var attr = DBContext.QuestionAttributes.FirstOrDefault(qa => qa.QuestionID == questionId && qa.AttributeID == EduTestingConsts.AttributeId_QuestionType);
+            if (attr == null)
+            {
+                attr = new QuestionAttribute
+                {
+                    AttributeID = EduTestingConsts.AttributeId_QuestionType,
+                    QuestionID = questionId
+                };
+                DBContext.QuestionAttributes.Add(attr);
+            }
+            attr.Value = questionTypeId.ToString();
+            DBContext.SaveChanges();
+        }
+
+        public void UpdateAnswerIsRight(int answerId, bool isRight)
+        {
+            var answer = SelectById<Answer>(answerId);
+            if (answer.Attributes == null)
+                answer.Attributes = new List<CustomAttribute>();
+            var attr = answer.Attributes.FirstOrDefault(qa => qa.AttributeID == EduTestingConsts.AttributeId_AnswerIsRight);
+            if (attr == null)
+            {
+                attr = SelectById<CustomAttribute>(EduTestingConsts.AttributeId_AnswerIsRight);
+                answer.Attributes.Add(attr);
+            }
+            // TODO: set attribute value
+            //attr.Value = questionTypeId.ToString();
+            DBContext.SaveChanges();
+        }
+
         #endregion
-	}
+
+
+    }
 }

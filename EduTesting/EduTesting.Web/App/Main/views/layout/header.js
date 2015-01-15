@@ -23,6 +23,21 @@
                 });
                 return false;
             };
+            var permissions = {
+                'Home': false,
+                'About': false,
+                'Test': 'teacher',
+                'Exam': 'user'
+            };
+            vm.menuDisabled = function (name) {
+                if (!permissions.hasOwnProperty(name))
+                    throw 'invalid configuration';
+                var role = permissions[name];
+                if (role === false)
+                    return false;
+                var roles = vm.user.roles();
+                return !roles.hasOwnProperty(role);
+            };
         }
     ]);
 })();

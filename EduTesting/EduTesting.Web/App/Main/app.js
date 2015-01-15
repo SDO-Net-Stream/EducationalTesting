@@ -55,19 +55,15 @@
                     templateUrl: '/App/Main/views/test/list.cshtml',
                 })
                 .state('test.edit', {
-                    url: '^/test/:test/edit',
-                    templateUrl: '/App/Main/views/test/list.cshtml',
-                })
-                .state('question', {
-                    url: '/question',
-                    templateUrl: '/App/Main/views/question/list.cshtml',
-                })
-                .state('question.edit', {
-                    url: '^/question/edit/:test/:question',
-                    templateUrl: '/App/Main/views/question/list.cshtml',
+                    url: '/:test/edit',
+                    templateUrl: '/App/Main/views/test/edit.cshtml',
                 })
 
 
+                .state('test.available', {
+                    url: '/available',
+                    templateUrl: '/App/Main/views/test/exams.cshtml',
+                })
                 .state('test.pass', { // answering test
                     url: '/:test/pass',
                     abstract: true,
@@ -99,15 +95,21 @@
                 .state('test.result.details', {
                     url: '/:user'
                 })
+
             ;
         }
     ]);
     (function () {
         var username = null;
+        var roles = [];
         app.value('user', {
             signIn: function (loginInfo) {
                 if (loginInfo != null) {
                     username = loginInfo.userName;
+                    if (loginInfo.userRoles)
+                        roles = loginInfo.userRoles;
+                    else
+                        roles = [];
                 }
             },
             isAuthenticated: function () {
@@ -115,6 +117,12 @@
             },
             name: function () {
                 return username;
+            },
+            roles: function () {
+                var result = {};
+                for (var i = 0; i < roles.length; i++)
+                    result[roles[i].toLowerCase()] = true;
+                return result;
             }
         });
     })();

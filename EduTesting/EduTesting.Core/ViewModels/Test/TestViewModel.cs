@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EduTesting.ViewModels.Test
 {
-    public class TestListItemViewModel
+    public class TestViewModel
     {
         public int TestId { get; set; }
         public string TestName { get; set; }
-        public int UserFirstName { get; set; }
-        public int UserLastName { get; set; }
+        public string TestDescription { get; set; }
+        public QuestionViewModel[] Questions { get; set; }
     }
 }

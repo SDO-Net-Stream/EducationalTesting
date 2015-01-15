@@ -89,13 +89,15 @@
     <Compile Include="Service\INotificationService.cs" />
     <Compile Include="Service\ITestService.cs" />
     <Compile Include="Service\IWebUserManager.cs" />
-    <Compile Include="ViewModels\Question\QuestionListItemViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultParameterViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultQuestionViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultsFilterViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultViewModel.cs" />
     <Compile Include="ViewModels\TestResult\UserAnswerViewModel.cs" />
+    <Compile Include="ViewModels\Test\AnswerViewModel.cs" />
+    <Compile Include="ViewModels\Test\QuestionViewModel.cs" />
     <Compile Include="ViewModels\Test\TestListItemViewModel.cs" />
+    <Compile Include="ViewModels\Test\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

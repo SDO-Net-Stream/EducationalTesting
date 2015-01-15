@@ -129,7 +129,12 @@ namespace EduTesting.EntityFramework
             questions.ForEach(q => context.Questions.Add(q));
             context.SaveChanges();
 
-            context.Attributes.Add(new CustomAttribute { AttributeID = 1, AttributeName = "Question Type" });
+            var attributes = new List<CustomAttribute>
+            {
+                new CustomAttribute { AttributeID = 1, AttributeName = "Question Type" },
+                new CustomAttribute { AttributeID = 2, AttributeName = "Answer is right" }
+            };
+            attributes.ForEach(a => context.Attributes.Add(a));
             context.SaveChanges();
 
             var singleAnswerTypeValue = ((int)(EduTesting.ViewModels.TestResult.QuestionType.SingleAnswer)).ToString();
@@ -219,6 +224,21 @@ namespace EduTesting.EntityFramework
             };
             answers.ForEach(a => context.Answers.Add(a));
             context.SaveChanges();
+
+            var roles = new List<Role>
+            {
+                new Role { RoleID = 1, RoleName = "User" },
+                new Role { RoleID = 1, RoleName = "Teacher" },
+                new Role { RoleID = 3, RoleName = "Administrator" }
+            };
+            roles.ForEach(r => context.Roles.Add(r));
+            var users = new List<User>
+            {
+                new User { UserId = 1, FirstName = "Default", LastName = "User", Activated = true, Deleted = false, DomainName = "eleks-software\\maryan.provashynskyy" }
+            };
+            users.ForEach(u => context.Users.Add(u));
+            context.SaveChanges();
+
         }
     }
 }
