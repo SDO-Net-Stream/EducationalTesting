@@ -34,5 +34,7 @@ namespace EduTesting.Interfaces
         IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testResultId);
         void UpdateQuestionType(int questionId, int questionTypeId);
 
+
+        void UpdateAnswerIsRight(int answerId, bool isRight);
     }
 }

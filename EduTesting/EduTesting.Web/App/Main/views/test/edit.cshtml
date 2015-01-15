@@ -6,18 +6,18 @@
     <accordion close-others="oneAtATime">
         <accordion-group ng-repeat="question in model.questions">
             <accordion-heading>
-                {{question.questionText || question.questionDescription}}
+                {{question.questionText || question.questionDescription || "-- no description --"}}
                 <div style="float: right">
                     <button class="glyphicon glyphicon-pencil btn-link" ng-click="editQuestion(question); $event.stopPropagation();"></button>
                     <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteQuestion(question); $event.stopPropagation();"></button>
                 </div>
             </accordion-heading>
-            {{ question.questionText? question.questionDescription : ""}}
+            {{ question.questionText ? question.questionDescription : ""}}
             <div ng-repeat="answer in question.answers" style="margin-bottom: 8px">
                 {{answer.answerText}}
                 <div style="float: right; border-color: gray;">
-                    <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer)"></button>
-                    <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer)"></button>
+                    <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
+                    <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
                 </div>
                 <div style="float: right;">
                     <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct</button>
@@ -25,19 +25,19 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <button type="button" class="btn" ng-click="addAnswer(question)">Create new Answer</button>
+            <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
         </accordion-group>
     </accordion>
     <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
     <div class="clearfix"></div>
     <div class="pull-right">
-        <button class="btn btn-primary" ng-click="save()">{{id == 'new'? "Create" : "Update"}}</button>
+        <button class="btn btn-primary" ng-click="save()">{{id=='new' ? "Create" : "Update"}}</button>
         <a class="btn" ui-sref="test.list">Cancel</a>
     </div>
-    <script id="app.views.test.edit.question.html" style="display: none" type="text/ng-template">
+    <script id="app.views.test.edit.question.html" type="text/ng-template">
         <form ng-submit="ok()" name="form" class="form-horizontal">
             <div class="modal-header">
-                <h3 class="modal-title">Create question</h3>
+                <h3 class="modal-title">{{model.isNew ? "Create" : "Edit"}} question</h3>
             </div>
             <div class="modal-body">
                 <div class="form-group" ng-class="{'has-error': form.questionText.$dirty && form.questionText.$invalid, 'has-success': form.questionText.$dirty && !form.questionText.$invalid}">
@@ -70,13 +70,13 @@
             </div>
         </form>
     </script>
-    <script id="app.views.test.edit.deleteQuestion.html" style="display: none" type="text/ng-template">
+    <script id="app.views.test.edit.deleteQuestion.html" type="text/ng-template">
         <form ng-submit="ok()" name="form" class="form-horizontal">
             <div class="modal-header">
                 <h3 class="modal-title">Delete question</h3>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete question '{{model.questionText}}'?
+                Are you sure you want to delete question '{{model.questionText || model.questionDescription}}'?
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Delete</button>
@@ -122,4 +122,43 @@
             </div>
         </form>
     </script>
+    <script id="app.views.test.edit.answer.html" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">{{model.isNew ? "Create" : "Edit"}} answer</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{'has-error': form.answerText.$dirty && form.answerText.$invalid, 'has-success': form.answerText.$dirty && !form.answerText.$invalid}">
+                    <label for="answer-edit-text" class="control-label col-xs-2">Text:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="answerText" ng-model="model.answerText" id="answer-edit-text" class="form-control" required="required"></input>
+                        <span ng-show="form.answerText.$dirty && form.answerText.$error.required" class="help-block">Enter text.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.answerIsRight.$dirty && form.answerIsRight.$invalid, 'has-success': form.answerIsRight.$dirty && !form.answerIsRight.$invalid}">
+                    <label for="answer-edit-answerIsRight" class="control-label col-xs-2">Is right:</label>
+                    <input type="checkbox" ng-model="model.answerIsRight" id="answer-edit-answerIsRight" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">{{model.isNew ? 'Create' : 'Update'}}</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
+    <script id="app.views.test.edit.deleteAnswer.html" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete answer</h3>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete answer '{{model.answerText}}'?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
+
 </div>

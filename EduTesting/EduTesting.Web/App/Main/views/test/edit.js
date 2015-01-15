@@ -96,6 +96,59 @@
                 });
             };
 
+            $scope.editAnswer = function (answer, question) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.test.edit.answer.html',
+                    controller: ['$scope', function ($scopeModal) {
+                        var source = answer || {
+                            answerId: 0,
+                            answerIsRight: false,
+                        };
+                        var model = {
+                            isNew: !answer,
+                            answerText: source.answerText,
+                            answerIsRight: source.answerIsRight
+                        };
+                        $scopeModal.model = model;
+                        $scopeModal.ok = function () {
+                            source.answerText = model.answerText;
+                            if (model.isNew) {
+                                question.answers.push(source);
+                            }
+                            if (source.answerIsRight != model.answerIsRight) {
+                                vm.toggleAnswerRight(question, source);
+                            }
+
+                            $scopeModal.$close(source);
+                        };
+                        $scopeModal.cancel = function () {
+                            $scopeModal.$dismiss('cancel');
+                        };
+                    }]
+                });
+            };
+            $scope.deleteAnswer = function (answer, question) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.test.edit.deleteAnswer.html',
+                    controller: ['$scope', function ($scopeModal) {
+                        $scopeModal.model = answer;
+                        $scopeModal.ok = function () {
+                            var answers = question.answers;
+                            for (var i = 0; i < answers.length; i++) {
+                                if (answers[i] == answer) {
+                                    answers.splice(i, 1);
+                                    break;
+                                }
+                            }
+                            $scopeModal.$close();
+                        };
+                        $scopeModal.cancel = function () {
+                            $scopeModal.$dismiss('cancel');
+                        };
+                    }]
+                });
+            };
+
             vm.toggleAnswerRight = function (question, answer) {
                 switch (question.questionTypeCode) {
                     case "SingleAnswer":
@@ -128,5 +181,5 @@
             };
         }
     ]);
-    
+
 })();

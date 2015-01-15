@@ -166,6 +166,22 @@ namespace EduTesting.Repositories
             DBContext.SaveChanges();
         }
 
+        public void UpdateAnswerIsRight(int answerId, bool isRight)
+        {
+            var answer = SelectById<Answer>(answerId);
+            if (answer.Attributes == null)
+                answer.Attributes = new List<CustomAttribute>();
+            var attr = answer.Attributes.FirstOrDefault(qa => qa.AttributeID == EduTestingConsts.AttributeId_AnswerIsRight);
+            if (attr == null)
+            {
+                attr = SelectById<CustomAttribute>(EduTestingConsts.AttributeId_AnswerIsRight);
+                answer.Attributes.Add(attr);
+            }
+            // TODO: set attribute value
+            //attr.Value = questionTypeId.ToString();
+            DBContext.SaveChanges();
+        }
+
         #endregion
 
 

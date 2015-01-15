@@ -53,7 +53,7 @@ namespace EduTesting.Service
                     else
                         model.Answers = question.Answers.Select(a =>
                         {
-                            var attr = a.Attributes.FirstOrDefault(x => x.AttributeName == EduTestingConsts.AttributeName_AnswerIsRight);
+                            var attr = a.Attributes == null ? null : a.Attributes.FirstOrDefault(x => x.AttributeID == EduTestingConsts.AttributeId_AnswerIsRight);
                             var answer = new AnswerViewModel
                             {
                                 AnswerId = a.AnswerId,
@@ -99,16 +99,14 @@ namespace EduTesting.Service
         #region Update Test
         private void UpdateTestPropertiesFromViewModel(TestViewModel model, Test entity)
         {
-            entity.TestId = model.TestId;
             entity.TestName = model.TestName;
             entity.TestDescription = model.TestDescription;
         }
         private void UpdateTestQuestionsFromViewModel(TestViewModel model, Test entity)
         {
             var questions = entity.Questions ?? new List<Question>();
-            var toUpdate = questions.ToDictionary(q => q.QuestionId);
-            var toInsert = model.Questions.ToArray();
-            foreach (var question in toInsert)
+            var toUpdate = (entity.Questions ?? new Question[0]).ToDictionary(q => q.QuestionId);
+            foreach (var question in model.Questions)
             {
                 Question newQuestion;
                 if (toUpdate.ContainsKey(question.QuestionId))
@@ -126,12 +124,35 @@ namespace EduTesting.Service
                 newQuestion.QuestionText = question.QuestionText;
                 newQuestion.QuestionDescription = question.QuestionDescription;
                 _Repository.UpdateQuestionType(newQuestion.QuestionId, (int)question.QuestionType);
-                //TODO: update answers
+                UpdateTestAnswersFromViewModel(question, newQuestion);
             }
             foreach (var question in toUpdate)
             {
                 entity.Questions.Remove(question.Value);
                 _Repository.Delete<Question>(question.Value.QuestionId);
+            }
+        }
+
+        private void UpdateTestAnswersFromViewModel(QuestionViewModel model, Question entity)
+        {
+            var toUpdate = (entity.Answers ?? new Answer[0]).ToDictionary(a => a.AnswerId);
+            foreach (var answer in model.Answers)
+            {
+                Answer newAnswer;
+                if (toUpdate.ContainsKey(answer.AnswerId))
+                {
+                    newAnswer = toUpdate[answer.AnswerId];
+                    toUpdate.Remove(answer.AnswerId);
+                }
+                else
+                {
+                    newAnswer = new Answer();
+                    newAnswer.QuestionId = entity.QuestionId;
+                    _Repository.Insert(newAnswer);
+                    entity.Answers.Add(newAnswer);
+                }
+                newAnswer.AnswerText = answer.AnswerText;
+                _Repository.UpdateAnswerIsRight(newAnswer.AnswerId, answer.AnswerIsRight);
             }
         }
         #endregion
