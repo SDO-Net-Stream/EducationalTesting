@@ -18,9 +18,9 @@ namespace EduTesting.ViewModels.Login
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(currentUser.DomainName))
+                if (!string.IsNullOrWhiteSpace(currentUser.UserDomainName))
                 {
-                    UserName = currentUser.DomainName.Split('\\')[1];
+                    UserName = currentUser.UserDomainName.Split('\\')[1];
                 }
                 else
                 {

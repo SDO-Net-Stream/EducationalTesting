@@ -10,16 +10,16 @@ namespace EduTesting.Model
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
         public string UserEmail { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public bool Activated { get; set; }
-        public bool Deleted { get; set; }
-        public string DomainName { get; set; }
-        public string Password { get; set; }
-        public string PasswordSalt { get; set; }
-        public string PasswordVerificationToken { get; set; }
+        public Nullable<System.DateTime> UserDateCreated { get; set; }
+        public bool UserActivated { get; set; }
+        public bool UserDeleted { get; set; }
+        public string UserDomainName { get; set; }
+        public string UserPassword { get; set; }
+        public string UserPasswordSalt { get; set; }
+        public string UserPasswordVerificationToken { get; set; }
     
         public virtual ICollection<TestResult> TestsResults { get; set; }
         public virtual ICollection<UserGroup> UserGroups { get; set; }

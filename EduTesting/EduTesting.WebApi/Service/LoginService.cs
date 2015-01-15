@@ -32,7 +32,7 @@ namespace EduTesting.Service
         public LoginInfo Login(LoginByEmailModel login)
         {
             var user = _userProvider.GetUserByEmailPassword(login.Email, login.Password);
-            if (user == null || !user.Activated)
+            if (user == null || !user.UserActivated)
                 return null;
             _sessionManager.UpdateSession(user);
             return new LoginInfo(user);
@@ -45,7 +45,7 @@ namespace EduTesting.Service
             if (identity != null && identity.IsAuthenticated)
             {
                 var user = _userProvider.GetUserByDomainName(identity.Name);
-                if (user != null || !user.Activated)
+                if (user != null || !user.UserActivated)
                 {
                     _sessionManager.UpdateSession(user);
                     return new LoginInfo(user);
