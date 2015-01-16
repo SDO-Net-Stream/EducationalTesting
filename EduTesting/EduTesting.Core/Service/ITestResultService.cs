@@ -11,7 +11,6 @@ namespace EduTesting.Service
     {
         TestResultListItemViewModel[] GetTestResultsForCurrentUser();
 
-        TestResultListItemViewModel[] GetTestResults(TestResultsFilterViewModel filter);
         /// <summary>
         /// Continue if not completed or start new
         /// </summary>
@@ -20,5 +19,6 @@ namespace EduTesting.Service
         TestResultViewModel GetTestResult(TestResultParameterViewModel key);
         void SaveUserAnswer(UserAnswerViewModel answer);
         void CompleteTestResult(TestResultParameterViewModel key);
+        TestResultListItemViewModel[] GetTestResultsForUsers(TestResultsFilterViewModel filter);
     }
 }

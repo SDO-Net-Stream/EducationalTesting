@@ -18,15 +18,24 @@ namespace EduTesting.Service
             _Repository = repository;
             _webUser = webUser;
         }
-        public TestResultListItemViewModel[] GetTestResults(TestResultsFilterViewModel filter)
+
+        public TestResultListItemViewModel[] GetTestResultsForUsers(TestResultsFilterViewModel filter)
         {
-            var results = _Repository.GetTestResultsByTest(filter.TestId);
-            return results.Select(r => new TestResultListItemViewModel
-            {
-                UserFirstName = r.UserId.ToString(),
-                UserLastName = r.UserId.ToString(),
-                TestResultIsCompleted = r.IsCompleted
-            }).ToArray();
+            var testResults = _Repository.GetTestResultsByTest(filter.TestId);
+            return testResults
+                .GroupBy(
+                    r => r.UserId,
+                    (rId, results) =>
+                    {
+                        var last = results.OrderByDescending(r => r.Timestamp).First();
+                        return new TestResultListItemViewModel
+                        {
+                            UserFirstName = last.User.UserFirstName,
+                            UserLastName = last.User.UserLastName,
+                            TestResultIsCompleted = last.IsCompleted
+                        };
+                    }
+                ).OrderBy(r => r.UserFirstName).ThenBy(r => r.UserLastName).ToArray();
         }
 
         public void StartTest(StartTestViewModel startModel)
@@ -114,7 +123,7 @@ namespace EduTesting.Service
                             .Where(ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null))
                             .Select(ua => ua.Answer.AnswerId).ToArray()
                     }
-               };
+                };
                 return item;
             }).ToArray();
             return result;
@@ -162,6 +171,8 @@ namespace EduTesting.Service
         public void CompleteTestResult(TestResultParameterViewModel key)
         {
             var exam = _Repository.SelectById<TestResult>(key.TestResultId);
+            if (exam.UserId != _webUser.CurrentUser.UserId)
+                throw new BusinessLogicException("You can complete only owning test sessions");
             exam.IsCompleted = true;
             _Repository.Update<TestResult>(exam);
         }

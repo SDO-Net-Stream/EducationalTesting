@@ -9,5 +9,6 @@ namespace EduTesting.ViewModels.TestResult
     public class TestResultsFilterViewModel
     {
         public int TestId { get; set; }
+        public string UserName { get; set; }
     }
 }

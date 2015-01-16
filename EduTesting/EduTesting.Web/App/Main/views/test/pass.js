@@ -43,21 +43,27 @@
                     $state.go('test.pass.question', { test: testResult.testId, question: number });
                 });
             };
+
+            $scope.isQuestionAnswered = function (question) {
+                question = question || $scope.question;
+                switch (enumConverter.questionTypeToString(question.questionType)) {
+                    case "SingleAnswer":
+                    case "MultipleAnswers":
+                        return question.userAnswer.answerIds.length > 0;
+                        break;
+                    default:
+                        throw "Not implemented";
+                }
+            };
+
             $scope.next = function () {
                 $scope.waitSaving(true).then(function() {
                     // go to next unanswered question
                     for (var i = $scope.questionN % $scope.examination.questions.length; i != $scope.questionN - 1 ; i = (i + 1) % $scope.examination.questions.length) {
                         var question = $scope.examination.questions[i];
-                        switch (enumConverter.questionTypeToString(question.questionType)) {
-                            case "SingleAnswer":
-                            case "MultipleAnswers":
-                                if (question.userAnswer.answerIds.length == 0) {
-                                    $scope.goToQuestion(i + 1);
-                                    return;
-                                }
-                                break;
-                            default:
-                                throw "Not implemented";
+                        if (!$scope.isQuestionAnswered(question)) {
+                            $scope.goToQuestion(i + 1);
+                            return;
                         }
                     }
                     if ($scope.examination.questions[i].userAnswer.answerIds.length != 0) {
@@ -79,14 +85,8 @@
                 var count = 0;
                 for (var i = 0; i < $scope.examination.questions.length; i++) {
                     var question = $scope.examination.questions[i];
-                    switch (enumConverter.questionTypeToString(question.questionType)) {
-                        case "SingleAnswer":
-                        case "MultipleAnswers":
-                            if (question.userAnswer.answerIds.length != 0)
-                                count++;
-                            break;
-                        default:
-                            throw "Not implemented";
+                    if ($scope.isQuestionAnswered(question)) {
+                        count++;
                     }
                 }
                 $scope.userAnswersCount = count;

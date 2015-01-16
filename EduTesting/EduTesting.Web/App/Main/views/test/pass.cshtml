@@ -17,7 +17,7 @@
             {{answer.answerText}}
         </li>
     </ul>
-    <button class="btn" ng-click="next()">next</button>
+    <button class="btn" ng-class="{'btn-success' : isQuestionAnswered(), 'btn-warning' : !isQuestionAnswered() }" ng-click="next()">next</button>
 </div>
 <div>
     <h4>Answered questions: {{userAnswersCount}} / {{examination.questions.length}}</h4>

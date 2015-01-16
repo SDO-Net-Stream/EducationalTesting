@@ -1,6 +1,6 @@
 ﻿<div ng-controller="app.views.test.list as vm">
     <accordion close-others="oneAtATime">
-        <accordion-group ng-repeat="test in tests">
+        <accordion-group ng-repeat="test in tests" is-open="test.isopened">
             <accordion-heading>
                 <div class="width:100%">
                     {{test.testName}}
@@ -10,8 +10,9 @@
                     </div>
                 </div>
             </accordion-heading>
-            <div style="margin-bottom: 8px">
-                TODO: statistic info
+            <div ng-if="test.result && vm.resultLoaded(test)"></div>
+            <div ng-include="'/App/Main/views/test/result.cshtml'">
+                loading
             </div>
         </accordion-group>
     </accordion>

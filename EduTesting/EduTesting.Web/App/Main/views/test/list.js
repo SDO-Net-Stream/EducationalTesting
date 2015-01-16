@@ -1,5 +1,4 @@
-﻿var inputCounter = 0;
-(function () {
+﻿(function () {
     var controllerId = 'app.views.test.list';
     var app = angular.module('app');
     app.controller(controllerId, [
@@ -30,6 +29,13 @@
                         };
                     }
                 });
+            };
+            this.resultLoaded = function (test) {
+                if (test.isopened && !test.resultLoaded) {
+                    test.result.load(test);
+                    test.resultLoaded = true;
+                }
+                return true;
             };
         }
     ]);
