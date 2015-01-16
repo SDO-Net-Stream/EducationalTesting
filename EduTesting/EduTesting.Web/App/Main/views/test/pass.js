@@ -8,7 +8,7 @@
             $scope.questionN = parseInt($stateParams.question);
             if (testResult.questions.length == 0) {
                 message.error("Questions list is empty");
-                $state.go('test.list');
+                $state.go('test.available');
                 return;
             }
             if ($scope.questionN <= 0 || $scope.questionN > testResult.questions.length || isNaN($scope.questionN)) {
@@ -25,14 +25,10 @@
                     $scope.answerId = -1;
                 }
                 $scope.$watch('answerId', function (newValue) {
-                    console.log(newValue);
                     if ($scope.answerId >= 0) {
                         if ($scope.question.userAnswer.answerIds.length == 0 || $scope.question.userAnswer.answerIds[0] != newValue) {
                             $scope.question.userAnswer.answerIds = [newValue];
-                            message.info('Answer detected: ' + newValue);
                             $scope.trackChanges();
-                        } else {
-                            message.info('Same detected: ' + newValue);
                         }
                     } else {
                         $scope.question.userAnswer.answerIds = [];
@@ -43,7 +39,9 @@
                 $scope.answerIds = $scope.question.userAnswer.answerIds;
             }
             $scope.goToQuestion = function (number) {
-                $state.go('test.pass.question', { test: testResult.testId, question: number });
+                $scope.waitSaving(true).then(function () {
+                    $state.go('test.pass.question', { test: testResult.testId, question: number });
+                });
             };
             $scope.next = function () {
                 $scope.waitSaving(true).then(function() {
@@ -75,15 +73,31 @@
                     $scope.question.userAnswer.answerIds.push(id);
                 }
                 $scope.answerIds = $scope.question.userAnswer.answerIds;
-                console.log($scope.question.userAnswer.answerIds);
                 $scope.trackChanges();
             };
-            console.log($scope.question.userAnswer.answerIds);
+            var countAnswers = function () {
+                var count = 0;
+                for (var i = 0; i < $scope.examination.questions.length; i++) {
+                    var question = $scope.examination.questions[i];
+                    switch (enumConverter.questionTypeToString(question.questionType)) {
+                        case "SingleAnswer":
+                        case "MultipleAnswers":
+                            if (question.userAnswer.answerIds.length != 0)
+                                count++;
+                            break;
+                        default:
+                            throw "Not implemented";
+                    }
+                }
+                $scope.userAnswersCount = count;
+                $scope.userAnswersFull = count == $scope.examination.questions.length;
+            };
+            countAnswers();
             var saveDefer = $q.defer();
             saveDefer.resolve();
             var saveTimeout = null;
             $scope.trackChanges = function (immediate) {
-                console.log('trackChanges', immediate);
+                countAnswers();
                 if (saveTimeout) {
                     saveDefer.reject();
                     clearTimeout(saveTimeout);
@@ -109,6 +123,15 @@
                     $scope.trackChanges(immediate);
                 }
                 return saveDefer.promise;
+            };
+            $scope.completeTest = function () {
+                $scope.waitSaving(true).then(function () {
+                    examService.completeTestResult({ testResultId: testResult.testResultId })
+                        .success(function () {
+                            message.success("Test completed");
+                            $state.go('test.available');
+                        });
+                });
             };
         }
     ]);

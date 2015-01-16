@@ -53,16 +53,19 @@
                 .state('test.list', {
                     url: '/list',
                     templateUrl: '/App/Main/views/test/list.cshtml',
+                    menu: 'Test'
                 })
                 .state('test.edit', {
                     url: '/:test/edit',
                     templateUrl: '/App/Main/views/test/edit.cshtml',
+                    menu: 'Test'
                 })
 
 
                 .state('test.available', {
                     url: '/available',
                     templateUrl: '/App/Main/views/test/exams.cshtml',
+                    menu: 'Exam'
                 })
                 .state('test.pass', { // answering test
                     url: '/:test/pass',
@@ -87,13 +90,16 @@
                 .state('test.pass.question', {
                     url: '/:question',
                     templateUrl: '/App/Main/views/test/pass.cshtml',
-                    controller: 'app.views.test.pass'
+                    controller: 'app.views.test.pass',
+                    menu: 'Exam'
                 })
                 .state('test.result', { // test results
                     url: '/:test/result',
+                        menu: 'Test'
                 })
                 .state('test.result.details', {
-                    url: '/:user'
+                    url: '/:user',
+                    menu: 'Test'
                 })
 
             ;

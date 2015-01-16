@@ -2,10 +2,12 @@
     <accordion close-others="oneAtATime">
         <accordion-group ng-repeat="test in tests">
             <accordion-heading>
-                {{test.testName}}
-                <div style="float: right">
-                    <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})"></a>
-                    <a class="glyphicon glyphicon-remove" ng-click="deleteTest(test)"></a>
+                <div class="width:100%">
+                    {{test.testName}}
+                    <div style="float: right">
+                        <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})" ng-click="$event.stopPropagation();"></a>
+                        <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteTest(test); $event.stopPropagation();"></button>
+                    </div>
                 </div>
             </accordion-heading>
             <div style="margin-bottom: 8px">

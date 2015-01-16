@@ -42,7 +42,17 @@ namespace EduTesting.Service
                 Timestamp = DateTime.UtcNow,
                 IsCompleted = false,
             };
-            _Repository.Insert<TestResult>(exam);
+            exam = _Repository.Insert<TestResult>(exam);
+            // TODO: check test type
+            foreach (var question in test.Questions)
+            {
+                _Repository.Insert(new UserAnswer
+                {
+                    TestResultId = exam.TestResultId,
+                    Question = question,
+                    Answer = null
+                });
+            }
         }
 
         public TestResultViewModel GetActiveUserTestResult(StartTestViewModel startModel)
@@ -100,8 +110,9 @@ namespace EduTesting.Service
                         //TODO: AnswerText
                         QuestionId = q.QuestionId,
                         TestResultId = exam.TestResultId,
-                        AnswerIds = _Repository.GetUserAnswersByTestResultId(exam.TestResultId).Where(
-                            ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null)).Select(ua => ua.Answer.AnswerId).ToArray()
+                        AnswerIds = _Repository.GetUserAnswersByTestResultId(exam.TestResultId)
+                            .Where(ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null))
+                            .Select(ua => ua.Answer.AnswerId).ToArray()
                     }
                };
                 return item;
@@ -117,18 +128,34 @@ namespace EduTesting.Service
             if (question == null)
                 throw new BusinessLogicException("Question not found by id " + answer.QuestionId);
             var testResult = _Repository.SelectById<TestResult>(answer.TestResultId);
-            _Repository.Delete(testResult.UsersAnswers.Where(a => a.Question.QuestionId == answer.QuestionId));
-            foreach (var answerId in answer.AnswerIds)
+            var oldAnswers = testResult.UsersAnswers
+                .Where(a => a.Question.QuestionId == answer.QuestionId).ToArray();
+            if (oldAnswers.Length == 0)
+                throw new BusinessLogicException("Question is not included in the test");
+            _Repository.Delete(oldAnswers);
+            if (answer.AnswerIds.Length == 0)
             {
-                var answerModel = _Repository.SelectById<Answer>(answerId);
-                if (answerModel == null)
-                    throw new BusinessLogicException("Answer not found by id " + answerId);
-                _Repository.Insert<UserAnswer>(new UserAnswer
+                _Repository.Insert(new UserAnswer
                 {
                     TestResultId = answer.TestResultId,
                     Question = question,
-                    Answer = answerModel
+                    Answer = null
                 });
+            }
+            else
+            {
+                foreach (var answerId in answer.AnswerIds)
+                {
+                    var answerModel = _Repository.SelectById<Answer>(answerId);
+                    if (answerModel == null)
+                        throw new BusinessLogicException("Answer not found by id " + answerId);
+                    _Repository.Insert<UserAnswer>(new UserAnswer
+                    {
+                        TestResultId = answer.TestResultId,
+                        Question = question,
+                        Answer = answerModel
+                    });
+                }
             }
         }
 
