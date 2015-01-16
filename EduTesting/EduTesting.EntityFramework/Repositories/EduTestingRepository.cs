@@ -116,7 +116,7 @@ namespace EduTesting.Repositories
         #endregion
     }
 
-    public class EduTestingRepository : EduTestingGenericRepository, IEduTestingRepository
+    public partial class EduTestingRepository : EduTestingGenericRepository, IEduTestingRepository
     {
         #region Methods
 

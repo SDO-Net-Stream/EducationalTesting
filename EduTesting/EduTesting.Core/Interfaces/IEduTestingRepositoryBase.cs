@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using EduTesting.Model;
+using EduTesting.DataProvider;
 
 namespace EduTesting.Interfaces
 {
@@ -23,7 +24,7 @@ namespace EduTesting.Interfaces
         void Delete<TEntity>(IEnumerable<TEntity> items) where TEntity : class;
     }
 
-    public interface IEduTestingRepository : IEduTestingGenericRepository
+    public interface IEduTestingRepository : IEduTestingGenericRepository, IUserRepository
     {
         IEnumerable<Question> GetQuestionsByTest(int testId);
 

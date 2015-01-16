@@ -7,6 +7,8 @@ using EduTesting.DataProvider;
 using Abp.Domain.Uow;
 using EduTesting.Repositories;
 using EduTesting.Interfaces;
+using Abp.Dependency;
+using Castle.MicroKernel.Registration;
 
 namespace EduTesting
 {
@@ -21,9 +23,10 @@ namespace EduTesting
         public override void Initialize()
         {
             //IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            IocManager.Register<IUserRepository, FakeUserProvider>();
+            //IocManager.Register<IUserRepository, FakeUserProvider>();
             IocManager.Register<IUnitOfWork, FakeUnitOfWork>();
-            IocManager.Register<IEduTestingRepository, EduTestingRepository>(lifeStyle: Abp.Dependency.DependencyLifeStyle.Transient);
+            //IocManager.Register<IEduTestingRepository, EduTestingRepository>(lifeStyle: DependencyLifeStyle.Transient);
+            IocManager.IocContainer.Register(Component.For<IEduTestingRepository, IUserRepository>().ImplementedBy<EduTestingRepository>().LifestyleTransient());
             // Forces initialization of database on model changes.
             using (var context = new EduTestingDbContext())
             {
