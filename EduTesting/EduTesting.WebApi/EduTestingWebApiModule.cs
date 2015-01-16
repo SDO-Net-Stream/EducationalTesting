@@ -39,6 +39,9 @@ namespace EduTesting
             DynamicApiControllerBuilder.For<ITestResultService>("app/testResult")
                 .WithFilters(authenticationFilter)
                 .Build();
+            DynamicApiControllerBuilder.For<IUserGroupService>("app/group")
+                .WithFilters(authenticationFilter)
+                .Build();
 
 #if DEBUG
             EventBus.Default.Register<AbpHandledExceptionData>(eventData =>

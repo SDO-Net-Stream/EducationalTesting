@@ -40,7 +40,14 @@ namespace EduTesting.Web
                         "Exam",
                         new LocalizableString("PassingTest", EduTestingConsts.LocalizationSourceName),
                         url: "#/test/available",
-                        icon: "fa fa-briefcase"
+                        icon: "fa fa-trophy"
+                        )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "Group",
+                        new LocalizableString("Group", EduTestingConsts.LocalizationSourceName),
+                        url: "#/group/list",
+                        icon: "fa fa-group"
                         )
                 );
         }

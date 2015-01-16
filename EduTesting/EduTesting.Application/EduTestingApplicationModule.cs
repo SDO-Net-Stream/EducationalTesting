@@ -13,6 +13,7 @@ namespace EduTesting
             IocManager.Register<ITestService, TestService>();
             IocManager.Register<ITestResultService, TestResultService>();
             IocManager.Register<IAccountService, AccountService>();
+            IocManager.Register<IUserGroupService, UserGroupService>();
         }
     }
 }

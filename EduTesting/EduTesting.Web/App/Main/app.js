@@ -102,6 +102,18 @@
                     menu: 'Test'
                 })
 
+
+                .state('group', {
+                    abstract: true,
+                    url: '/group',
+                    template: '<ui-view/>'
+                })
+                .state('group.list', {
+                    url: '/list',
+                    templateUrl: '/App/Main/views/group/list.cshtml',
+                    menu: 'Group'
+                })
+
             ;
         }
     ]);

@@ -27,7 +27,8 @@
                 'Home': false,
                 'About': false,
                 'Test': 'teacher',
-                'Exam': 'user'
+                'Exam': 'user',
+                'Group': 'teacher',
             };
             vm.menuDisabled = function (name) {
                 if (!permissions.hasOwnProperty(name))

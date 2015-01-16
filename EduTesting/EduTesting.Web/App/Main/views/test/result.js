@@ -5,7 +5,6 @@
         '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult', '$stateParams',
         function ($scope, testService, message, $state, $modal, testResultService, $stateParams) {
             var loadUsers = function() {
-                console.log('loading users', $scope.result.filter.userName);
                 testResultService.getTestResultsForUsers({ testId: $scope.test.testId, userName: $scope.result.filter.userName })
                     .success(function (list) {
                         $scope.result.users = list;

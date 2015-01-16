@@ -1,0 +1,11 @@
+﻿<div ng-controller="app.views.group.list as vm">
+    <accordion>
+        <accordion-group ng-repeat="group in groups">
+            <accordion-heading>
+                <div>
+                    {{group.groupName}}
+                </div>
+            </accordion-heading>
+        </accordion-group>
+    </accordion>
+</div>

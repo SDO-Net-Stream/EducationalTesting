@@ -78,6 +78,7 @@
     <Compile Include="Model\UserGroup.cs" />
     <Compile Include="Model\UserAnswer.cs" />
     <Compile Include="Service\ITestResultService.cs" />
+    <Compile Include="Service\IUserGroupService.cs" />
     <Compile Include="ViewModels\TestResult\StartTestViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultAnswerViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultListItemViewModel.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="ViewModels\Test\QuestionViewModel.cs" />
     <Compile Include="ViewModels\Test\TestListItemViewModel.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
+    <Compile Include="ViewModels\UserGroup\UserGroupListFilterViewModel.cs" />
+    <Compile Include="ViewModels\UserGroup\UserGroupListItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
