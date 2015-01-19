@@ -17,14 +17,99 @@ namespace EduTesting.Service
             _repository = repository;
         }
 
-        public UserGroupListItemViewModel[] GetGroups(UserGroupListFilterViewModel filter)
+        public UserGroupViewModel[] GetGroups(UserGroupListFilterViewModel filter)
         {
             var groups = string.IsNullOrWhiteSpace(filter.GroupName) ?
                 _repository.SelectAll<UserGroup>() :
-                _repository.SelectAll<UserGroup>(g => g.GroupName.Contains(filter.GroupName));
+                _repository.SelectAll<UserGroup>().Where(g => g.GroupName.Contains(filter.GroupName));
             return groups.OrderBy(g => g.GroupName).Take(filter.Count ?? 10)
-                .Select(g => new UserGroupListItemViewModel { GroupId = g.GroupID, GroupName = g.GroupName })
+                .Select(g => ToViewModel(g))
                 .ToArray();
         }
+
+        public UserListItemViewModel[] GetUsers(UserListFilterViewModel filter)
+        {
+            var users = _repository.SelectAll<User>();
+            if (!string.IsNullOrWhiteSpace(filter.UserName))
+            {
+                var nameFilter = filter.UserName.ToLowerInvariant();
+                users = users.Where(u => string.Concat(u.UserFirstName, " ", u.UserLastName).ToLowerInvariant().Contains(nameFilter));
+            }
+            return users.OrderBy(u => u.UserFirstName).ThenBy(u => u.UserLastName).Take(filter.Count ?? 20)
+                .Select(u => new UserListItemViewModel
+                {
+                    UserId = u.UserId,
+                    UserFirstName = u.UserFirstName,
+                    UserLastName = u.UserLastName
+                }).ToArray();
+        }
+
+
+        private UserGroupViewModel ToViewModel(UserGroup entity)
+        {
+            return new UserGroupViewModel
+            {
+                GroupId = entity.GroupID,
+                GroupName = entity.GroupName,
+                Users = entity.Users.OrderBy(u => u.UserFirstName).ThenBy(u => u.UserLastName)
+                    .Select(u => new UserListItemViewModel
+                    {
+                        UserId = u.UserId,
+                        UserFirstName = u.UserFirstName,
+                        UserLastName = u.UserLastName
+                    }).ToArray()
+            };
+        }
+
+        #region Editing
+        public UserGroupViewModel InsertGroup(UserGroupUpdateViewModel group)
+        {
+            var entity = new UserGroup();
+            UpdateGroupFromViewModel(group, entity);
+            entity = _repository.Insert(entity);
+            UpdateGroupUsersFromViewModel(group, entity);
+            _repository.Update(entity); // TODO: replace by SaveChanges
+            return ToViewModel(entity);
+        }
+
+
+        private void UpdateGroupUsersFromViewModel(UserGroupUpdateViewModel group, UserGroup entity)
+        {
+            var toRemove = (entity.Users ?? new User[0]).ToDictionary(u => u.UserId);
+            foreach (var userId in group.Users)
+            {
+                if (toRemove.ContainsKey(userId))
+                {
+                    toRemove.Remove(userId);
+                }
+                else
+                {
+                    var newUser = _repository.GetUserById(userId);
+                    entity.Users.Add(newUser);
+                }
+            }
+            foreach (var user in toRemove)
+            {
+                entity.Users.Remove(user.Value);
+            }
+        }
+
+        private void UpdateGroupFromViewModel(UserGroupUpdateViewModel group, UserGroup entity)
+        {
+            entity.GroupName = group.GroupName;
+        }
+        public UserGroupViewModel UpdateGroup(UserGroupUpdateViewModel group)
+        {
+            var entity = _repository.SelectById<UserGroup>(group.GroupId);
+            UpdateGroupFromViewModel(group, entity);
+            UpdateGroupUsersFromViewModel(group, entity);
+            _repository.Update(entity); // TODO: replace by SaveChanges
+            return ToViewModel(entity);
+        }
+        public void DeleteGroup(UserGroupUpdateViewModel group)
+        {
+            _repository.Delete<UserGroup>(group.GroupId);
+        }
+        #endregion
     }
 }

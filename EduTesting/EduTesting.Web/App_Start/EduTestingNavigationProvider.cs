@@ -46,7 +46,7 @@ namespace EduTesting.Web
                     new MenuItemDefinition(
                         "Group",
                         new LocalizableString("Group", EduTestingConsts.LocalizationSourceName),
-                        url: "#/group/list",
+                        url: "#/group/list/",
                         icon: "fa fa-group"
                         )
                 );

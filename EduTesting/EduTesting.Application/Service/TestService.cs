@@ -104,7 +104,6 @@ namespace EduTesting.Service
         }
         private void UpdateTestQuestionsFromViewModel(TestViewModel model, Test entity)
         {
-            var questions = entity.Questions ?? new List<Question>();
             var toUpdate = (entity.Questions ?? new Question[0]).ToDictionary(q => q.QuestionId);
             foreach (var question in model.Questions)
             {
@@ -153,6 +152,11 @@ namespace EduTesting.Service
                 }
                 newAnswer.AnswerText = answer.AnswerText;
                 _Repository.UpdateAnswerIsRight(newAnswer.AnswerId, answer.AnswerIsRight);
+            }
+            foreach (var answer in toUpdate)
+            {
+                entity.Answers.Remove(answer.Value);
+                _Repository.Delete<Answer>(answer.Value.QuestionId);
             }
         }
         #endregion

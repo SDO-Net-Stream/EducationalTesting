@@ -1,5 +1,5 @@
 ﻿<div ng-controller="app.views.test.list as vm">
-    <accordion close-others="oneAtATime">
+    <accordion close-others="false">
         <accordion-group ng-repeat="test in tests" is-open="test.isopened">
             <accordion-heading>
                 <div class="width:100%">

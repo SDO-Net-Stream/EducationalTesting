@@ -9,6 +9,11 @@ namespace EduTesting.Service
 {
     public interface IUserGroupService
     {
-        UserGroupListItemViewModel[] GetGroups(UserGroupListFilterViewModel filter);
+        UserGroupViewModel[] GetGroups(UserGroupListFilterViewModel filter);
+        UserListItemViewModel[] GetUsers(UserListFilterViewModel filter);
+
+        UserGroupViewModel InsertGroup(UserGroupUpdateViewModel group);
+        UserGroupViewModel UpdateGroup(UserGroupUpdateViewModel group);
+        void DeleteGroup(UserGroupUpdateViewModel group);
     }
 }

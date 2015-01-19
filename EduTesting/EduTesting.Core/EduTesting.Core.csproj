@@ -99,8 +99,11 @@
     <Compile Include="ViewModels\Test\QuestionViewModel.cs" />
     <Compile Include="ViewModels\Test\TestListItemViewModel.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
+    <Compile Include="ViewModels\UserGroup\UserGroupUpdateViewModel.cs" />
     <Compile Include="ViewModels\UserGroup\UserGroupListFilterViewModel.cs" />
-    <Compile Include="ViewModels\UserGroup\UserGroupListItemViewModel.cs" />
+    <Compile Include="ViewModels\UserGroup\UserGroupViewModel.cs" />
+    <Compile Include="ViewModels\UserGroup\UserListFilterViewModel.cs" />
+    <Compile Include="ViewModels\UserGroup\UserListItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

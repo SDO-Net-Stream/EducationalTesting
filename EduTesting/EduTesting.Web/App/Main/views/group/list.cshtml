@@ -1,11 +1,46 @@
 ﻿<div ng-controller="app.views.group.list as vm">
-    <accordion>
-        <accordion-group ng-repeat="group in groups">
+    <form ng-submit="void(0);" name="search" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-xs-2">Search:</label>
+            <div class="col-xs-10">
+                <input type="text" name="groupName" ng-model="filterGroupName" class="form-control" ng-change="searchGroup()"></input>
+            </div>
+        </div>
+    </form>
+
+    <accordion close-others="false">
+        <accordion-group ng-repeat="group in groups" is-open="group.$isOpen">
             <accordion-heading>
                 <div>
                     {{group.groupName}}
                 </div>
             </accordion-heading>
+
+            <div>
+                <div class="col-xs-6">
+                    Users in group ({{group.users.length}}):
+                    <ul>
+                        <li ng-repeat="user in group.users">{{user.userFirstName}} {{user.userLastName}}
+                        </li>
+                    </ul>
+                    <form ng-submit="void(0);" name="search" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Search:</label>
+                            <div class="col-xs-10">
+                                <input type="text" name="userName" ng-model="group.filterUserName" class="form-control" ng-change="searchUser(group)"></input>
+                            </div>
+                        </div>
+                    </form>
+                    <ul ng-if="group.filteredUsers">
+                        <li ng-repeat="user in group.filteredUsers">
+                            {{user.userFirstName}} {{user.userLastName}}
+                            <button class="btn glyphicon glyphicon-plus" ng-click="addUserToGroup(user, group)" ng-if="!userInGroup(user, group)"></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </accordion-group>
     </accordion>
 </div>
+
+

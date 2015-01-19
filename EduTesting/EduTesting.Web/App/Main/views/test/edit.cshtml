@@ -3,7 +3,7 @@
     <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
     <h4>{{model.testName}}<a ng-click="editTestName()">{{model.testName?'':'Please enter name of the test'}}<span class="glyphicon glyphicon-pencil"></span></a></h4>
     {{model.testDescription}}
-    <accordion close-others="oneAtATime">
+    <accordion close-others="false">
         <accordion-group ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
             <accordion-heading>
                 <div class="width:100%">

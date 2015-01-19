@@ -109,7 +109,10 @@
                     template: '<ui-view/>'
                 })
                 .state('group.list', {
-                    url: '/list',
+                    url: '/list/:group',
+                    params: {
+                        group: { value: 0 }
+                    },
                     templateUrl: '/App/Main/views/group/list.cshtml',
                     menu: 'Group'
                 })
