@@ -8,7 +8,7 @@ using EduTesting.DataProvider;
 
 namespace EduTesting.Interfaces
 {
-    public interface IEduTestingGenericRepository : IDisposable
+    public interface IEduTestingGenericRepository
     {
         IQueryable<TEntity> SelectAll<TEntity>(params Expression<Func<TEntity, object>>[] includeObjects) where TEntity : class;
         IEnumerable<TEntity> SelectAll<TEntity>() where TEntity : class;

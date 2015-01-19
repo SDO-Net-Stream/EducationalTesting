@@ -17,7 +17,7 @@ namespace EduTesting.Repositories
 
         public User GetUserByDomainName(string domainName)
         {
-            return DBContext.Users.FirstOrDefault(user => domainName.Equals(user.UserDomainName, StringComparison.InvariantCultureIgnoreCase));
+            return GetDBContext().Users.FirstOrDefault(user => domainName.Equals(user.UserDomainName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public User GetUserByEmail(string email)
@@ -25,7 +25,7 @@ namespace EduTesting.Repositories
             if (string.IsNullOrWhiteSpace(email))
                 return null;
             else
-                return DBContext.Users.FirstOrDefault(user => email.Equals(user.UserEmail, StringComparison.InvariantCultureIgnoreCase));
+                return GetDBContext().Users.FirstOrDefault(user => email.Equals(user.UserEmail, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public User GetUserByEmailPassword(string email, string password)
@@ -35,7 +35,7 @@ namespace EduTesting.Repositories
 
         public User GetUserByToken(string token)
         {
-            return DBContext.Users.FirstOrDefault(user => user.UserPasswordVerificationToken == token);
+            return GetDBContext().Users.FirstOrDefault(user => user.UserPasswordVerificationToken == token);
         }
 
         public User Register(string name, string email, string password)

@@ -26,7 +26,8 @@ namespace EduTesting
             //IocManager.Register<IUserRepository, FakeUserProvider>();
             IocManager.Register<IUnitOfWork, FakeUnitOfWork>();
             //IocManager.Register<IEduTestingRepository, EduTestingRepository>(lifeStyle: DependencyLifeStyle.Transient);
-            IocManager.IocContainer.Register(Component.For<IEduTestingRepository, IUserRepository>().ImplementedBy<EduTestingRepository>().LifestyleTransient());
+            IocManager.IocContainer.Register(Component.For<IEduTestingRepository, IUserRepository>().ImplementedBy<EduTestingRepository>().LifestyleSingleton());
+            IocManager.IocContainer.Register(Component.For<EduTestingDbContext>().LifestylePerWebRequest());
             // Forces initialization of database on model changes.
             using (var context = new EduTestingDbContext())
             {

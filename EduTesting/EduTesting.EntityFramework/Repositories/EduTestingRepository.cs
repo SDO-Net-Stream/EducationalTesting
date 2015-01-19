@@ -16,20 +16,11 @@ namespace EduTesting.Repositories
 
         public EduTestingGenericRepository()
         {
-            DBContext = new EduTestingDbContext();
         }
 
-        public EduTestingGenericRepository(EduTestingDbContext db)
+        protected EduTestingDbContext GetDBContext()
         {
-            DBContext = db;
-        }
-
-        public void Dispose()
-        {
-            if (DBContext != null)
-            {
-                DBContext.Dispose();
-            }
+            return Abp.Dependency.IocManager.Instance.Resolve<EduTestingDbContext>();
         }
 
         #endregion
@@ -38,7 +29,7 @@ namespace EduTesting.Repositories
 
         public IQueryable<TEntity> SelectAll<TEntity>(params Expression<Func<TEntity, object>>[] includeObjects) where TEntity : class
         {
-            IQueryable<TEntity> resultList = DBContext.Set<TEntity>();
+            IQueryable<TEntity> resultList = GetDBContext().Set<TEntity>();
 
             foreach (var includeItem in includeObjects)
             {
@@ -50,68 +41,68 @@ namespace EduTesting.Repositories
 
         public IEnumerable<TEntity> SelectAll<TEntity>() where TEntity : class
         {
-            return DBContext.Set<TEntity>().ToList();
+            return GetDBContext().Set<TEntity>().ToList();
         }
 
         public TEntity SelectById<TEntity>(params object[] keyValues) where TEntity : class
         {
-            return DBContext.Set<TEntity>().Find(keyValues);
+            return GetDBContext().Set<TEntity>().Find(keyValues);
         }
 
         public TEntity Insert<TEntity>(TEntity item) where TEntity : class
         {
-            var entity = DBContext.Set<TEntity>().Add(item);
-            DBContext.SaveChanges();
+            var db = GetDBContext();
+            var entity = db.Set<TEntity>().Add(item);
+            db.SaveChanges();
             return entity;
         }
 
         public IEnumerable<TEntity> Insert<TEntity>(IEnumerable<TEntity> items) where TEntity : class
         {
-            var entities = DBContext.Set<TEntity>().AddRange(items);
-            DBContext.SaveChanges();
+            var db = GetDBContext();
+            var entities = db.Set<TEntity>().AddRange(items);
+            db.SaveChanges();
             return entities;
         }
 
-        private void UpdateInternal<TEntity>(TEntity item) where TEntity : class
+        private void UpdateInternal<TEntity>(EduTestingDbContext db, TEntity item) where TEntity : class
         {
-            DBContext.Set<TEntity>().Attach(item);
-            DBContext.Entry(item).State = EntityState.Modified;
+            db.Set<TEntity>().Attach(item);
+            db.Entry(item).State = EntityState.Modified;
         }
 
         public void Update<TEntity>(TEntity item) where TEntity : class
         {
-            UpdateInternal<TEntity>(item);
-            DBContext.SaveChanges();
+            var db = GetDBContext();
+            UpdateInternal<TEntity>(db, item);
+            db.SaveChanges();
         }
 
         public void Update<TEntity>(IEnumerable<TEntity> items) where TEntity : class
         {
-            foreach(var item in items)
+            var db = GetDBContext();
+            foreach (var item in items)
             {
-                UpdateInternal<TEntity>(item);
+                UpdateInternal<TEntity>(db, item);
             }
-            DBContext.SaveChanges();
+            db.SaveChanges();
         }
 
         public void Delete<TEntity>(int itemId) where TEntity : class
         {
-            var table = DBContext.Set<TEntity>();
+            var db = GetDBContext();
+            var table = db.Set<TEntity>();
             var item = table.Find(itemId);
             table.Remove(item);
-            DBContext.SaveChanges();
+            db.SaveChanges();
         }
 
         public void Delete<TEntity>(IEnumerable<TEntity> items) where TEntity : class
         {
-            DBContext.Set<TEntity>().RemoveRange(items);
-            DBContext.SaveChanges();
+            var db = GetDBContext();
+            db.Set<TEntity>().RemoveRange(items);
+            db.SaveChanges();
         }
-
-        #endregion
-
-        #region Properties
-
-        protected EduTestingDbContext DBContext { get; private set; }
 
         #endregion
     }
@@ -122,37 +113,38 @@ namespace EduTesting.Repositories
 
         public IEnumerable<Question> GetQuestionsByTest(int testId)
         {
-            return DBContext.Questions.Where(q => q.TestId == testId);
+            return GetDBContext().Questions.Where(q => q.TestId == testId);
         }
 
         public IEnumerable<TestResult> GetTestResultsByTest(int testId)
         {
-            return DBContext.TestResults.Where(tr => tr.TestId == testId);
+            return GetDBContext().TestResults.Where(tr => tr.TestId == testId);
         }
 
         public IEnumerable<TestResult> GetTestResultsByUser(int userId)
         {
-            return DBContext.TestResults.Where(tr => tr.UserId == userId);
+            return GetDBContext().TestResults.Where(tr => tr.UserId == userId);
         }
 
         public IEnumerable<TestResult> GetTestResultsByTestAndUser(int testId, int userId)
         {
-            return DBContext.TestResults.Where(tr => tr.TestId == testId && tr.UserId == userId);
+            return GetDBContext().TestResults.Where(tr => tr.TestId == testId && tr.UserId == userId);
         }
 
         public TestResult GetActiveTestResultByUser(int testId, int userId)
         {
-            return DBContext.TestResults.FirstOrDefault(tr => tr.TestId == testId && tr.UserId == userId && tr.IsCompleted == false);
+            return GetDBContext().TestResults.FirstOrDefault(tr => tr.TestId == testId && tr.UserId == userId && tr.IsCompleted == false);
         }
 
         public IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testsResultId)
         {
-            return DBContext.UsersAnswers.Where(ua => ua.TestResult.TestResultId == testsResultId);
+            return GetDBContext().UsersAnswers.Where(ua => ua.TestResult.TestResultId == testsResultId);
         }
 
         public void UpdateQuestionType(int questionId, int questionTypeId)
         {
-            var attr = DBContext.QuestionAttributes.FirstOrDefault(qa => qa.QuestionID == questionId && qa.AttributeID == EduTestingConsts.AttributeId_QuestionType);
+            var db = GetDBContext();
+            var attr = db.QuestionAttributes.FirstOrDefault(qa => qa.QuestionID == questionId && qa.AttributeID == EduTestingConsts.AttributeId_QuestionType);
             if (attr == null)
             {
                 attr = new QuestionAttribute
@@ -160,10 +152,10 @@ namespace EduTesting.Repositories
                     AttributeID = EduTestingConsts.AttributeId_QuestionType,
                     QuestionID = questionId
                 };
-                DBContext.QuestionAttributes.Add(attr);
+                db.QuestionAttributes.Add(attr);
             }
             attr.Value = questionTypeId.ToString();
-            DBContext.SaveChanges();
+            db.SaveChanges();
         }
 
         public void UpdateAnswerIsRight(int answerId, bool isRight)
@@ -179,7 +171,7 @@ namespace EduTesting.Repositories
             }
             // TODO: set attribute value
             //attr.Value = questionTypeId.ToString();
-            DBContext.SaveChanges();
+            GetDBContext().SaveChanges();
         }
 
         #endregion
