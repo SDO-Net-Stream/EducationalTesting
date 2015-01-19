@@ -12,13 +12,9 @@ namespace EduTesting.DataProvider
         User GetUserById(int userId);
         User GetUserByDomainName(string domainName);
         User GetUserByEmail(string email);
-        User GetUserByEmailPassword(string email, string password);
         User GetUserByToken(string token);
 
-        User Register(string name, string email, string password);
-        void ChangePassword(User user, string password);
-
-        string GenerateUserToken(User user);
-        void DeleteUserToken(User user, string token);
+        void InsertUser(User user);
+        void UpdateUser(User user);
     }
 }

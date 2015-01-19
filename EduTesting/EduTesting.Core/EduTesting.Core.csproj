@@ -77,6 +77,7 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserGroup.cs" />
     <Compile Include="Model\UserAnswer.cs" />
+    <Compile Include="Security\PasswordEncription.cs" />
     <Compile Include="Service\ITestResultService.cs" />
     <Compile Include="Service\IUserGroupService.cs" />
     <Compile Include="ViewModels\TestResult\StartTestViewModel.cs" />

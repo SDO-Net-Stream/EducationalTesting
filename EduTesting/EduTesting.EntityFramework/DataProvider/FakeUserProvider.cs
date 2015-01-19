@@ -36,19 +36,7 @@ namespace EduTesting.DataProvider
         {
             return FakeUser(domainName);
         }
-
-        public User GetUserByEmailPassword(string email, string password)
-        {
-            if (email == password)
-            {
-                return GetUserByEmail(email);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
+        
         public User GetUserById(int id)
         {
             return FakeUser(id.ToString());
@@ -66,27 +54,14 @@ namespace EduTesting.DataProvider
             return FakeUser(token.Split(' ')[0]);
         }
 
-        public User Register(string name, string email, string password)
+        public void InsertUser(User user)
         {
-            if (password != email)
-                throw new BusinessLogicException("Email and password must match");
-            return FakeUser(email);
+            throw new NotImplementedException();
         }
 
-        public void ChangePassword(User user, string password)
+        public void UpdateUser(User user)
         {
-            //
-        }
-
-        public string GenerateUserToken(User user)
-        {
-            var key = string.IsNullOrWhiteSpace(user.UserEmail) ? user.UserDomainName : user.UserEmail;
-            return key + " " + Guid.NewGuid().ToString();
-        }
-
-        public void DeleteUserToken(User user, string token)
-        {
-            //
+            throw new NotImplementedException();
         }
     }
 }

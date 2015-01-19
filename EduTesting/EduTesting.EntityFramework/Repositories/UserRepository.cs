@@ -28,34 +28,19 @@ namespace EduTesting.Repositories
                 return GetDBContext().Users.FirstOrDefault(user => email.Equals(user.UserEmail, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public User GetUserByEmailPassword(string email, string password)
+        public void InsertUser(User user)
         {
-            throw new NotImplementedException();
+            Insert(user);
+        }
+
+        public void UpdateUser(User user)
+        {
+            Update(user);
         }
 
         public User GetUserByToken(string token)
         {
-            return GetDBContext().Users.FirstOrDefault(user => user.UserPasswordVerificationToken == token);
-        }
-
-        public User Register(string name, string email, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangePassword(User user, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GenerateUserToken(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteUserToken(User user, string token)
-        {
-            throw new NotImplementedException();
+            return GetDBContext().Users.FirstOrDefault(u => u.UserPasswordVerificationToken == token);
         }
     }
 }

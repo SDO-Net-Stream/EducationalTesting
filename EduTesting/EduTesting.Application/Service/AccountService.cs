@@ -1,12 +1,11 @@
 ﻿using Abp.Domain.Uow;
 using EduTesting.DataProvider;
 using EduTesting.Model;
+using EduTesting.Security;
 using EduTesting.ViewModels.Account;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EduTesting.Service
 {
@@ -21,7 +20,14 @@ namespace EduTesting.Service
         }
         public void RegisterByEmail(RegisterUserViewModel model)
         {
-            var user = _userRepository.Register(model.Name, model.Email, model.Password);
+            var user = new User();
+            user.UserFirstName = model.Name;
+            user.UserEmail = model.Email;
+            user.UserPasswordSalt = PasswordEncription.GenerateSaltValue();
+            user.UserPassword = PasswordEncription.HashPassword(model.Password, user.UserPasswordSalt);
+            user.UserPasswordVerificationToken = null;
+            _userRepository.InsertUser(user);
+            //var user = _userRepository.Register(model.Name, model.Email, model.Password);
         }
 
         public void ResetPassword(LostPasswordViewModel model)
@@ -29,7 +35,16 @@ namespace EduTesting.Service
             var user = _userRepository.GetUserByEmail(model.Email);
             if (user == null)
                 throw new BusinessLogicException("Email not found");
-            var token = _userRepository.GenerateUserToken(user);
+            string token;
+            var encoding = Encoding.Unicode;
+            while (true)
+            {
+                token = BitConverter.ToString(encoding.GetBytes(PasswordEncription.GenerateSaltValue()));
+                if (_userRepository.GetUserByToken(token) == null)
+                    break;
+            }
+            user.UserPasswordVerificationToken = token;
+            _userRepository.UpdateUser(user);
             //UnitOfWorkScope.Current.OnSuccess(() => _notificationService.SendResetPassword(user, token));
             _notificationService.SendResetPassword(user, token);
         }
@@ -39,8 +54,11 @@ namespace EduTesting.Service
             var user = _userRepository.GetUserByToken(model.Token);
             if (user == null)
                 throw new BusinessLogicException("Invalid user token");
-            _userRepository.ChangePassword(user, model.Password);
-            _userRepository.DeleteUserToken(user, model.Token);
+            user.UserPasswordSalt = PasswordEncription.GenerateSaltValue();
+            user.UserPassword = PasswordEncription.HashPassword(model.Password, user.UserPasswordSalt);
+            user.UserPasswordVerificationToken = null;
+            _userRepository.UpdateUser(user);
         }
+
     }
 }
