@@ -17,7 +17,7 @@
             {{ question.questionDescription || "-- no description --" }}
             <div ng-repeat="answer in question.answers" style="margin-bottom: 8px">
                 {{answer.answerText}}
-                <div style="float: right; border-color: gray;">
+                <div style="float: right;">
                     <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
                     <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
                 </div>

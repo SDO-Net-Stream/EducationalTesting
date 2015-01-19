@@ -13,14 +13,23 @@
             <accordion-heading>
                 <div>
                     {{group.groupName}}
+                    <div style="float: right">
+<!--
+                        <button class="glyphicon glyphicon-pencil btn-link" ng-click="editGroup(group); $event.stopPropagation();"></button>
+-->
+                        <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteGroup(group); $event.stopPropagation();"></button>
+                    </div>
                 </div>
             </accordion-heading>
 
-            <div>
+            <button class="btn" ng-click="editGroup(group)">Rename group</button>
+            <div class="clearfix">
                 <div class="col-xs-6">
                     Users in group ({{group.users.length}}):
                     <ul>
-                        <li ng-repeat="user in group.users">{{user.userFirstName}} {{user.userLastName}}
+                        <li ng-repeat="user in group.users">
+                            {{user.userFirstName}} {{user.userLastName}}
+                            <button class="btn glyphicon glyphicon-remove" ng-click="removeUserFromGroup(user, group)"></button>
                         </li>
                     </ul>
                     <form ng-submit="void(0);" name="search" class="form-horizontal">
@@ -41,6 +50,40 @@
             </div>
         </accordion-group>
     </accordion>
+    <button type="button" class="btn" ng-click="editGroup(null)">Create new Group</button>
 </div>
 
+<script id="app.views.group.list.edit.html" type="text/ng-template">
+    <form ng-submit="ok()" name="form" class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title">{{model.isNew ? "Create" : "Edit"}} group</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" ng-class="{'has-error': form.groupName.$dirty && form.groupName.$invalid, 'has-success': form.groupName.$dirty && !form.groupName.$invalid}">
+                <label for="group-edit-name" class="control-label col-xs-2">Name:</label>
+                <div class="col-xs-10">
+                    <input type="text" name="groupName" ng-model="model.groupName" id="group-edit-name" class="form-control" required="required"></input>
+                    <span ng-show="form.groupName.$dirty && form.groupName.$error.required" class="help-block">Enter group name.</span>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">{{model.isNew ? 'Create' : 'Update'}}</button>
+            <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</script>
+<script id="app.views.group.list.delete.html" type="text/ng-template">
+    <form ng-submit="ok()" name="form" class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title">Delete group</h3>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete group '{{model.groupName}}'?
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Delete</button>
+            <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</script>
 

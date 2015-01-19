@@ -47,18 +47,22 @@ namespace EduTesting.Service
 
         private UserGroupViewModel ToViewModel(UserGroup entity)
         {
-            return new UserGroupViewModel
+            var model = new UserGroupViewModel
             {
                 GroupId = entity.GroupID,
-                GroupName = entity.GroupName,
-                Users = entity.Users.OrderBy(u => u.UserFirstName).ThenBy(u => u.UserLastName)
+                GroupName = entity.GroupName
+            };
+            if (entity.Users == null)
+                model.Users = new UserListItemViewModel[0];
+            else
+                model.Users = entity.Users.OrderBy(u => u.UserFirstName).ThenBy(u => u.UserLastName)
                     .Select(u => new UserListItemViewModel
                     {
                         UserId = u.UserId,
                         UserFirstName = u.UserFirstName,
                         UserLastName = u.UserLastName
-                    }).ToArray()
-            };
+                    }).ToArray();
+            return model;
         }
 
         #region Editing
@@ -85,6 +89,8 @@ namespace EduTesting.Service
                 else
                 {
                     var newUser = _repository.GetUserById(userId);
+                    if (entity.Users == null)
+                        entity.Users = new List<User>();
                     entity.Users.Add(newUser);
                 }
             }
