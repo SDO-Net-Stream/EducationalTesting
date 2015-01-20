@@ -6,7 +6,7 @@
         function ($scope, testService, message, $state, $modal, testResultService) {
             $scope.tests = [];
             var loadTests = function () {
-                testService.getTests().success(function (list) {
+                testService.getTests({}).success(function (list) {
                     $scope.tests = list;
                 });
             };

@@ -11,5 +11,6 @@ namespace EduTesting.ViewModels.UserGroup
         public int GroupId { get; set; }
         public string GroupName { get; set; }
         public int[] Users { get; set; }
+        public int[] Tests { get; set; }
     }
 }

@@ -8,7 +8,7 @@
             var vm = this;
             $scope.tests = [];
             vm.results = {};
-            testService.getTests().success(function (list) {
+            testService.getTests({}).success(function (list) {
                 $scope.tests = list;
             });
             testResultService.getTestResultsForCurrentUser().success(function (list) {

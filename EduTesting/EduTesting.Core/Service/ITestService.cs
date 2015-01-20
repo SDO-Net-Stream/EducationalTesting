@@ -11,7 +11,7 @@ namespace EduTesting.Service
     public interface ITestService
     {
         TestViewModel GetTest(TestListItemViewModel test);
-        IEnumerable<TestListItemViewModel> GetTests();
+        TestListItemViewModel[] GetTests(TestListFilterViewModel filter);
 
         TestViewModel InsertTest(TestViewModel test);
         void UpdateTest(TestViewModel test);

@@ -79,15 +79,17 @@ namespace EduTesting.Service
             return result;
         }
 
-        public IEnumerable<TestListItemViewModel> GetTests()
+        public TestListItemViewModel[] GetTests(TestListFilterViewModel filter)
         {
             var tests = _Repository.SelectAll<Test>();
-            var result = new List<TestListItemViewModel>();
-            foreach (var test in tests)
+            if (!string.IsNullOrWhiteSpace(filter.TestName))
             {
-                result.Add(new TestListItemViewModel { TestId = test.TestId, TestName = test.TestName });
+                var nameFilter = filter.TestName.ToLowerInvariant();
+                tests = tests.Where(t => t.TestName.ToLowerInvariant().Contains(nameFilter));
             }
-            return result;
+            return tests.Take(filter.Count ?? 20)
+                .Select(t => new TestListItemViewModel { TestId = t.TestId, TestName = t.TestName })
+                .ToArray();
         }
 
         public TestViewModel InsertTest(TestViewModel test)

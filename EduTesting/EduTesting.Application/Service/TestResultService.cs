@@ -22,6 +22,12 @@ namespace EduTesting.Service
         public TestResultListItemViewModel[] GetTestResultsForUsers(TestResultsFilterViewModel filter)
         {
             var testResults = _Repository.GetTestResultsByTest(filter.TestId);
+            if (!string.IsNullOrWhiteSpace(filter.UserName))
+            {
+                var nameFilter = filter.UserName.ToLowerInvariant();
+                testResults = testResults.Where(r => string.Concat(r.User.UserFirstName, " ", r.User.UserLastName).ToLowerInvariant().Contains(filter.UserName));
+            }
+
             return testResults
                 .GroupBy(
                     r => r.UserId,
@@ -35,7 +41,9 @@ namespace EduTesting.Service
                             TestResultStatus = last.TestResultStatus
                         };
                     }
-                ).OrderBy(r => r.UserFirstName).ThenBy(r => r.UserLastName).ToArray();
+                ).OrderBy(r => r.UserFirstName).ThenBy(r => r.UserLastName)
+                .Take(filter.Count ?? 20)
+                .ToArray();
         }
 
         public void StartTest(StartTestViewModel startModel)
@@ -194,7 +202,7 @@ namespace EduTesting.Service
             #endregion
             exam.TestResultStatus = textAnswers ? TestResultStatus.Finished : TestResultStatus.Completed;
             exam.TestResultScore = score;
-            exam.TestResultRating = exam.Test.Ratings.OrderBy(r => r.RatingLowerBound).FirstOrDefault(r => r.RatingLowerBound <= score);
+            exam.TestResultRating = exam.Test.Ratings.OrderByDescending(r => r.RatingLowerBound).FirstOrDefault(r => r.RatingLowerBound <= score);
             exam.TestResultEndTime = DateTime.UtcNow;
             _Repository.Update<TestResult>(exam);
         }
@@ -212,7 +220,8 @@ namespace EduTesting.Service
             {
                 TestId = r.TestId,
                 TestResultStatus = r.TestResultStatus,
-                TestResultScore = r.TestResultScore
+                TestResultScore = r.TestResultScore,
+                RatingTitle = (r.TestResultRating == null ? (string)null : r.TestResultRating.RatingTitle)
             }).ToArray();
         }
     }

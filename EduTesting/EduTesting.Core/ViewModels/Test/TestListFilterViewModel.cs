@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.ViewModels.UserGroup
+namespace EduTesting.ViewModels.Test
 {
-    public class UserGroupListFilterViewModel
+    public class TestListFilterViewModel
     {
-        public int? TestId { get; set; }
-        public string GroupName { get; set; }
+        public string TestName { get; set; }
         public int? Count { get; set; }
     }
 }

@@ -2,8 +2,8 @@
     var controllerId = 'app.views.test.result';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult', '$stateParams', 'enumConverter',
-        function ($scope, testService, message, $state, $modal, testResultService, $stateParams, enumConverter) {
+        '$scope', 'abp.services.app.testResult', 'abp.services.app.group', '$stateParams', 'enumConverter',
+        function ($scope, testResultService, groupService, $stateParams, enumConverter) {
             var loadUsers = function() {
                 testResultService.getTestResultsForUsers({ testId: $scope.test.testId, userName: $scope.result.filter.userName })
                     .success(function (list) {
@@ -13,10 +13,17 @@
                         $scope.result.users = list;
                     });
             };
+            var loadGroups = function () {
+                groupService.getGroups({ testId: $scope.test.testId, groupName: $scope.result.filter.groupName })
+                    .success(function (list) {
+                        $scope.result.groups = list;
+                    });
+            };
             $scope.result = {
                 filter: {},
                 load: function (test) {
                     loadUsers();
+                    loadGroups();
                 }
             };
             if ($scope.test) {
@@ -33,6 +40,18 @@
                     usersTimeout = setTimeout(function () {
                         usersTimeout = null;
                         loadUsers();
+                    }, 500);
+                }
+            });
+
+            var groupsTimeout = null;
+            $scope.$watch('result.filter.groupName', function (filter) {
+                if (typeof (filter) != 'undefined') {
+                    if (groupsTimeout)
+                        clearTimeout(groupsTimeout);
+                    groupsTimeout = setTimeout(function () {
+                        groupsTimeout = null;
+                        loadGroups();
                     }, 500);
                 }
             });

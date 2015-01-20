@@ -10,5 +10,6 @@ namespace EduTesting.ViewModels.TestResult
     {
         public int TestId { get; set; }
         public string UserName { get; set; }
+        public int? Count { get; set; }
     }
 }

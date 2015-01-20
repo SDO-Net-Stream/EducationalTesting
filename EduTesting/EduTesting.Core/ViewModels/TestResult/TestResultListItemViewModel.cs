@@ -15,5 +15,6 @@ namespace EduTesting.ViewModels.TestResult
         public int TestId { get; set; }
         public TestResultStatus TestResultStatus { get; set; }
         public decimal TestResultScore { get; set; }
+        public string RatingTitle { get; set; }
     }
 }
