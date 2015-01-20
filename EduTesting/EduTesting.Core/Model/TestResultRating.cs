@@ -18,7 +18,7 @@ namespace EduTesting.Model
         public int RatingId { get; set; }
         [Required]
         public int TestId { get; set; }
-        public int RatingLowerBound { get; set; }
+        public decimal RatingLowerBound { get; set; }
         public string RatingTitle { get; set; }
 
         public virtual Test Test { get; set; }

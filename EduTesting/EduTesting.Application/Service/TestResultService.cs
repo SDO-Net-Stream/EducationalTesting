@@ -164,8 +164,37 @@ namespace EduTesting.Service
             var exam = _Repository.SelectById<TestResult>(key.TestResultId);
             if (exam.UserId != _webUser.CurrentUser.UserId)
                 throw new BusinessLogicException("You can complete only owning test sessions");
-            // TODO: check text answers
-            exam.TestResultStatus = TestResultStatus.Completed;
+            var textAnswers = false;
+            var score = 0m;
+            #region calculate score
+            foreach (var group in exam.UsersAnswers.GroupBy(a => a.Question))
+            {
+                switch(group.Key.QuestionType)
+                {
+                    case QuestionType.TextAnswer:
+                        textAnswers = true;
+                        break;
+                    case QuestionType.SingleAnswer:
+                        var userAnswer = group.SingleOrDefault();
+                        if (userAnswer != null)
+                            score += userAnswer.Answer.AnswerScore;
+                        break;
+                    case QuestionType.MultipleAnswers:
+                        var scores = group.Key.Answers.Select(a => a.AnswerScore);
+                        var selected = group.Where(ua => ua.Answer != null).Sum(ua => ua.Answer.AnswerScore);
+                        if (scores.Max() == 1)
+                            score += selected / scores.Sum();
+                        else
+                            score += selected;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            #endregion
+            exam.TestResultStatus = textAnswers ? TestResultStatus.Finished : TestResultStatus.Completed;
+            exam.TestResultScore = score;
+            exam.TestResultRating = exam.Test.Ratings.OrderBy(r => r.RatingLowerBound).FirstOrDefault(r => r.RatingLowerBound <= score);
             exam.TestResultEndTime = DateTime.UtcNow;
             _Repository.Update<TestResult>(exam);
         }

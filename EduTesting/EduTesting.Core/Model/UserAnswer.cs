@@ -12,6 +12,8 @@ namespace EduTesting.Model
         public int UserAnswerId { get; set; }
         [Required]
         public int TestResultId { get; set; }
+        [Required]
+        public int QuestionId { get; set; }
 		public string CustomAnswerText { get; set; }
 
         public virtual TestResult TestResult { get; set; }

@@ -21,7 +21,7 @@ namespace EduTesting.Model
         /// </summary>
         public DateTime? TestResultEndTime { get; set; }
         public TestResultStatus TestResultStatus { get; set; }
-        public int TestResultScore { get; set; }
+        public decimal TestResultScore { get; set; }
 
         public virtual TestResultRating TestResultRating { get; set; }
         public virtual Test Test { get; set; }

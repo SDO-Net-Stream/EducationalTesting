@@ -17,7 +17,7 @@ namespace EduTesting.Model
         /// <summary>
         /// Simple case: correct/wrong = 1/0
         /// </summary>
-        public int AnswerScore { get; set; }
+        public decimal AnswerScore { get; set; }
     
         public virtual Question Question { get; set; }
         public virtual ICollection<CustomAttribute> Attributes { get; set; }

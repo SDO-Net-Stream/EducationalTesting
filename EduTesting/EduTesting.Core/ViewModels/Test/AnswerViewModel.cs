@@ -10,6 +10,6 @@ namespace EduTesting.ViewModels.Test
     {
         public int AnswerId { get; set; }
         public string AnswerText { get; set; }
-        public int AnswerScore { get; set; }
+        public decimal AnswerScore { get; set; }
     }
 }
