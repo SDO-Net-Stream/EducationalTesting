@@ -8,6 +8,7 @@ namespace EduTesting.Model
     public class Role
     {
 		[Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public UserRole RoleID { get; set; }
         public string RoleName { get; set; }
     

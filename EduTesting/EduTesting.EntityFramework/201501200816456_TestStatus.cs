@@ -46,12 +46,7 @@ namespace EduTesting.Migrations
             AddColumn("dbo.TestResults", "TestResultStatus", c => c.Int(nullable: false));
             AddColumn("dbo.TestResults", "TestResultScore", c => c.Int(nullable: false));
             AddColumn("dbo.TestResults", "TestResultRating_RatingId", c => c.Int());
-
-            AddColumn("dbo.Roles", "Role_ID", c => c.Int(nullable: false, identity: false));
-            Sql("update dbo.Roles set Role_ID = RoleID");
-            DropColumn("dbo.Roles", "RoleID");
-            RenameColumn("dbo.Roles", "Role_ID", "RoleID");
-
+            AlterColumn("dbo.Roles", "RoleID", c => c.Int(nullable: false, identity: false));
             AddPrimaryKey("dbo.Roles", "RoleID");
             CreateIndex("dbo.TestResults", "TestResultRating_RatingId");
             AddForeignKey("dbo.TestResults", "TestResultRating_RatingId", "dbo.TestResultRatings", "RatingId");
@@ -78,12 +73,7 @@ namespace EduTesting.Migrations
             DropIndex("dbo.TestResults", new[] { "TestResultRating_RatingId" });
             DropIndex("dbo.TestResultRatings", new[] { "TestId" });
             DropPrimaryKey("dbo.Roles");
-
-            AddColumn("dbo.Roles", "Role_ID", c => c.Int(nullable: false, identity: true));
-            Sql("update dbo.Roles set Role_ID = RoleID");
-            DropColumn("dbo.Roles", "RoleID");
-            RenameColumn("dbo.Roles", "Role_ID", "RoleID");
-
+            AlterColumn("dbo.Roles", "RoleID", c => c.Int(nullable: false, identity: true));
             DropColumn("dbo.TestResults", "TestResultRating_RatingId");
             DropColumn("dbo.TestResults", "TestResultScore");
             DropColumn("dbo.TestResults", "TestResultStatus");

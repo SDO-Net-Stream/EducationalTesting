@@ -236,7 +236,6 @@ namespace EduTesting.EntityFramework
             };
             answers.ForEach(a => context.Answers.Add(a));
             context.SaveChanges();
-
             var roles = new List<Role>
             {
                 new Role { RoleID = UserRole.User, RoleName = "User" },
@@ -244,6 +243,7 @@ namespace EduTesting.EntityFramework
                 new Role { RoleID = UserRole.Administrator, RoleName = "Administrator" }
             };
             roles.ForEach(r => context.Roles.Add(r));
+            context.SaveChanges();
             var users = new List<User>
             {
                 new User 
@@ -254,7 +254,6 @@ namespace EduTesting.EntityFramework
             };
             users.ForEach(u => context.Users.Add(u));
             context.SaveChanges();
-
         }
     }
 }
