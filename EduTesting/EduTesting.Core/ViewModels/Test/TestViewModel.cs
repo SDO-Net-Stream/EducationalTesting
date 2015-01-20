@@ -12,5 +12,6 @@ namespace EduTesting.ViewModels.Test
         public string TestName { get; set; }
         public string TestDescription { get; set; }
         public QuestionViewModel[] Questions { get; set; }
+        public TestResultRatingViewModel[] Ratings { get; set; }
     }
 }

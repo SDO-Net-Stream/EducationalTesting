@@ -14,6 +14,7 @@ namespace EduTesting.Model
 		public int TestId { get; set; }
 		public string QuestionText { get; set; }
         public string QuestionDescription { get; set; }
+        public QuestionType QuestionType { get; set; }
 
 		public virtual Test Test { get; set; }
 		public virtual ICollection<Answer> Answers { get; set; }

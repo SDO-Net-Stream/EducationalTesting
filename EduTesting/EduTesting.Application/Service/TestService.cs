@@ -42,27 +42,38 @@ namespace EduTesting.Service
                         TestId = entity.TestId,
                         QuestionId = question.QuestionId,
                         QuestionText = question.QuestionText,
-                        QuestionDescription = question.QuestionDescription
+                        QuestionDescription = question.QuestionDescription,
+                        QuestionType = question.QuestionType
                     };
-                    var typeAttribute = question.QuestionAttributes.FirstOrDefault(a => a.AttributeID == EduTestingConsts.AttributeId_QuestionType);
-                    // TODO: throw error when missing
-                    if (typeAttribute != null)
-                        model.QuestionType = (QuestionType)int.Parse(typeAttribute.Value);
                     if (question.Answers == null)
                         model.Answers = new AnswerViewModel[0];
                     else
-                        model.Answers = question.Answers.Select(a =>
+                    {
+                        model.Answers = question.Answers.OrderBy(a => a.AnswerOrder).Select(a =>
                         {
-                            var attr = a.Attributes == null ? null : a.Attributes.FirstOrDefault(x => x.AttributeID == EduTestingConsts.AttributeId_AnswerIsRight);
                             var answer = new AnswerViewModel
                             {
                                 AnswerId = a.AnswerId,
                                 AnswerText = a.AnswerText,
-                                AnswerIsRight = attr != null // TODO: && attr.value == 1
+                                AnswerScore = a.AnswerScore
                             };
                             return answer;
                         }).ToArray();
+                    }
                     return model;
+                }).ToArray();
+            }
+            if (entity.Ratings == null)
+            {
+                result.Ratings = new TestResultRatingViewModel[0];
+            }
+            else
+            {
+                result.Ratings = entity.Ratings.Select(rating => new TestResultRatingViewModel
+                {
+                    RatingId = rating.RatingId,
+                    RatingLowerBound = rating.RatingLowerBound,
+                    RatingTitle = rating.RatingTitle
                 }).ToArray();
             }
             return result;
@@ -85,6 +96,7 @@ namespace EduTesting.Service
             UpdateTestPropertiesFromViewModel(test, entity);
             entity = _Repository.Insert<Test>(entity);
             UpdateTestQuestionsFromViewModel(test, entity);
+            UpdateRatingsFromViewModel(test, entity);
             test.TestId = entity.TestId;
             return test;
         }
@@ -95,6 +107,7 @@ namespace EduTesting.Service
             UpdateTestPropertiesFromViewModel(test, entity);
             _Repository.Update(entity);
             UpdateTestQuestionsFromViewModel(test, entity);
+            UpdateRatingsFromViewModel(test, entity);
         }
         #region Update Test
         private void UpdateTestPropertiesFromViewModel(TestViewModel model, Test entity)
@@ -122,7 +135,8 @@ namespace EduTesting.Service
                 }
                 newQuestion.QuestionText = question.QuestionText;
                 newQuestion.QuestionDescription = question.QuestionDescription;
-                _Repository.UpdateQuestionType(newQuestion.QuestionId, (int)question.QuestionType);
+                newQuestion.QuestionType = question.QuestionType;
+                _Repository.Update(newQuestion);
                 UpdateTestAnswersFromViewModel(question, newQuestion);
             }
             foreach (var question in toUpdate)
@@ -135,8 +149,9 @@ namespace EduTesting.Service
         private void UpdateTestAnswersFromViewModel(QuestionViewModel model, Question entity)
         {
             var toUpdate = (entity.Answers ?? new Answer[0]).ToDictionary(a => a.AnswerId);
-            foreach (var answer in model.Answers)
+            for (var i=0;i<model.Answers.Length;i++)
             {
+                var answer = model.Answers[i];
                 Answer newAnswer;
                 if (toUpdate.ContainsKey(answer.AnswerId))
                 {
@@ -151,7 +166,8 @@ namespace EduTesting.Service
                     entity.Answers.Add(newAnswer);
                 }
                 newAnswer.AnswerText = answer.AnswerText;
-                _Repository.UpdateAnswerIsRight(newAnswer.AnswerId, answer.AnswerIsRight);
+                newAnswer.AnswerScore = answer.AnswerScore;
+                newAnswer.AnswerOrder = i;
             }
             foreach (var answer in toUpdate)
             {
@@ -159,6 +175,36 @@ namespace EduTesting.Service
                 _Repository.Delete<Answer>(answer.Value.QuestionId);
             }
         }
+
+        private void UpdateRatingsFromViewModel(TestViewModel model, Test entity)
+        {
+            var toUpdate = (entity.Ratings ?? new TestResultRating[0]).ToDictionary(r => r.RatingId);
+            foreach (var rating in model.Ratings)
+            {
+                TestResultRating newRating;
+                if (toUpdate.ContainsKey(rating.RatingId))
+                {
+                    newRating = toUpdate[rating.RatingId];
+                    toUpdate.Remove(rating.RatingId);
+                }
+                else
+                {
+                    newRating = new TestResultRating();
+                    newRating.TestId = model.TestId;
+                    _Repository.Insert(newRating);
+                    entity.Ratings.Add(newRating);
+                }
+                newRating.RatingTitle = rating.RatingTitle;
+                newRating.RatingLowerBound = rating.RatingLowerBound;
+                _Repository.Update(newRating);
+            }
+            foreach (var rating in toUpdate)
+            {
+                entity.Ratings.Remove(rating.Value);
+                _Repository.Delete<TestResultRating>(rating.Value.RatingId);
+            }
+        }
+
         #endregion
 
         public void DeleteTest(TestViewModel test)

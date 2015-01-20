@@ -3,35 +3,66 @@
     <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
     <h4>{{model.testName}}<a ng-click="editTestName()">{{model.testName?'':'Please enter name of the test'}}<span class="glyphicon glyphicon-pencil"></span></a></h4>
     {{model.testDescription}}
-    <accordion close-others="false">
-        <accordion-group ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
-            <accordion-heading>
-                <div class="width:100%">
-                    {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
-                    <div style="float: right">
-                        <button class="glyphicon glyphicon-pencil btn-link" ng-click="editQuestion(question); $event.stopPropagation();"></button>
-                        <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteQuestion(question); $event.stopPropagation();"></button>
+    <div class="clearfix">
+        <h3>Questions:</h3>
+        <accordion close-others="false">
+            <accordion-group ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
+                <accordion-heading>
+                    <div class="width:100%">
+                        {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
+                        <div style="float: right">
+                            <button class="glyphicon glyphicon-pencil btn-link" ng-click="editQuestion(question); $event.stopPropagation();"></button>
+                            <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteQuestion(question); $event.stopPropagation();"></button>
+                        </div>
                     </div>
-                </div>
-            </accordion-heading>
-            {{ question.questionDescription || "-- no description --" }}
-            <div ng-repeat="answer in question.answers" style="margin-bottom: 8px">
-                {{answer.answerText}}
-                <div style="float: right;">
-                    <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
-                    <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
-                </div>
-                <div style="float: right;">
-                    <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct</button>
-                    <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="!answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong</button>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
-        </accordion-group>
-    </accordion>
-    <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
-    <div class="clearfix"></div>
+                </accordion-heading>
+                {{ question.questionDescription || "-- no description --" }}
+                <h4 ng-if="question.questionTypeCode != 'TextAnswer' || question.answers.length > 0">Answers:</h4>
+                <table class="table">
+                    <tbody>
+                        <tr ng-repeat="answer in question.answers">
+                            <td>
+                                {{answer.answerText}}
+                            </td>
+                            <td>
+                                <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerScore > 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct.{{answer.answerScore != 1? ' (score: ' + answer.answerScore + ')' : ''}}</button>
+                                <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="answer.answerScore <= 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong.</button>
+                            </td>
+                            <td>
+                                <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
+                                <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
+            </accordion-group>
+        </accordion>
+        <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
+    </div>
+    <div class="clearfix">
+        <h3>Ratings:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Min score</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="rating in model.ratings">
+                    <td>{{rating.ratingTitle}}</td>
+                    <td>{{rating.ratingLowerBound}}</td>
+                    <td>
+                        <button class="glyphicon glyphicon-pencil btn" ng-click="editRating(rating)"></button>
+                        <button class="glyphicon glyphicon-remove btn" ng-click="deleteRating(rating)"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn" ng-click="editRating(null)">Add rating</button>
+    </div>
     <div class="pull-right">
         <button class="btn btn-primary" ng-click="save()">{{id=='new' ? "Create" : "Update"}}</button>
         <a class="btn" ui-sref="test.list">Cancel</a>
@@ -137,9 +168,12 @@
                         <span ng-show="form.answerText.$dirty && form.answerText.$error.required" class="help-block">Enter text.</span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.answerIsRight.$dirty && form.answerIsRight.$invalid, 'has-success': form.answerIsRight.$dirty && !form.answerIsRight.$invalid}">
-                    <label for="answer-edit-answerIsRight" class="control-label col-xs-2">Is right:</label>
-                    <input type="checkbox" ng-model="model.answerIsRight" id="answer-edit-answerIsRight" />
+                <div class="form-group" ng-class="{'has-error': form.answerScore.$dirty && form.answerScore.$invalid, 'has-success': form.answerScore.$dirty && !form.answerScore.$invalid}">
+                    <label for="answer-edit-answerScore" class="control-label col-xs-2">Score:</label>
+                    <div class="col-xs-10">
+                        <input type="number" ng-model="model.answerScore" id="answer-edit-answerScore" required="required"/>
+                        <span ng-show="form.answerScore.$dirty && form.answerScore.$error.required" class="help-block">Enter score.</span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -162,5 +196,42 @@
             </div>
         </form>
     </script>
-
+    <script id="app.views.test.edit.rating.html" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">{{model.isNew ? "Create" : "Edit"}} rating</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{'has-error': form.ratingTitle.$dirty && form.ratingTitle.$invalid, 'has-success': form.ratingTitle.$dirty && !form.ratingTitle.$invalid}">
+                    <label for="rating-edit-title" class="control-label col-xs-2">Title:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="ratingTitle" ng-model="model.ratingTitle" id="rating-edit-title" class="form-control" required="required"></input>
+                        <span ng-show="form.ratingTitle.$dirty && form.ratingTitle.$error.required" class="help-block">Enter title.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.ratingScore.$dirty && form.ratingScore.$invalid, 'has-success': form.ratingScore.$dirty && !form.ratingScore.$invalid}">
+                    <label for="rating-edit-score" class="control-label col-xs-2">Min score:</label>
+                    <input type="number" name="ratingScore" ng-model="model.ratingScore" id="rating-edit-score" class="form-control" required="required"></input>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">{{model.isNew ? 'Create' : 'Update'}}</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
+    <script id="app.views.test.edit.deleteRating.html" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete rating</h3>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete rating '{{model.ratingTitle}}'?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
 </div>

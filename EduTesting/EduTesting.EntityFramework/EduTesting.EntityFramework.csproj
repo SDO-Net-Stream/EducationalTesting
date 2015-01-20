@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201501151659196_UserFieldsRename.Designer.cs">
       <DependentUpon>201501151659196_UserFieldsRename.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501200816456_TestStatus.cs" />
+    <Compile Include="Migrations\201501200816456_TestStatus.Designer.cs">
+      <DependentUpon>201501200816456_TestStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="EduTestingDataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501151659196_UserFieldsRename.resx">
       <DependentUpon>201501151659196_UserFieldsRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501200816456_TestStatus.resx">
+      <DependentUpon>201501200816456_TestStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

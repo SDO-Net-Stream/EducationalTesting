@@ -71,9 +71,13 @@
     <Compile Include="Model\BusinessLogicException.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\QuestionAttribute.cs" />
+    <Compile Include="Model\QuestionType.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestResult.cs" />
+    <Compile Include="Model\TestResultRating.cs" />
+    <Compile Include="Model\TestResultStatus.cs" />
+    <Compile Include="Model\TestStatus.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserGroup.cs" />
     <Compile Include="Model\UserAnswer.cs" />
@@ -99,6 +103,7 @@
     <Compile Include="ViewModels\Test\AnswerViewModel.cs" />
     <Compile Include="ViewModels\Test\QuestionViewModel.cs" />
     <Compile Include="ViewModels\Test\TestListItemViewModel.cs" />
+    <Compile Include="ViewModels\Test\TestResultRatingViewModel.cs" />
     <Compile Include="ViewModels\Test\TestViewModel.cs" />
     <Compile Include="ViewModels\UserGroup\UserGroupUpdateViewModel.cs" />
     <Compile Include="ViewModels\UserGroup\UserGroupListFilterViewModel.cs" />

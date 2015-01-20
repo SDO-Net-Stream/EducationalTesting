@@ -133,45 +133,18 @@ namespace EduTesting.Repositories
 
         public TestResult GetActiveTestResultByUser(int testId, int userId)
         {
-            return GetDBContext().TestResults.FirstOrDefault(tr => tr.TestId == testId && tr.UserId == userId && tr.IsCompleted == false);
+            var now = DateTime.UtcNow;
+            return GetDBContext().TestResults.FirstOrDefault(tr => 
+                tr.TestId == testId && 
+                tr.UserId == userId && 
+                tr.TestResultStatus == TestResultStatus.InProgress && 
+                (!tr.TestResultEndTime.HasValue || tr.TestResultEndTime > now)
+            );
         }
 
         public IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testsResultId)
         {
             return GetDBContext().UsersAnswers.Where(ua => ua.TestResult.TestResultId == testsResultId);
-        }
-
-        public void UpdateQuestionType(int questionId, int questionTypeId)
-        {
-            var db = GetDBContext();
-            var attr = db.QuestionAttributes.FirstOrDefault(qa => qa.QuestionID == questionId && qa.AttributeID == EduTestingConsts.AttributeId_QuestionType);
-            if (attr == null)
-            {
-                attr = new QuestionAttribute
-                {
-                    AttributeID = EduTestingConsts.AttributeId_QuestionType,
-                    QuestionID = questionId
-                };
-                db.QuestionAttributes.Add(attr);
-            }
-            attr.Value = questionTypeId.ToString();
-            db.SaveChanges();
-        }
-
-        public void UpdateAnswerIsRight(int answerId, bool isRight)
-        {
-            var answer = SelectById<Answer>(answerId);
-            if (answer.Attributes == null)
-                answer.Attributes = new List<CustomAttribute>();
-            var attr = answer.Attributes.FirstOrDefault(qa => qa.AttributeID == EduTestingConsts.AttributeId_AnswerIsRight);
-            if (attr == null)
-            {
-                attr = SelectById<CustomAttribute>(EduTestingConsts.AttributeId_AnswerIsRight);
-                answer.Attributes.Add(attr);
-            }
-            // TODO: set attribute value
-            //attr.Value = questionTypeId.ToString();
-            GetDBContext().SaveChanges();
         }
 
         #endregion

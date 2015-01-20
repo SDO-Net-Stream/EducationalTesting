@@ -48,6 +48,7 @@ namespace EduTesting.EntityFramework
         public virtual IDbSet<UserGroup> UserGroups { get; set; }
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<UserAnswer> UsersAnswers { get; set; }
+        public virtual IDbSet<TestResultRating> TestResultRatings { get; set; }
     }
 
     //Example:

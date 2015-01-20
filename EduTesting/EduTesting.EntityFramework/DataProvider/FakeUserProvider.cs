@@ -10,8 +10,8 @@ namespace EduTesting.DataProvider
     public class FakeUserProvider : IUserRepository
     {
         private readonly Role[] _fakeRoles = new Role[]{
-            new Role { RoleID=2, RoleName = EduTestingConsts.RoleName_Teacher },
-            new Role { RoleID=1, RoleName = EduTestingConsts.RoleName_User }
+            new Role { RoleID=UserRole.Teacher, RoleName = "Teacher" },
+            new Role { RoleID=UserRole.User, RoleName = "User" }
         };
         private User FakeUser(string key)
         {
@@ -36,7 +36,7 @@ namespace EduTesting.DataProvider
         {
             return FakeUser(domainName);
         }
-        
+
         public User GetUserById(int id)
         {
             return FakeUser(id.ToString());

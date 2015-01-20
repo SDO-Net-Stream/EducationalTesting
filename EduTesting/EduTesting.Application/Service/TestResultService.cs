@@ -27,12 +27,12 @@ namespace EduTesting.Service
                     r => r.UserId,
                     (rId, results) =>
                     {
-                        var last = results.OrderByDescending(r => r.Timestamp).First();
+                        var last = results.OrderByDescending(r => r.TestResultBeginTime).First();
                         return new TestResultListItemViewModel
                         {
                             UserFirstName = last.User.UserFirstName,
                             UserLastName = last.User.UserLastName,
-                            TestResultIsCompleted = last.IsCompleted
+                            TestResultStatus = last.TestResultStatus
                         };
                     }
                 ).OrderBy(r => r.UserFirstName).ThenBy(r => r.UserLastName).ToArray();
@@ -48,8 +48,8 @@ namespace EduTesting.Service
             {
                 UserId = _webUser.CurrentUser.UserId,
                 TestId = test.TestId,
-                Timestamp = DateTime.UtcNow,
-                IsCompleted = false,
+                TestResultBeginTime = DateTime.UtcNow,
+                TestResultStatus = TestResultStatus.InProgress,
             };
             exam = _Repository.Insert<TestResult>(exam);
             // TODO: check test type
@@ -80,14 +80,6 @@ namespace EduTesting.Service
             return ToTestResultViewModel(exam);
         }
 
-        private QuestionType GetQuestionType(int questionId)
-        {
-            var attr = _Repository.SelectById<QuestionAttribute>(questionId, EduTestingConsts.AttributeId_QuestionType);
-            if (attr == null)
-                throw new BusinessLogicException("Question Type not founds");
-            return (QuestionType)(Int32.Parse(attr.Value));
-        }
-
         private TestResultViewModel ToTestResultViewModel(TestResult exam)
         {
             var test = _Repository.SelectById<Test>(exam.TestId);
@@ -96,20 +88,19 @@ namespace EduTesting.Service
                 TestResultId = exam.TestResultId,
                 TestId = test.TestId,
                 UserId = exam.UserId,
-                TestResultTimestamp = exam.Timestamp,
-                TestResultEndTime = null,// exam.TestResultTimestamp.AddMinutes(test.MaxDuration)
-                TestResultIsCompleted = exam.IsCompleted,
+                TestResultBeginTime = exam.TestResultBeginTime,
+                TestResultEndTime = exam.TestResultEndTime,
+                TestResultStatus = exam.TestResultStatus,
             };
             result.Questions = _Repository.GetQuestionsByTest(result.TestId).ToArray()
                 .Select(q =>
             {
-                var qtAttribute = q.QuestionAttributes.First(a => a.AttributeID == EduTestingConsts.AttributeId_QuestionType);
                 var item = new TestResultQuestionViewModel
                 {
                     QuestionId = q.QuestionId,
-                    QuestionType = (QuestionType)(Int32.Parse(qtAttribute.Value)),
+                    QuestionType = q.QuestionType,
                     QuestionDescription = q.QuestionDescription,
-                    Answers = q.Answers.Select(a => new TestResultAnswerViewModel
+                    Answers = q.Answers.OrderBy(a => a.AnswerOrder).Select(a => new TestResultAnswerViewModel
                     {
                         AnswerId = a.AnswerId,
                         AnswerText = a.AnswerText
@@ -173,7 +164,9 @@ namespace EduTesting.Service
             var exam = _Repository.SelectById<TestResult>(key.TestResultId);
             if (exam.UserId != _webUser.CurrentUser.UserId)
                 throw new BusinessLogicException("You can complete only owning test sessions");
-            exam.IsCompleted = true;
+            // TODO: check text answers
+            exam.TestResultStatus = TestResultStatus.Completed;
+            exam.TestResultEndTime = DateTime.UtcNow;
             _Repository.Update<TestResult>(exam);
         }
 
@@ -184,14 +177,13 @@ namespace EduTesting.Service
             var results = _Repository.GetTestResultsByUser(userId);
             //TODO: should be executed in repository
             var lastResults = results
-                .GroupBy(r => r.TestId, (testId, testResults) => testResults.OrderByDescending(r => r.Timestamp).First())
+                .GroupBy(r => r.TestId, (testId, testResults) => testResults.OrderByDescending(r => r.TestResultBeginTime).First())
                 .ToArray();
             return lastResults.Select(r => new TestResultListItemViewModel
             {
                 TestId = r.TestId,
-                TestResultIsCompleted = r.IsCompleted,
-                //TODO: test result score
-                TestResultScore = 0
+                TestResultStatus = r.TestResultStatus,
+                TestResultScore = r.TestResultScore
             }).ToArray();
         }
     }

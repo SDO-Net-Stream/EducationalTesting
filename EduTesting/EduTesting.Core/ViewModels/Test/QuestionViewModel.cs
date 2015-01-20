@@ -1,4 +1,5 @@
-﻿using EduTesting.ViewModels.TestResult;
+﻿using EduTesting.Model;
+using EduTesting.ViewModels.TestResult;
 using System;
 using System.Collections.Generic;
 using System.Linq;
