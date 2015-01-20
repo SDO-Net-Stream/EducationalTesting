@@ -8,7 +8,8 @@
             $scope.id = $stateParams.test;
             $scope.model = {
                 testId: 0,
-                questions: []
+                questions: [],
+                ratings:[]
             };
             if ($scope.id != 'new') {
                 testService.getTest({ testId: $scope.id }).success(function (test) {

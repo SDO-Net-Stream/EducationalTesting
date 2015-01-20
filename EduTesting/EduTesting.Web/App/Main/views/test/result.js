@@ -2,11 +2,14 @@
     var controllerId = 'app.views.test.result';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult', '$stateParams',
-        function ($scope, testService, message, $state, $modal, testResultService, $stateParams) {
+        '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult', '$stateParams', 'enumConverter',
+        function ($scope, testService, message, $state, $modal, testResultService, $stateParams, enumConverter) {
             var loadUsers = function() {
                 testResultService.getTestResultsForUsers({ testId: $scope.test.testId, userName: $scope.result.filter.userName })
                     .success(function (list) {
+                        for (var i = 0; i < list.length; i++) {
+                            list[i].testResultStatusCode = enumConverter.testResultStatusToString(list[i].testResultStatus);
+                        }
                         $scope.result.users = list;
                     });
             };
@@ -14,7 +17,6 @@
                 filter: {},
                 load: function (test) {
                     loadUsers();
-                    
                 }
             };
             if ($scope.test) {

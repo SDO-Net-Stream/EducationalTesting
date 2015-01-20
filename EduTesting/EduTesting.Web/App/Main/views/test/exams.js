@@ -3,8 +3,8 @@
     var controllerId = 'app.views.test.exams';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult',
-        function ($scope, testService, message, $state, $modal, testResultService) {
+        '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult', 'enumConverter',
+        function ($scope, testService, message, $state, $modal, testResultService, enumConverter) {
             var vm = this;
             $scope.tests = [];
             vm.results = {};
@@ -13,8 +13,10 @@
             });
             testResultService.getTestResultsForCurrentUser().success(function (list) {
                 vm.results = {};
-                for (var i = 0; i < list.length; i++)
+                for (var i = 0; i < list.length; i++) {
+                    list[i].testResultStatusCode = enumConverter.testResultStatusToString(list[i].testResultStatus);
                     vm.results[list[i].testId] = list[i];
+                }
             });
             $scope.start = function (test) {
                 testResultService.startTest({ testId: test.testId }).success(function () {

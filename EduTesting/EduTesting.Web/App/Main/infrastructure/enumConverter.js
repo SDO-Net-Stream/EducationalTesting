@@ -13,5 +13,19 @@
                 throw "Invalid QuestionType";
             return questionTypes[index];
         };
+
+        var testResultStatuses = ['InProgress', 'Finished', 'Completed'];
+        this.stringToTestResultStatus = function (str) {
+            for (var i = 0; i < testResultStatuses.length; i++) {
+                if (testResultStatuses[i] === str)
+                    return i;
+            }
+            throw "Invalid TestResultStatus";
+        };
+        this.testResultStatusToString = function (index) {
+            if (index < 0 || index >= testResultStatuses.length)
+                throw "Invalid TestResultStatus";
+            return testResultStatuses[index];
+        };
     });
 })();

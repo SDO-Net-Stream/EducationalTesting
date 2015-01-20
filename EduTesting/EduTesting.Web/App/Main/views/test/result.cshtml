@@ -5,7 +5,7 @@
     <input type="text" ng-model="result.filter.userName" />
     <ul>
         <li ng-repeat="user in result.users" ng-class="{ active: $parent.user == user }">
-            {{user.userFirstName}} {{user.userLastName}} - {{user.testResultIsCompleted ? "Completed" : "In Prodress"}}
+            {{user.userFirstName}} {{user.userLastName}} - {{user.testResultStatusCode == "InProgress" ? "In Prodress" : "Completed"}}
         </li>
     </ul>
 </div>
