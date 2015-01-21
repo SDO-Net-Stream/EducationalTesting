@@ -63,5 +63,11 @@ namespace EduTesting.DataProvider
         {
             throw new NotImplementedException();
         }
+
+
+        public void AddRoleToUser(User user, UserRole role)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

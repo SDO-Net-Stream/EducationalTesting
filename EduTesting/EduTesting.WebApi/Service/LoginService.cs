@@ -48,7 +48,7 @@ namespace EduTesting.Service
             if (identity != null && identity.IsAuthenticated)
             {
                 var user = _userProvider.GetUserByDomainName(identity.Name);
-                if (user != null || !user.UserActivated)
+                if (user != null && !user.UserActivated)
                 {
                     _sessionManager.UpdateSession(user);
                     return new LoginInfo(user);

@@ -26,7 +26,9 @@ namespace EduTesting.Service
             user.UserPasswordSalt = PasswordEncription.GenerateSaltValue();
             user.UserPassword = PasswordEncription.HashPassword(model.Password, user.UserPasswordSalt);
             user.UserPasswordVerificationToken = null;
+            user.UserActivated = true;
             _userRepository.InsertUser(user);
+            _userRepository.AddRoleToUser(user, UserRole.User);
             //var user = _userRepository.Register(model.Name, model.Email, model.Password);
         }
 

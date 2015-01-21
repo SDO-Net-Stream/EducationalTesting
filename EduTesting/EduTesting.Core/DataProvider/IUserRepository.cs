@@ -16,5 +16,6 @@ namespace EduTesting.DataProvider
 
         void InsertUser(User user);
         void UpdateUser(User user);
+        void AddRoleToUser(User user, UserRole role);
     }
 }

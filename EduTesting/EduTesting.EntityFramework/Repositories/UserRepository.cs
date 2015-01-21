@@ -42,5 +42,15 @@ namespace EduTesting.Repositories
         {
             return GetDBContext().Users.FirstOrDefault(u => u.UserPasswordVerificationToken == token);
         }
+
+
+        public void AddRoleToUser(User user, UserRole role)
+        {
+            var db = GetDBContext();
+            if (user.Roles == null)
+                user.Roles = new List<Role>();
+            user.Roles.Add(SelectById<Role>(role));
+            Update(user);
+        }
     }
 }
