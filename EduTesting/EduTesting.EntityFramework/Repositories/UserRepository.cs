@@ -3,6 +3,7 @@ using EduTesting.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,6 +52,17 @@ namespace EduTesting.Repositories
                 user.Roles = new List<Role>();
             user.Roles.Add(SelectById<Role>(role));
             Update(user);
+        }
+
+
+        public void DeleteUser(User user)
+        {
+            Delete<User>(user.UserId);
+        }
+
+        public IQueryable<User> GetUsers()
+        {
+            return SelectAll<User>(new Expression<Func<User, object>>[0]);
         }
     }
 }

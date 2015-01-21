@@ -27,5 +27,19 @@
                 throw "Invalid TestResultStatus";
             return testResultStatuses[index];
         };
+
+        var userRoles = ['User', 'Teacher', 'Administrator'];
+        this.stringToUserRole = function (str) {
+            for (var i = 0; i < userRoles.length; i++) {
+                if (userRoles[i] === str)
+                    return i + 1;
+            }
+            throw "Invalid UserRole";
+        };
+        this.userRoleToString = function (index) {
+            if (index < 1 || index > testResultStatuses.length)
+                throw "Invalid UserRole";
+            return userRoles[index - 1];
+        };
     });
 })();

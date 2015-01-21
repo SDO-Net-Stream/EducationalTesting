@@ -16,6 +16,10 @@ namespace EduTesting.DataProvider
 
         void InsertUser(User user);
         void UpdateUser(User user);
+        void DeleteUser(User user);
         void AddRoleToUser(User user, UserRole role);
+
+        // TODO: replace by filtering method
+        IQueryable<User> GetUsers();
     }
 }

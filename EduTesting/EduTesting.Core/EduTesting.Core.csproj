@@ -84,6 +84,7 @@
     <Compile Include="Security\PasswordEncription.cs" />
     <Compile Include="Service\ITestResultService.cs" />
     <Compile Include="Service\IUserGroupService.cs" />
+    <Compile Include="Service\IUserService.cs" />
     <Compile Include="ViewModels\TestResult\StartTestViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultAnswerViewModel.cs" />
     <Compile Include="ViewModels\TestResult\TestResultListItemViewModel.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="ViewModels\UserGroup\UserGroupViewModel.cs" />
     <Compile Include="ViewModels\UserGroup\UserListFilterViewModel.cs" />
     <Compile Include="ViewModels\UserGroup\UserListItemViewModel.cs" />
+    <Compile Include="ViewModels\User\UserListFilterViewModel.cs" />
+    <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

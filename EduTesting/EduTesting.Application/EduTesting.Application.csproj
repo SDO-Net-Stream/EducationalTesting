@@ -69,6 +69,7 @@
     <Compile Include="Service\TestResultService.cs" />
     <Compile Include="Service\TestService.cs" />
     <Compile Include="Service\UserGroupService.cs" />
+    <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

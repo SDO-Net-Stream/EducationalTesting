@@ -123,14 +123,25 @@
     (function () {
         var username = null;
         var roles = [];
+        var enumConverter = null;
         app.value('user', {
             signIn: function (loginInfo) {
+                /*
+                angular.injector().invoke(['enumConverter', function (e) {
+                    debugger;
+                }]);
+                return;
+                */
+                if (!enumConverter) {
+                    enumConverter = angular.injector(['app']).get('enumConverter');
+                }
                 if (loginInfo != null) {
                     username = loginInfo.userName;
-                    if (loginInfo.userRoles)
-                        roles = loginInfo.userRoles;
-                    else
-                        roles = [];
+                    roles = [];
+                    if (loginInfo.userRoles) {
+                        for (var i = 0; i < loginInfo.userRoles.length; i++)
+                            roles.push(enumConverter.userRoleToString(loginInfo.userRoles[i]));
+                    }
                 }
             },
             isAuthenticated: function () {

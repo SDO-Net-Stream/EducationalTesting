@@ -69,5 +69,16 @@ namespace EduTesting.DataProvider
         {
             throw new NotImplementedException();
         }
+
+
+        public void DeleteUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<User> GetUsers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

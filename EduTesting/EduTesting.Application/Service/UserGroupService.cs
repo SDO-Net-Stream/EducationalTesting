@@ -20,9 +20,22 @@ namespace EduTesting.Service
 
         public UserGroupViewModel[] GetGroups(UserGroupListFilterViewModel filter)
         {
-            var groups = (filter.TestId.HasValue) ?
-                _repository.SelectById<Test>(filter.TestId.Value).UserGroups :
-                _repository.SelectAll<UserGroup>();
+            IEnumerable<UserGroup> groups;
+            if (filter.TestId.HasValue)
+            {
+                groups = _repository.SelectById<Test>(filter.TestId.Value).UserGroups;
+                if (filter.UserId.HasValue)
+                    groups = groups.Where(g => g.Users.Any(u => u.UserId == filter.UserId.Value));
+            }
+            else
+                if (filter.UserId.HasValue)
+                {
+                    groups = _repository.SelectById<User>(filter.UserId.Value).UserGroups;
+                }
+                else
+                {
+                    groups = _repository.SelectAll<UserGroup>();
+                }
             if (!string.IsNullOrWhiteSpace(filter.GroupName))
             {
                 var nameFilter = filter.GroupName.ToLowerInvariant();
