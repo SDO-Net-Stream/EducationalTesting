@@ -60,25 +60,38 @@
                     templateUrl: '/App/Main/views/test/edit.cshtml',
                     menu: 'Test'
                 })
+                .state('test.result', { // test results
+                    url: '/:test/result',
+                    menu: 'Test'
+                })
+                .state('test.result.details', {
+                    url: '/:user',
+                    menu: 'Test'
+                })
 
 
-                .state('test.available', {
-                    url: '/available',
-                    templateUrl: '/App/Main/views/test/exams.cshtml',
+                .state('exam', {
+                    abstract: true,
+                    url: '/exam',
+                    template: '<ui-view/>'
+                })
+                .state('exam.list', {
+                    url: '/list',
+                    templateUrl: '/App/Main/views/exam/list.cshtml',
                     menu: 'Exam'
                 })
-                .state('test.pass', { // answering test
+                .state('exam.pass', { // answering test
                     url: '/:test/pass',
                     abstract: true,
                     resolve: {
                         testResult: [
-                            'abp.services.app.testResult', '$stateParams', '$q', '$state',
+                            'abp.services.app.exam', '$stateParams', '$q', '$state',
                             function (resultService, $stateParams, $q, $state) {
                                 var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
                                 var defer = $q.defer();
                                 result.success(function (testResult) { defer.resolve(testResult); });
                                 result.error(function () {
-                                    $state.go('test.list');
+                                    $state.go('exam.list');
                                     defer.reject();
                                 });
                                 return defer.promise;
@@ -87,19 +100,11 @@
                     },
                     template: '<ui-view/>'
                 })
-                .state('test.pass.question', {
+                .state('exam.pass.question', {
                     url: '/:question',
-                    templateUrl: '/App/Main/views/test/pass.cshtml',
-                    controller: 'app.views.test.pass',
+                    templateUrl: '/App/Main/views/exam/pass.cshtml',
+                    controller: 'app.views.exam.pass',
                     menu: 'Exam'
-                })
-                .state('test.result', { // test results
-                    url: '/:test/result',
-                    menu: 'Test'
-                })
-                .state('test.result.details', {
-                    url: '/:user',
-                    menu: 'Test'
                 })
 
 

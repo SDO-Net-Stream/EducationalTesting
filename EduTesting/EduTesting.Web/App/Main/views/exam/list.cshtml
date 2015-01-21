@@ -1,0 +1,24 @@
+﻿<div ng-controller="app.views.exam.list as vm">
+    <accordion close-others="true">
+        <accordion-group ng-repeat="test in tests">
+            <accordion-heading>
+                <div>
+                    {{test.testName}}
+                    <div style="float: right">
+                        <a ui-sref="exam.pass.question({test: test.testId, question: 1})" ng-click="$event.stopPropagation();" ng-if="test.testResultStatusCode == 'InProgress'">Answer</a>
+                        <a class="glyphicon glyphicon-play" ng-click="start(test); $event.stopPropagation();" ng-if="test.testResultStatusCode != 'InProgress'">Start</a>
+                    </div>
+                </div>
+            </accordion-heading>
+            <div style="margin-bottom: 8px">
+                <div ng-if="test.testResultStatusCode">
+                    Status: {{test.testResultStatusCode}}
+                </div>
+                <div ng-if="test.testResultStatusCode && test.testResultStatusCode != 'InProgress'">
+                    Score: {{test.testResultScore}} <br />
+                    Rating: {{test.ratingTitle}}
+                </div>
+            </div>
+        </accordion-group>
+    </accordion>
+</div>

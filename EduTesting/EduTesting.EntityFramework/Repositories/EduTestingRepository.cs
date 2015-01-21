@@ -123,7 +123,7 @@ namespace EduTesting.Repositories
 
         public IEnumerable<TestResult> GetTestResultsByUser(int userId)
         {
-            return GetDBContext().TestResults.Where(tr => tr.UserId == userId);
+            return GetDBContext().TestResults.Where(tr => tr.UserId == userId).Include(r => r.TestResultRating);
         }
 
         public IEnumerable<TestResult> GetTestResultsByTestAndUser(int testId, int userId)

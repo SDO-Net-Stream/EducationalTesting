@@ -2,8 +2,8 @@
     var controllerId = 'app.views.test.list';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$modal', 'abp.services.app.testResult',
-        function ($scope, testService, message, $state, $modal, testResultService) {
+        '$scope', 'abp.services.app.test', 'message', '$state', '$modal',
+        function ($scope, testService, message, $state, $modal) {
             $scope.tests = [];
             var loadTests = function () {
                 testService.getTests({}).success(function (list) {

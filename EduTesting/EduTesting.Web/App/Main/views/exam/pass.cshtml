@@ -1,7 +1,7 @@
 ﻿<h3>
-    <a class="glyphicon glyphicon-step-backward" ui-sref="test.pass.question({test: examination.testId, question: questionN - 1})" ng-if="questionN > 1"></a>
+    <a class="glyphicon glyphicon-step-backward" ui-sref="exam.pass.question({test: examination.testId, question: questionN - 1})" ng-if="questionN > 1"></a>
     Question # {{questionN}} / {{examination.questions.length}}
-    <a class="glyphicon glyphicon-step-forward" ui-sref="test.pass.question({test: examination.testId, question: questionN + 1})" ng-if="questionN < examination.questions.length"></a>
+    <a class="glyphicon glyphicon-step-forward" ui-sref="exam.pass.question({test: examination.testId, question: questionN + 1})" ng-if="questionN < examination.questions.length"></a>
 </h3>
 <div>{{question.questionDescription}}</div>
 <div>

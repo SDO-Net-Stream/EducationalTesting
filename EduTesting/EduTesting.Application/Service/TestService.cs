@@ -10,7 +10,7 @@ using EduTesting.ViewModels.TestResult;
 
 namespace EduTesting.Service
 {
-    public class TestService : EduTestingAppServiceBase, ITestService
+    public class TestService : ITestService
     {
         private IEduTestingRepository _Repository;
 
@@ -99,6 +99,7 @@ namespace EduTesting.Service
             entity = _Repository.Insert<Test>(entity);
             UpdateTestQuestionsFromViewModel(test, entity);
             UpdateRatingsFromViewModel(test, entity);
+            _Repository.Update(entity);
             test.TestId = entity.TestId;
             return test;
         }
@@ -110,6 +111,7 @@ namespace EduTesting.Service
             _Repository.Update(entity);
             UpdateTestQuestionsFromViewModel(test, entity);
             UpdateRatingsFromViewModel(test, entity);
+            _Repository.Update(entity);
         }
         #region Update Test
         private void UpdateTestPropertiesFromViewModel(TestViewModel model, Test entity)
@@ -192,7 +194,7 @@ namespace EduTesting.Service
                 else
                 {
                     newRating = new TestResultRating();
-                    newRating.TestId = model.TestId;
+                    newRating.TestId = entity.TestId;
                     _Repository.Insert(newRating);
                     entity.Ratings.Add(newRating);
                 }

@@ -1,19 +1,19 @@
 ﻿(function () {
-    var controllerId = 'app.views.test.pass';
+    var controllerId = 'app.views.exam.pass';
     angular.module('app').controller(controllerId, [
-        '$scope', 'abp.services.app.testResult', 'message', '$state', '$stateParams', 'testResult', 'enumConverter', '$q',
+        '$scope', 'abp.services.app.exam', 'message', '$state', '$stateParams', 'testResult', 'enumConverter', '$q',
         function ($scope, examService, message, $state, $stateParams, testResult, enumConverter, $q) {
             var vm = this;
             $scope.examination = testResult;
             $scope.questionN = parseInt($stateParams.question);
             if (testResult.questions.length == 0) {
                 message.error("Questions list is empty");
-                $state.go('test.available');
+                $state.go('exam.list');
                 return;
             }
             if ($scope.questionN <= 0 || $scope.questionN > testResult.questions.length || isNaN($scope.questionN)) {
                 message.warning("Invalid question number");
-                $state.go('test.pass.question', { test: testResult.testId, question: 1 });
+                $state.go('exam.pass.question', { test: testResult.testId, question: 1 });
                 return;
             }
             $scope.question = testResult.questions[$scope.questionN - 1];
@@ -40,7 +40,7 @@
             }
             $scope.goToQuestion = function (number) {
                 $scope.waitSaving(true).then(function () {
-                    $state.go('test.pass.question', { test: testResult.testId, question: number });
+                    $state.go('exam.pass.question', { test: testResult.testId, question: number });
                 });
             };
 
@@ -129,7 +129,7 @@
                     examService.completeTestResult({ testResultId: testResult.testResultId })
                         .success(function () {
                             message.success("Test completed");
-                            $state.go('test.available');
+                            $state.go('exam.list');
                         });
                 });
             };

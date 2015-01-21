@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EduTesting.Service
 {
-    public class AccountService : EduTestingAppServiceBase, IAccountService
+    public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
         private readonly INotificationService _notificationService;

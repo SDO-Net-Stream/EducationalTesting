@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduTesting.ViewModels.TestResult
+namespace EduTesting.ViewModels.Exam
 {
     public class TestResultViewModel
     {

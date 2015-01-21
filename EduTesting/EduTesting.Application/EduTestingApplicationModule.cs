@@ -12,6 +12,7 @@ namespace EduTesting
             //IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
             IocManager.Register<ITestService, TestService>();
             IocManager.Register<ITestResultService, TestResultService>();
+            IocManager.Register<IExamService, ExamService>();
             IocManager.Register<IAccountService, AccountService>();
             IocManager.Register<IUserGroupService, UserGroupService>();
             IocManager.Register<IUserService, UserService>();

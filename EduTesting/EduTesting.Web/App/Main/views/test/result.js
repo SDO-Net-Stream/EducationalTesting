@@ -2,10 +2,10 @@
     var controllerId = 'app.views.test.result';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.testResult', 'abp.services.app.group', '$stateParams', 'enumConverter',
-        function ($scope, testResultService, groupService, $stateParams, enumConverter) {
+        '$scope', 'abp.services.app.result', 'abp.services.app.group', '$stateParams', 'enumConverter',
+        function ($scope, resultService, groupService, $stateParams, enumConverter) {
             var loadUsers = function() {
-                testResultService.getTestResultsForUsers({ testId: $scope.test.testId, userName: $scope.result.filter.userName })
+                resultService.getTestResultsForUsers({ testId: $scope.test.testId, userName: $scope.result.filter.userName })
                     .success(function (list) {
                         for (var i = 0; i < list.length; i++) {
                             list[i].testResultStatusCode = enumConverter.testResultStatusToString(list[i].testResultStatus);

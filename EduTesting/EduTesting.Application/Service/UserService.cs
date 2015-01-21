@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Service
 {
-    public class UserService : EduTestingAppServiceBase, IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
         public UserService(IUserRepository repository)

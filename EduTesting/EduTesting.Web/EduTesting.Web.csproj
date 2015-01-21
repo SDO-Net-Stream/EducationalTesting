@@ -215,10 +215,10 @@
     <Content Include="App\Main\views\home\home.js" />
     <Content Include="App\Main\views\about\about.js" />
     <Content Include="App\Main\views\login\login.js" />
-    <Content Include="App\Main\views\test\exams.js" />
+    <Content Include="App\Main\views\exam\list.js" />
     <Content Include="App\Main\views\test\edit.js" />
     <Content Include="App\Main\views\test\list.js" />
-    <Content Include="App\Main\views\test\pass.js" />
+    <Content Include="App\Main\views\exam\pass.js" />
     <Content Include="App\Main\views\test\result.js" />
     <Content Include="App\Main\views\user\list.js" />
     <Content Include="Content\bootstrap-cosmo.min.css" />
@@ -350,9 +350,9 @@
     <Content Include="App\Main\views\account\lostPassword.cshtml" />
     <Content Include="App\Main\views\account\resetPassword.cshtml" />
     <Content Include="App\Main\views\test\list.cshtml" />
-    <Content Include="App\Main\views\test\pass.cshtml" />
+    <Content Include="App\Main\views\exam\pass.cshtml" />
     <Content Include="App\Main\views\test\edit.cshtml" />
-    <Content Include="App\Main\views\test\exams.cshtml" />
+    <Content Include="App\Main\views\exam\list.cshtml" />
     <Content Include="App\Main\views\test\result.cshtml" />
     <Content Include="App\Main\views\group\list.cshtml" />
     <Content Include="App\Main\views\user\list.cshtml" />

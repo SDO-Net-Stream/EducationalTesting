@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EduTesting.ViewModels.TestResult
+namespace EduTesting.ViewModels.Exam
 {
     public class TestResultQuestionViewModel
     {

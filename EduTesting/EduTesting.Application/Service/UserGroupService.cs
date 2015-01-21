@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Service
 {
-    public class UserGroupService : EduTestingAppServiceBase, IUserGroupService
+    public class UserGroupService : IUserGroupService
     {
         private readonly IEduTestingRepository _repository;
         public UserGroupService(IEduTestingRepository repository)
