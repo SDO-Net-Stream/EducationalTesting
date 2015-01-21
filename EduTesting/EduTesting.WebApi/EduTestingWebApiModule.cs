@@ -52,7 +52,7 @@ namespace EduTesting
                 .WithFilters(authenticate, authorizeAdministrator)
                 .Build();
             DynamicApiControllerBuilder.For<IExamService>("app/exam")
-                .WithFilters(authenticate, authorizeAdministrator)
+                .WithFilters(authenticate, authorizeUser)
                 .Build();
 
 

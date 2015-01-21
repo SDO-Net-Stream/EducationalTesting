@@ -2,8 +2,8 @@
     var controllerId = 'app.views.user.list';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.user', 'message', '$modal', 'enumConverter',
-        function ($scope, userService, message, $modal, enumConverter) {
+        '$scope', 'abp.services.app.user', 'message', '$modal', 'enumConverter', 'user',
+        function ($scope, userService, message, $modal, enumConverter, user) {
             $scope.filter = {};
             var loadUsers = function () {
                 userService.getUsers($scope.expandFilter ? $scope.filter : { userName: $scope.filter.userName })
@@ -20,7 +20,6 @@
                     loadUsers();
                 }, 500);
             };
-            loadUsers();
 
             $scope.userRoles = function (user) {
                 var roles = [];
@@ -73,6 +72,7 @@
                     }]
                 });
             };
+            user.requireRole('Administrator').then(loadUsers);
         }
     ]);
 })();

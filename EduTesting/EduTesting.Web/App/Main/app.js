@@ -16,6 +16,18 @@
     app.config([
         '$stateProvider', '$urlRouterProvider',
         function ($stateProvider, $urlRouterProvider) {
+            var provideAuth = function (roleName) {
+                return [
+                    '$state', 'user', 'message',
+                    function ($state, user, message) {
+                        user.requireRole(roleName).then(angular.noop, function () {
+                            message.error('Not enought permissions');
+                            $state.go('home');
+                        })
+                    }
+                ];
+            };
+
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
@@ -48,7 +60,8 @@
                 .state('test', {
                     abstract: true,
                     url: '/test',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('Teacher')
                 })
                 .state('test.list', {
                     url: '/list',
@@ -73,7 +86,8 @@
                 .state('exam', {
                     abstract: true,
                     url: '/exam',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('User')
                 })
                 .state('exam.list', {
                     url: '/list',
@@ -85,13 +99,17 @@
                     abstract: true,
                     resolve: {
                         testResult: [
-                            'abp.services.app.exam', '$stateParams', '$q', '$state',
-                            function (resultService, $stateParams, $q, $state) {
-                                var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                            'abp.services.app.exam', '$stateParams', '$q', '$state', 'user',
+                            function (resultService, $stateParams, $q, $state, user) {
                                 var defer = $q.defer();
-                                result.success(function (testResult) { defer.resolve(testResult); });
-                                result.error(function () {
-                                    $state.go('exam.list');
+                                user.requireRole('User').then(function () {
+                                    var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                                    result.success(function (testResult) { defer.resolve(testResult); });
+                                    result.error(function () {
+                                        $state.go('exam.list');
+                                        defer.reject();
+                                    });
+                                }, function () {
                                     defer.reject();
                                 });
                                 return defer.promise;
@@ -111,7 +129,8 @@
                 .state('group', {
                     abstract: true,
                     url: '/group',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('Teacher')
                 })
                 .state('group.list', {
                     url: '/list/:group',
@@ -124,7 +143,8 @@
                 .state('user', {
                     abstract: true,
                     url: '/user',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('Administrator')
                 })
                 .state('user.list', {
                     url: '/list',
@@ -134,41 +154,6 @@
             ;
         }
     ]);
-    (function () {
-        var username = null;
-        var roles = [];
-        var enumConverter = null;
-        app.value('user', {
-            signIn: function (loginInfo) {
-                if (!enumConverter) {
-                    enumConverter = angular.injector(['app']).get('enumConverter');
-                }
-                if (loginInfo != null) {
-                    username = loginInfo.userName;
-                    roles = [];
-                    if (loginInfo.userRoles) {
-                        for (var i = 0; i < loginInfo.userRoles.length; i++)
-                            roles.push(enumConverter.userRoleToString(loginInfo.userRoles[i]));
-                    }
-                }
-            },
-            isAuthenticated: function () {
-                return !!username;
-            },
-            name: function () {
-                return username;
-            },
-            roles: function () {
-                var result = {};
-                for (var i = 0; i < roles.length; i++)
-                    result[roles[i].toLowerCase()] = true;
-                return result;
-            }
-        });
-    })();
-    app.run(['user', 'abp.services.app.login', function (user, loginService) {
-        loginService.getUserInfo().success(user.signIn);
-    }]);
     app.run(['message', function (message) {
         abp.message.info = message.info;
         abp.message.warn = message.warning;

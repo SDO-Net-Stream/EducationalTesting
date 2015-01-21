@@ -198,6 +198,7 @@
     <Content Include="App\Main\app.js" />
     <Content Include="App\Main\images\abp-logo.png" />
     <Content Include="App\Main\infrastructure\enumConverter.js" />
+    <Content Include="App\Main\infrastructure\user.js" />
     <Content Include="App\Main\main.css">
       <DependentUpon>main.less</DependentUpon>
     </Content>

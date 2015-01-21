@@ -29,7 +29,7 @@
             if ($scope.test) {
                 $scope.test.result = $scope.result;
             } else {
-                // TODO: load testId from state
+                // TODO: require role && load testId from state
                 // $scope.test = test;
             }
             var usersTimeout = null;

@@ -2,8 +2,8 @@
     var controllerId = 'app.views.group.list';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.group', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', '$q',
-        function ($scope, groupService, testService, message, $state, $stateParams, $modal, $q) {
+        '$scope', 'abp.services.app.group', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', '$q', 'user',
+        function ($scope, groupService, testService, message, $state, $stateParams, $modal, $q, user) {
             var openGroupParam = $stateParams.group;
             var loadGroups = function () {
                 groupService.getGroups({ groupName: $scope.filterGroupName })
@@ -29,7 +29,6 @@
                     loadGroups();
                 }, 500);
             };
-            loadGroups();
 
             var userTimeout = null;
             $scope.searchUser = function (group) {
@@ -180,6 +179,7 @@
                     }
                 });
             };
+            user.requireRole('Teacher').then(loadGroups);
         }
     ]);
 })();

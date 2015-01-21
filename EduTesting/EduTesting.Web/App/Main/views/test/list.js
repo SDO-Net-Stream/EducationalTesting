@@ -2,15 +2,14 @@
     var controllerId = 'app.views.test.list';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$modal',
-        function ($scope, testService, message, $state, $modal) {
+        '$scope', 'abp.services.app.test', 'message', 'user', '$modal',
+        function ($scope, testService, message, user, $modal) {
             $scope.tests = [];
             var loadTests = function () {
                 testService.getTests({}).success(function (list) {
                     $scope.tests = list;
                 });
             };
-            loadTests();
             $scope.deleteTest = function (test) {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.test.list.delete.html',
@@ -37,6 +36,7 @@
                 }
                 return true;
             };
+            user.requireRole('Teacher').then(loadTests)
         }
     ]);
 })();

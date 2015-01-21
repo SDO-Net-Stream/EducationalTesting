@@ -2,8 +2,8 @@
     var controllerId = 'app.views.test.edit';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', 'enumConverter',
-        function ($scope, testService, message, $state, $stateParams, $modal, enumConverter) {
+        '$scope', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', 'enumConverter', 'user',
+        function ($scope, testService, message, $state, $stateParams, $modal, enumConverter, user) {
             var vm = this;
             $scope.id = $stateParams.test;
             $scope.model = {
@@ -12,10 +12,12 @@
                 ratings:[]
             };
             if ($scope.id != 'new') {
-                testService.getTest({ testId: $scope.id }).success(function (test) {
-                    for (var i = 0; i < test.questions.length; i++)
-                        test.questions[i].questionTypeCode = enumConverter.questionTypeToString(test.questions[i].questionType);
-                    $scope.model = test;
+                user.requireRole('Teacher').then(function () {
+                    testService.getTest({ testId: $scope.id }).success(function (test) {
+                        for (var i = 0; i < test.questions.length; i++)
+                            test.questions[i].questionTypeCode = enumConverter.questionTypeToString(test.questions[i].questionType);
+                        $scope.model = test;
+                    });
                 });
             }
 
