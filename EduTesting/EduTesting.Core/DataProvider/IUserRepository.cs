@@ -21,5 +21,7 @@ namespace EduTesting.DataProvider
 
         // TODO: replace by filtering method
         IQueryable<User> GetUsers();
+
+        void RemoveRoleFromUser(User user, UserRole role);
     }
 }

@@ -22,6 +22,7 @@ namespace EduTesting.Service
             var entity = new User();
             UpdateUserFromViewModel(user, entity);
             _repository.InsertUser(entity);
+            UpdateUserRolesFromViewModel(user, entity);
             return ToViewModel(entity);
         }
 
@@ -30,6 +31,7 @@ namespace EduTesting.Service
             var entity = _repository.GetUserById(user.UserId);
             UpdateUserFromViewModel(user, entity);
             _repository.UpdateUser(entity);
+            UpdateUserRolesFromViewModel(user, entity);
         }
 
         public void DeleteUser(UserViewModel user)
@@ -76,8 +78,25 @@ namespace EduTesting.Service
 
         private void UpdateUserFromViewModel(UserViewModel model, User entity)
         {
-
+            entity.UserFirstName = model.UserFirstName;
+            entity.UserLastName = model.UserLastName;
+            entity.UserEmail = model.UserEmail;
+            entity.UserDomainName = model.UserDomainName;
         }
+        private void UpdateUserRolesFromViewModel(UserViewModel user, User entity)
+        {
+            var toDelete = (entity.Roles ?? new Role[0]).ToDictionary(r => r.RoleID);
+            foreach(var role in user.Roles)
+            {
+                if (toDelete.ContainsKey(role))
+                    toDelete.Remove(role);
+                else
+                    _repository.AddRoleToUser(entity, role);
+            }
+            foreach (var role in toDelete)
+                _repository.RemoveRoleFromUser(entity, role.Key);
+        }
+
         private UserViewModel ToViewModel(User user)
         {
             var model = new UserViewModel

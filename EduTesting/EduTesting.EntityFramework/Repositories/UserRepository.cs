@@ -54,6 +54,11 @@ namespace EduTesting.Repositories
             Update(user);
         }
 
+        public void RemoveRoleFromUser(User user, UserRole role)
+        {
+            user.Roles.Remove(user.Roles.First(r => r.RoleID == role));
+            Update(user);
+        }
 
         public void DeleteUser(User user)
         {

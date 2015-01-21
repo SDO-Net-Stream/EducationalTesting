@@ -80,5 +80,11 @@ namespace EduTesting.DataProvider
         {
             throw new NotImplementedException();
         }
+
+
+        public void RemoveRoleFromUser(User entity, UserRole role)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
