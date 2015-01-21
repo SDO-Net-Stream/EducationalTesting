@@ -49,6 +49,13 @@ namespace EduTesting.Web
                         url: "#/group/list/",
                         icon: "fa fa-group"
                         )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "User",
+                        new LocalizableString("User", EduTestingConsts.LocalizationSourceName),
+                        url: "#/user/list",
+                        icon: "fa fa-user"
+                        )
                 );
         }
     }

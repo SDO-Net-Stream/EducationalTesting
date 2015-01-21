@@ -220,6 +220,7 @@
     <Content Include="App\Main\views\test\list.js" />
     <Content Include="App\Main\views\test\pass.js" />
     <Content Include="App\Main\views\test\result.js" />
+    <Content Include="App\Main\views\user\list.js" />
     <Content Include="Content\bootstrap-cosmo.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -354,6 +355,7 @@
     <Content Include="App\Main\views\test\exams.cshtml" />
     <Content Include="App\Main\views\test\result.cshtml" />
     <Content Include="App\Main\views\group\list.cshtml" />
+    <Content Include="App\Main\views\user\list.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />

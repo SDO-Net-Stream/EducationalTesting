@@ -15,5 +15,6 @@
     <text name="Test" value="Test" />
     <text name="PassingTest" value="Exam" />
     <text name="Group" value="Groups" />
+    <text name="User" value="Users" />
   </texts>
 </localizationDictionary>

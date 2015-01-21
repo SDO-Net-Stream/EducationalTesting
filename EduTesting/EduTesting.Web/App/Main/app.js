@@ -95,7 +95,7 @@
                 })
                 .state('test.result', { // test results
                     url: '/:test/result',
-                        menu: 'Test'
+                    menu: 'Test'
                 })
                 .state('test.result.details', {
                     url: '/:user',
@@ -116,7 +116,16 @@
                     templateUrl: '/App/Main/views/group/list.cshtml',
                     menu: 'Group'
                 })
-
+                .state('user', {
+                    abstract: true,
+                    url: '/user',
+                    template: '<ui-view/>'
+                })
+                .state('user.list', {
+                    url: '/list',
+                    templateUrl: '/App/Main/views/user/list.cshtml',
+                    menu: 'User'
+                })
             ;
         }
     ]);
@@ -126,12 +135,6 @@
         var enumConverter = null;
         app.value('user', {
             signIn: function (loginInfo) {
-                /*
-                angular.injector().invoke(['enumConverter', function (e) {
-                    debugger;
-                }]);
-                return;
-                */
                 if (!enumConverter) {
                     enumConverter = angular.injector(['app']).get('enumConverter');
                 }

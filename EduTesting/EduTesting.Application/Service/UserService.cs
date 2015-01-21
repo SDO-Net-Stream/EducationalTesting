@@ -51,18 +51,18 @@ namespace EduTesting.Service
                 users = users.Where(u => u.UserActivated == filter.UserActivated.Value);
             if (!string.IsNullOrWhiteSpace(filter.UserDomainName))
             {
-                var nameFilter = filter.UserDomainName.ToLowerInvariant();
-                users = users.Where(u => u.UserDomainName != null && u.UserDomainName.ToLowerInvariant() == nameFilter);
+                var nameFilter = filter.UserDomainName.ToLower();
+                users = users.Where(u => u.UserDomainName != null && u.UserDomainName.ToLower().Contains(nameFilter));
             }
             if (!string.IsNullOrWhiteSpace(filter.UserEmail))
             {
-                var emailFilter = filter.UserEmail.ToLowerInvariant();
-                users = users.Where(u => u.UserEmail != null && u.UserEmail.ToLowerInvariant() == emailFilter);
+                var emailFilter = filter.UserEmail.ToLower();
+                users = users.Where(u => u.UserEmail != null && u.UserEmail.ToLower().Contains(emailFilter));
             }
             if (!string.IsNullOrWhiteSpace(filter.UserName))
             {
-                var nameFilter = filter.UserName.ToLowerInvariant();
-                users = users.Where(u => string.Concat(u.UserFirstName, " ", u.UserLastName).ToLowerInvariant() == nameFilter);
+                var nameFilter = filter.UserName.ToLower();
+                users = users.Where(u => string.Concat(u.UserFirstName, " ", u.UserLastName).ToLower().Contains(nameFilter));
             }
             if (filter.Roles != null)
             {
@@ -80,16 +80,20 @@ namespace EduTesting.Service
         }
         private UserViewModel ToViewModel(User user)
         {
-            return new UserViewModel
+            var model = new UserViewModel
             {
                 UserId = user.UserId,
                 UserFirstName = user.UserFirstName,
                 UserLastName = user.UserLastName,
                 UserEmail = user.UserEmail,
                 UserDomainName = user.UserDomainName,
-                UserActivated = user.UserActivated,
-                Roles = user.Roles.Select(r => r.RoleID).ToArray()
+                UserActivated = user.UserActivated
             };
+            if (user.Roles == null)
+                model.Roles = new UserRole[0];
+            else
+                model.Roles = user.Roles.Select(r => r.RoleID).ToArray();
+            return model;
         }
     }
 }

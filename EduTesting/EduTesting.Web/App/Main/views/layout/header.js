@@ -29,6 +29,7 @@
                 'Test': 'teacher',
                 'Exam': 'user',
                 'Group': 'teacher',
+                'User': 'administrator'
             };
             vm.menuDisabled = function (name) {
                 if (!permissions.hasOwnProperty(name))

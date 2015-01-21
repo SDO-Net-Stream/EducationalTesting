@@ -1,0 +1,79 @@
+﻿<div ng-controller="app.views.user.list as vm">
+    <form ng-submit="void(0);" name="search" class="form-horizontal">
+        <h3>Search user<button class="btn btn-sm btn-link" ng-click="expandFilter = !expandFilter"><i class="fa" ng-class="{'fa-expand': !expandFilter, 'fa-compress': expandFilter }"></i></button></h3>
+        <div class="form-group">
+            <label class="control-label col-xs-2">By name:</label>
+            <div class="col-xs-10">
+                <input type="text" name="userName" ng-model="filter.userName" class="form-control" ng-change="searchUser()"></input>
+            </div>
+        </div>
+        <div collapse="!expandFilter">
+            <div class="form-group">
+                <label class="control-label col-xs-2">By domain name:</label>
+                <div class="col-xs-10">
+                    <input type="text" name="userDomainName" ng-model="filter.userDomainName" class="form-control" ng-change="searchUser()"></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">By email:</label>
+                <div class="col-xs-10">
+                    <input type="text" name="userEmail" ng-model="filter.userEmail" class="form-control" ng-change="searchUser()"></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">By role:</label>
+                <div class="col-xs-10">
+                    <select name="userEmail" ng-model="filter.roles" ng-options="item.v as item.l for item in roleOptions" class="form-control" ng-change="searchUser()"></select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>
+                    First name
+                </td>
+                <td>
+                    Last name
+                </td>
+                <td>
+                    Email
+                </td>
+                <td>
+                    Domain name
+                </td>
+                <td>
+                    Active
+                </td>
+                <td>
+                    Roles
+                </td>
+                <td>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>
+                    {{user.userFirstName}}
+                </td>
+                <td>
+                    {{user.userLastName}}
+                </td>
+                <td>
+                    {{user.userEmail}}
+                </td>
+                <td>
+                    {{user.userDomainName}}
+                </td>
+                <td>
+                    {{user.userActivated}}
+                </td>
+                <td>
+                    {{userRoles(user)}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -62,7 +62,7 @@ namespace EduTesting.Repositories
 
         public IQueryable<User> GetUsers()
         {
-            return SelectAll<User>(new Expression<Func<User, object>>[0]);
+            return SelectAll<User>(u => u.Roles);
         }
     }
 }
