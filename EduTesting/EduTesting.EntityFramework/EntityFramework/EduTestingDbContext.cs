@@ -13,7 +13,7 @@ namespace EduTesting.EntityFramework
          *   pass connection string name to base classes. ABP works either way.
          */
         public EduTestingDbContext()
-            : base()
+            : base("name=EduTestingDbContext")
         {
 
         }
