@@ -2,6 +2,17 @@
     <h3 class="modal-title" ng-if="id == 'new'">Create test</h3>
     <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
     <h4>{{model.testName}}<a ng-click="editTestName()">{{model.testName?'':'Please enter name of the test'}}<span class="glyphicon glyphicon-pencil"></span></a></h4>
+    <div ng-if="model.testIsPublic">
+        Test is public.
+    </div>
+    <div>
+        Test type: 
+        <span ng-if="!model.testRandomSubsetSize">All questions.</span>
+        <span ng-if="model.testRandomSubsetSize">Random questions: {{model.testRandomSubsetSize}} of {{model.questions.length}}.</span>
+    </div>
+    <div ng-if="model.testTimeLimit">
+        Time limit: {{model.testTimeLimit}} min.
+    </div>
     {{model.testDescription}}
     <div class="clearfix">
         <h3>Questions:</h3>
@@ -124,28 +135,38 @@
             </div>
             <div class="modal-body">
                 <div class="form-group" ng-class="{'has-error': form.testName.$dirty && form.testName.$invalid, 'has-success': form.testName.$dirty && !form.testName.$invalid}">
-                    <label for="test-edit-text" class="control-label col-xs-2">Name:</label>
+                    <label for="test-edit-name" class="control-label col-xs-2">Name:</label>
                     <div class="col-xs-10">
-                        <input type="text" name="testName" ng-model="model.testName" id="test-edit-text" class="form-control" required="required"></input>
+                        <input type="text" name="testName" ng-model="model.testName" id="test-edit-name" class="form-control" required="required"></input>
                         <span ng-show="form.testName.$dirty && form.testName.$error.required" class="help-block">Enter name of the test.</span>
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.testDescription.$dirty && form.testDescription.$invalid, 'has-success': form.testDescription.$dirty && !form.testDescription.$invalid}">
-                    <label for="test-edit-text" class="control-label col-xs-2">Description:</label>
+                    <label for="test-edit-description" class="control-label col-xs-2">Description:</label>
                     <div class="col-xs-10">
-                        <input type="text" name="testDescription" ng-model="model.testDescription" id="test-edit-text" class="form-control"></input>
+                        <input type="text" name="testDescription" ng-model="model.testDescription" id="test-edit-description" class="form-control"></input>
                         <span ng-show="form.testDescription.$dirty && form.testDescription.$error.required" class="help-block">Enter description.</span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.testType.$dirty && form.testType.$invalid, 'has-success': form.testType.$dirty && !form.testType.$invalid}">
-                    <label for="test-edit-text" class="control-label col-xs-2">Type:</label>
+                <div class="form-group" ng-class="{'has-error': form.testIsPublic.$dirty && form.testIsPublic.$invalid, 'has-success': form.testIsPublic.$dirty && !form.testIsPublic.$invalid}">
+                    <label for="test-edit-ispublic" class="control-label col-xs-2">Public:</label>
                     <div class="col-xs-10">
-                        <select ng-change="" ng-model="model.testType" id="test-edit-testType">
-                            <option value="A">Test type A</option>
-                            <option value="B">Test type B</option>
-                            <option value="C">Test type B</option>
-                        </select>
-                        <span ng-show="form.testType.$dirty && form.testType.$error.required" class="help-block">Enter text.</span>
+                        <input type="checkbox" name="testIsPublic" ng-model="model.testIsPublic" id="test-edit-ispublic"></input>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.testTimeLimit.$dirty && form.testTimeLimit.$invalid, 'has-success': form.testTimeLimit.$dirty && !form.testTimeLimit.$invalid}">
+                    <label for="test-edit-time" class="control-label col-xs-2">Time limit:</label>
+                    <div class="col-xs-10">
+                        <input type="number" name="testTimeLimit" ng-model="model.testTimeLimit" id="test-edit-time" class="form-control"></input>
+                        <span class="help-block">Minutes</span>
+                        <span ng-show="form.testTimeLimit.$dirty && form.testTimeLimit.$error.number" class="help-block">Not valid number!</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.testRandomSubsetSize.$dirty && form.testRandomSubsetSize.$invalid, 'has-success': form.testRandomSubsetSize.$dirty && !form.testRandomSubsetSize.$invalid}">
+                    <label for="test-edit-time" class="control-label col-xs-2">Random questions:</label>
+                    <div class="col-xs-10">
+                        <input type="number" name="testRandomSubsetSize" ng-model="model.testRandomSubsetSize" id="test-edit-time" class="form-control"></input>
+                        <span ng-show="form.testRandomSubsetSize.$dirty && form.testRandomSubsetSize.$error.number" class="help-block">Not valid number!</span>
                     </div>
                 </div>
             </div>

@@ -29,13 +29,17 @@
                         var model = {
                             testName: source.testName,
                             testDescription: source.testDescription,
-                            testType: source.testType
+                            testIsPublic: source.testIsPublic,
+                            testTimeLimit: source.testTimeLimit,
+                            testRandomSubsetSize: source.testRandomSubsetSize
                         };
                         $scopeModal.model = model;
                         $scopeModal.ok = function () {
                             source.testName = model.testName;
                             source.testDescription = model.testDescription;
-                            source.testType = model.testType;
+                            source.testIsPublic = model.testIsPublic;
+                            source.testTimeLimit = model.testTimeLimit;
+                            source.testRandomSubsetSize = model.testRandomSubsetSize;
                             $scopeModal.$close(source);
                         };
                         $scopeModal.cancel = function () {
