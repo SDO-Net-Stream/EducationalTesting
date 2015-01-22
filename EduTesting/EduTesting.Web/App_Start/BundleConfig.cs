@@ -48,6 +48,7 @@ namespace EduTesting.Web
                         //"~/Scripts/angular/angular-ui/ui-bootstrap.min.js",
                         "~/Scripts/angular/angular-ui/ui-bootstrap-tpls.min.js",
                         "~/Scripts/angular/angular-ui/ui-utils.min.js",
+                        "~/Scripts/angular/angular-ui/ui-sortable.js",
 
                         "~/Abp/Framework/scripts/abp.js",
                         "~/Abp/Framework/scripts/libs/abp.jquery.js",

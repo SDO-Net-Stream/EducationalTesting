@@ -8,6 +8,7 @@
         'ui.router',
         'ui.bootstrap',
         'ui.jq',
+        'ui.sortable',
 
         'abp'
     ]);

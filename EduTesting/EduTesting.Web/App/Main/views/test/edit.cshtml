@@ -19,8 +19,8 @@
     {{model.testDescription}}
     <div class="clearfix">
         <h3>Questions:</h3>
-        <accordion close-others="false">
-            <accordion-group ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
+        <accordion close-others="false" ui-sortable="sortableQuestions">
+            <accordion-group class="js-question" ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
                 <accordion-heading>
                     <div class="width:100%">
                         {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
@@ -33,7 +33,7 @@
                 {{ question.questionDescription || "-- no description --" }}
                 <h4 ng-if="question.questionTypeCode != 'TextAnswer' || question.answers.length > 0">Answers:</h4>
                 <table class="table">
-                    <tbody>
+                    <tbody ui-sortable ng-model="question.answers">
                         <tr ng-repeat="answer in question.answers">
                             <td>
                                 {{answer.answerText}}
