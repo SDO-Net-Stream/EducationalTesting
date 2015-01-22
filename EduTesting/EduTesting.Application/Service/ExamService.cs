@@ -186,7 +186,11 @@ namespace EduTesting.Service
                 .ToDictionary(r => r.TestId);
             // TODO: include public tests
             var tests = _Repository.SelectAll<Test>(new Expression<Func<Test, object>>[0]);
-            tests = tests.Where(t => t.UserGroups.Any(g => groups.Contains(g.GroupID)));
+            tests = tests.Where(t =>
+                (t.TestAttributes.Any(a => a.AttributeId == (int)AttributeCode.TestIsPublic) ||
+                t.UserGroups.Any(g => groups.Contains(g.GroupID))) &&
+                t.TestStatus == TestStatus.Published
+            );
             return tests.ToArray().Select(t =>
             {
                 var model = new TestResultListItemViewModel

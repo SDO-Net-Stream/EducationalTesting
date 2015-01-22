@@ -2,11 +2,14 @@
     var controllerId = 'app.views.test.list';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', 'user', '$modal',
-        function ($scope, testService, message, user, $modal) {
+        '$scope', 'abp.services.app.test', 'message', 'user', '$modal', 'enumConverter',
+        function ($scope, testService, message, user, $modal, enumConverter) {
             $scope.tests = [];
             var loadTests = function () {
                 testService.getTests({}).success(function (list) {
+                    for (var i = 0; i < list.length; i++) {
+                        list[i].testStatusCode = enumConverter.testStatusToString(list[i].testStatus);
+                    }
                     $scope.tests = list;
                 });
             };

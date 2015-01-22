@@ -6,16 +6,19 @@
         function ($scope, testService, message, $state, $stateParams, $modal, enumConverter, user) {
             var vm = this;
             $scope.id = $stateParams.test;
+            $scope.testStatus = "Pending";
             $scope.model = {
                 testId: 0,
+                testStatus: enumConverter.stringToTestStatus($scope.testStatus),
                 questions: [],
-                ratings:[]
+                ratings: []
             };
             if ($scope.id != 'new') {
                 user.requireRole('Teacher').then(function () {
                     testService.getTest({ testId: $scope.id }).success(function (test) {
                         for (var i = 0; i < test.questions.length; i++)
                             test.questions[i].questionTypeCode = enumConverter.questionTypeToString(test.questions[i].questionType);
+                        $scope.testStatus = enumConverter.testStatusToString(test.testStatus);
                         $scope.model = test;
                     });
                 });
@@ -31,7 +34,8 @@
                             testDescription: source.testDescription,
                             testIsPublic: source.testIsPublic,
                             testTimeLimit: source.testTimeLimit,
-                            testRandomSubsetSize: source.testRandomSubsetSize
+                            testRandomSubsetSize: source.testRandomSubsetSize,
+                            testStatus: enumConverter.testStatusToString(source.testStatus)
                         };
                         $scopeModal.model = model;
                         $scopeModal.ok = function () {
@@ -40,6 +44,8 @@
                             source.testIsPublic = model.testIsPublic;
                             source.testTimeLimit = model.testTimeLimit;
                             source.testRandomSubsetSize = model.testRandomSubsetSize;
+                            source.testStatus = enumConverter.stringToTestStatus(model.testStatus);
+                            $scope.testStatus = model.testStatus;
                             $scopeModal.$close(source);
                         };
                         $scopeModal.cancel = function () {

@@ -50,7 +50,7 @@ namespace EduTesting.Repositories
             var db = GetDBContext();
             if (user.Roles == null)
                 user.Roles = new List<Role>();
-            user.Roles.Add(SelectById<Role>(role));
+            user.Roles.Add(SelectById<Role>((int)role));
             Update(user);
         }
 

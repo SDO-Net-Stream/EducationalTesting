@@ -41,5 +41,20 @@
                 throw "Invalid UserRole";
             return userRoles[index - 1];
         };
+
+        var testStatuses = ['Pending', 'Published'];
+        this.stringToTestStatus = function (str) {
+            for (var i = 0; i < testStatuses.length; i++) {
+                if (testStatuses[i] === str)
+                    return i;
+            }
+            throw "Invalid TestStatus";
+        };
+        this.testStatusToString = function (index) {
+            if (index < 0 || index >= testStatuses.length)
+                throw "Invalid TestStatus";
+            return testStatuses[index];
+        };
+
     });
 })();

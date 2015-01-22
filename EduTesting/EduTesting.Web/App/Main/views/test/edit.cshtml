@@ -2,6 +2,9 @@
     <h3 class="modal-title" ng-if="id == 'new'">Create test</h3>
     <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
     <h4>{{model.testName}}<a ng-click="editTestName()">{{model.testName?'':'Please enter name of the test'}}<span class="glyphicon glyphicon-pencil"></span></a></h4>
+    <div>
+        Status: <strong>{{testStatus}}</strong>
+    </div>
     <div ng-if="model.testIsPublic">
         Test is public.
     </div>
@@ -167,6 +170,16 @@
                     <div class="col-xs-10">
                         <input type="number" name="testRandomSubsetSize" ng-model="model.testRandomSubsetSize" id="test-edit-time" class="form-control"></input>
                         <span ng-show="form.testRandomSubsetSize.$dirty && form.testRandomSubsetSize.$error.number" class="help-block">Not valid number!</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.testStatus.$dirty && form.testStatus.$invalid, 'has-success': form.testStatus.$dirty && !form.testStatus.$invalid}">
+                    <label for="test-edit-status" class="control-label col-xs-2">Status:</label>
+                    <div class="col-xs-10">
+                        <select ng-model="model.testStatus" id="test-edit-status" class="form-control">
+                            <option value="Pending">Pending</option>
+                            <option value="Published">Published</option>
+                        </select>
+                        <span ng-show="form.testStatus.$dirty && form.testStatus.$error.required" class="help-block">Choose status.</span>
                     </div>
                 </div>
             </div>

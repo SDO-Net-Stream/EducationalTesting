@@ -88,7 +88,8 @@ namespace EduTesting.Service
                     .Select(t => new TestListItemViewModel
                     {
                         TestId = t.TestId,
-                        TestName = t.TestName
+                        TestName = t.TestName,
+                        TestStatus = t.TestStatus
                     }).ToArray();
             return model;
         }

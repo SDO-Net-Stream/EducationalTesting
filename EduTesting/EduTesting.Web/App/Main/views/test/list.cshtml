@@ -4,6 +4,7 @@
             <accordion-heading>
                 <div class="width:100%">
                     {{test.testName}}
+                    <strong ng-if="test.testStatusCode == 'Pending'">[Penging]</strong>
                     <div style="float: right">
                         <a class="glyphicon glyphicon-pencil" ui-sref="test.edit({test: test.testId})" ng-click="$event.stopPropagation();"></a>
                         <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteTest(test); $event.stopPropagation();"></button>

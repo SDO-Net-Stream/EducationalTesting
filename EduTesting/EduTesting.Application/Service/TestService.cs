@@ -34,7 +34,8 @@ namespace EduTesting.Service
                 TestDescription = entity.TestDescription,
                 TestIsPublic = attributes.Any(a => a.AttributeId == (int)AttributeCode.TestIsPublic),
                 TestRandomSubsetSize = randomAttr == null ? (int?)null : int.Parse(randomAttr.AttributeValue),
-                TestTimeLimit = timeAttr == null ? (int?)null : int.Parse(timeAttr.AttributeValue)
+                TestTimeLimit = timeAttr == null ? (int?)null : int.Parse(timeAttr.AttributeValue),
+                TestStatus = entity.TestStatus
             };
             if (entity.Questions == null)
             {
@@ -96,7 +97,12 @@ namespace EduTesting.Service
                 tests = tests.Where(t => t.TestName.ToLowerInvariant().Contains(nameFilter));
             }
             return tests.Take(filter.Count ?? 20)
-                .Select(t => new TestListItemViewModel { TestId = t.TestId, TestName = t.TestName })
+                .Select(t => new TestListItemViewModel
+                {
+                    TestId = t.TestId,
+                    TestName = t.TestName,
+                    TestStatus = t.TestStatus
+                })
                 .ToArray();
         }
 
@@ -128,6 +134,7 @@ namespace EduTesting.Service
         {
             entity.TestName = model.TestName;
             entity.TestDescription = model.TestDescription;
+            entity.TestStatus = model.TestStatus;
         }
         private void UpdateTestQuestionsFromViewModel(TestViewModel model, Test entity)
         {
