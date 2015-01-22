@@ -45,7 +45,7 @@ namespace EduTesting.Repositories
         }
 
 
-        public void AddRoleToUser(User user, UserRole role)
+        public void AddRoleToUser(User user, RoleCode role)
         {
             var db = GetDBContext();
             if (user.Roles == null)
@@ -54,9 +54,9 @@ namespace EduTesting.Repositories
             Update(user);
         }
 
-        public void RemoveRoleFromUser(User user, UserRole role)
+        public void RemoveRoleFromUser(User user, RoleCode role)
         {
-            user.Roles.Remove(user.Roles.First(r => r.RoleID == role));
+            user.Roles.Remove(user.Roles.First(r => r.RoleID == (int)role));
             Update(user);
         }
 

@@ -20,6 +20,6 @@ namespace EduTesting.Model
         public decimal AnswerScore { get; set; }
     
         public virtual Question Question { get; set; }
-        public virtual ICollection<CustomAttribute> Attributes { get; set; }
+        public virtual ICollection<AnswerAttribute> AnswerAttributes { get; set; }
     }
 }

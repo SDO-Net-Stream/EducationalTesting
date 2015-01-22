@@ -16,8 +16,8 @@ namespace EduTesting.Security
     public class AuthorizationFilter : IAuthorizationFilter
     {
         private readonly IIocManager _iocManager;
-        private readonly UserRole _role;
-        public AuthorizationFilter(UserRole role, IIocManager iocManager)
+        private readonly RoleCode _role;
+        public AuthorizationFilter(RoleCode role, IIocManager iocManager)
         {
             _role = role;
             _iocManager = iocManager;
@@ -26,7 +26,7 @@ namespace EduTesting.Security
         {
             var userManager = _iocManager.Resolve<IWebUserManager>();
             var user = userManager.CurrentUser;
-            if (user != null && user.Roles.Any(r => r.RoleID == _role)                )
+            if (user != null && user.Roles.Any(r => r.RoleID == (int)_role)                )
                 return continuation();
             return Task.FromResult(NewUnauthorized());
         }

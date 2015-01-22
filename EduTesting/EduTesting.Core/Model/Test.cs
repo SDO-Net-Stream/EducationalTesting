@@ -17,7 +17,7 @@ namespace EduTesting.Model
         public virtual ICollection<UserGroup> UserGroups { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
         public virtual ICollection<TestResult> TestsResults { get; set; }
-        public virtual ICollection<CustomAttribute> Attributes { get; set; }
+        public virtual ICollection<TestAttribute> TestAttributes { get; set; }
         public virtual ICollection<TestResultRating> Ratings { get; set; }
     }
 }

@@ -69,7 +69,7 @@ namespace EduTesting.Service
             if (filter.Roles != null)
             {
                 foreach (var role in filter.Roles)
-                    users = users.Where(u => u.Roles.Any(r => r.RoleID == role));
+                    users = users.Where(u => u.Roles.Any(r => r.RoleID == (int)role));
             }
             return users.OrderBy(u => u.UserFirstName).ThenBy(u => u.UserLastName).Take(filter.Count ?? 20)
                 .Select(ToViewModel).ToArray();
@@ -88,13 +88,13 @@ namespace EduTesting.Service
             var toDelete = (entity.Roles ?? new Role[0]).ToDictionary(r => r.RoleID);
             foreach(var role in user.Roles)
             {
-                if (toDelete.ContainsKey(role))
-                    toDelete.Remove(role);
+                if (toDelete.ContainsKey((int)role))
+                    toDelete.Remove((int)role);
                 else
                     _repository.AddRoleToUser(entity, role);
             }
             foreach (var role in toDelete)
-                _repository.RemoveRoleFromUser(entity, role.Key);
+                _repository.RemoveRoleFromUser(entity, (RoleCode)role.Key);
         }
 
         private UserViewModel ToViewModel(User user)
@@ -109,9 +109,9 @@ namespace EduTesting.Service
                 UserActivated = user.UserActivated
             };
             if (user.Roles == null)
-                model.Roles = new UserRole[0];
+                model.Roles = new RoleCode[0];
             else
-                model.Roles = user.Roles.Select(r => r.RoleID).ToArray();
+                model.Roles = user.Roles.Select(r => (RoleCode)r.RoleID).ToArray();
             return model;
         }
     }

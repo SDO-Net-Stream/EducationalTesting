@@ -15,6 +15,6 @@ namespace EduTesting.ViewModels.User
         public string UserEmail { get; set; }
         public string UserDomainName { get; set; }
         public bool UserActivated { get; set; }
-        public UserRole[] Roles { get; set; }
+        public RoleCode[] Roles { get; set; }
     }
 }

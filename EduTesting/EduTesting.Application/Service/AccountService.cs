@@ -28,7 +28,7 @@ namespace EduTesting.Service
             user.UserPasswordVerificationToken = null;
             user.UserActivated = true;
             _userRepository.InsertUser(user);
-            _userRepository.AddRoleToUser(user, UserRole.User);
+            _userRepository.AddRoleToUser(user, RoleCode.User);
             //var user = _userRepository.Register(model.Name, model.Email, model.Password);
         }
 

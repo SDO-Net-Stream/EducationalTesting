@@ -40,7 +40,9 @@ namespace EduTesting.EntityFramework
 
         public virtual IDbSet<Answer> Answers { get; set; }
         public virtual IDbSet<CustomAttribute> Attributes { get; set; }
+        public virtual IDbSet<TestAttribute> TestAttributes { get; set; }
         public virtual IDbSet<QuestionAttribute> QuestionAttributes { get; set; }
+        public virtual IDbSet<AnswerAttribute> AnswerAttributes { get; set; }
         public virtual IDbSet<Question> Questions { get; set; }
         public virtual IDbSet<Role> Roles { get; set; }
         public virtual IDbSet<Test> Tests { get; set; }

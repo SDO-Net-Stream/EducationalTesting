@@ -142,33 +142,20 @@ namespace EduTesting.EntityFramework
 
             var attributes = new List<CustomAttribute>
             {
-                new CustomAttribute { AttributeID = 1, AttributeName = "Question Type" },
-                new CustomAttribute { AttributeID = 2, AttributeName = "Answer is right" }
+                new CustomAttribute { AttributeID = (int)AttributeCode.TestTimeLimit, AttributeName = "Time limit for test" },
+                new CustomAttribute { AttributeID = (int)AttributeCode.TestIsPublic, AttributeName = "Test access: public" },
+                new CustomAttribute { AttributeID = (int)AttributeCode.TestRandomSubsetSize, AttributeName = "Random questions count" },
+                new CustomAttribute { AttributeID = (int)AttributeCode.AnswerMediaType, AttributeName = "Answer media type" },
             };
             attributes.ForEach(a => context.Attributes.Add(a));
             context.SaveChanges();
 
-            var questionAttributes = new List<QuestionAttribute>
+            var testAttributes = new List<TestAttribute>
             {
-                /*
-                new QuestionAttribute{QuestionID = 1, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 2, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 3, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 4, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 5, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 6, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 7, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 8, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 9, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 10, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 11, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 12, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 13, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 14, AttributeID = 1, Value = singleAnswerTypeValue},
-                new QuestionAttribute{QuestionID = 15, AttributeID = 1, Value = singleAnswerTypeValue}
-                 */
+                new TestAttribute { TestId = 1 ,AttributeId= (int)AttributeCode.TestIsPublic, AttributeValue = "True"},
+                new TestAttribute { TestId = 2 ,AttributeId= (int)AttributeCode.TestIsPublic, AttributeValue = "True"}
             };
-            questionAttributes.ForEach(q => context.QuestionAttributes.Add(q));
+            testAttributes.ForEach(a => context.TestAttributes.Add(a));
             context.SaveChanges();
 
             var answers = new List<Answer>
@@ -238,9 +225,9 @@ namespace EduTesting.EntityFramework
             context.SaveChanges();
             var roles = new List<Role>
             {
-                new Role { RoleID = UserRole.User, RoleName = "User" },
-                new Role { RoleID = UserRole.Teacher, RoleName = "Teacher" },
-                new Role { RoleID = UserRole.Administrator, RoleName = "Administrator" }
+                new Role { RoleID = (int)RoleCode.User, RoleName = "User" },
+                new Role { RoleID = (int)RoleCode.Teacher, RoleName = "Teacher" },
+                new Role { RoleID = (int)RoleCode.Administrator, RoleName = "Administrator" }
             };
             roles.ForEach(r => context.Roles.Add(r));
             context.SaveChanges();

@@ -9,9 +9,10 @@ namespace EduTesting.DataProvider
 {
     public class FakeUserProvider : IUserRepository
     {
-        private readonly Role[] _fakeRoles = new Role[]{
-            new Role { RoleID=UserRole.Teacher, RoleName = "Teacher" },
-            new Role { RoleID=UserRole.User, RoleName = "User" }
+        private readonly Role[] _fakeRoles = new Role[]
+        {
+            new Role { RoleID = (int)RoleCode.Teacher, RoleName = "Teacher" },
+            new Role { RoleID = (int)RoleCode.User, RoleName = "User" }
         };
         private User FakeUser(string key)
         {
@@ -65,7 +66,7 @@ namespace EduTesting.DataProvider
         }
 
 
-        public void AddRoleToUser(User user, UserRole role)
+        public void AddRoleToUser(User user, RoleCode role)
         {
             throw new NotImplementedException();
         }
@@ -82,7 +83,7 @@ namespace EduTesting.DataProvider
         }
 
 
-        public void RemoveRoleFromUser(User entity, UserRole role)
+        public void RemoveRoleFromUser(User entity, RoleCode role)
         {
             throw new NotImplementedException();
         }

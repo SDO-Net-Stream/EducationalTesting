@@ -29,9 +29,9 @@ namespace EduTesting
                 .Build();
              */
             var authenticate = new AuthenticationFilter(IocManager);
-            var authorizeUser = new AuthorizationFilter(UserRole.User, IocManager);
-            var authorizeTeacher = new AuthorizationFilter(UserRole.Teacher, IocManager);
-            var authorizeAdministrator = new AuthorizationFilter(UserRole.Administrator, IocManager);
+            var authorizeUser = new AuthorizationFilter(RoleCode.User, IocManager);
+            var authorizeTeacher = new AuthorizationFilter(RoleCode.Teacher, IocManager);
+            var authorizeAdministrator = new AuthorizationFilter(RoleCode.Administrator, IocManager);
 
             DynamicApiControllerBuilder.For<ITestService>("app/test")
                 .WithFilters(authenticate, authorizeTeacher)
