@@ -17,41 +17,48 @@
         Time limit: {{model.testTimeLimit}} min.
     </div>
     {{model.testDescription}}
+
     <div class="clearfix">
         <h3>Questions:</h3>
-        <accordion close-others="false" ui-sortable="sortableQuestions">
-            <accordion-group class="js-question" ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
-                <accordion-heading>
-                    <div class="width:100%">
-                        {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
-                        <div style="float: right">
-                            <button class="glyphicon glyphicon-pencil btn-link" ng-click="editQuestion(question); $event.stopPropagation();"></button>
-                            <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteQuestion(question); $event.stopPropagation();"></button>
-                        </div>
+
+        <div class="panel-group" ui-sortable="{ handle: '>.panel-heading', cancel: 'a,button' }" ng-model="model.questions">
+            <div ng-repeat="question in model.questions" class="panel panel-default" ng-class="{'panel-danger': question.$error}">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left">
+                        <a data-toggle="collapse" ng-click="question.$isopen = !question.$isopen; $event.preventDefault();">
+                            {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
+                        </a>
+                    </h4>
+                    <div class="pull-right">
+                        <button class="glyphicon glyphicon-pencil btn-link" ng-click="editQuestion(question); $event.stopPropagation();"></button>
+                        <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteQuestion(question); $event.stopPropagation();"></button>
                     </div>
-                </accordion-heading>
-                {{ question.questionDescription || "-- no description --" }}
-                <h4 ng-if="question.questionTypeCode != 'TextAnswer' || question.answers.length > 0">Answers:</h4>
-                <table class="table">
-                    <tbody ui-sortable ng-model="question.answers">
-                        <tr ng-repeat="answer in question.answers">
-                            <td>
-                                {{answer.answerText}}
-                            </td>
-                            <td>
-                                <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerScore > 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct.{{answer.answerScore != 1? ' (score: ' + answer.answerScore + ')' : ''}}</button>
-                                <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="answer.answerScore <= 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong.</button>
-                            </td>
-                            <td>
-                                <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
-                                <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
-            </accordion-group>
-        </accordion>
+                </div>
+                <div class="panel-collapse" collapse="!question.$isopen">
+                    <div class="panel-body">
+                        {{ question.questionDescription || "-- no description --" }}
+                        <h4 ng-if="question.questionTypeCode != 'TextAnswer' || question.answers.length > 0">Answers:</h4>
+                        <table class="table">
+                            <tbody ui-sortable ng-model="question.answers">
+                                <tr ng-repeat="answer in question.answers">
+                                    <td>{{answer.answerText}}
+                                    </td>
+                                    <td>
+                                        <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerScore > 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct.{{answer.answerScore != 1? ' (score: ' + answer.answerScore + ')' : ''}}</button>
+                                        <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="answer.answerScore <= 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong.</button>
+                                    </td>
+                                    <td>
+                                        <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
+                                        <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
     </div>
     <div class="clearfix">

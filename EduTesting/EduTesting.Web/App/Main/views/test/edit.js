@@ -224,11 +224,13 @@
 
             $scope.highlightQuestion = function (question) {
                 var questions = $scope.model.questions;
-                for (var i = 0; i < questions.length; i++)
+                for (var i = 0; i < questions.length; i++) {
                     if (questions[i] != question)
                         questions[i].$isopen = false;
+                    else
+                        questions[i].$isopen = true;
+                }
                 if (question) {
-                    question.$isopen = true;
                     question.$error = true;
                 }
             };
@@ -301,25 +303,6 @@
                         message.success("Test successfully updated");
                     $state.go('test.list');
                 });
-            };
-            $scope.sortableQuestions = {
-                items: '.js-question',
-                handle: '>.panel-heading',
-                helper: 'clone',
-                start: function (e, ui) {
-                    ui.item.sortable = {
-                        index: ui.item.index()
-                    };
-                },
-                update: function (e, ui) {
-                    var index = ui.item.index();
-                    var oldIndex = ui.item.sortable.index;
-                    if (index > oldIndex)
-                        index--;
-                    var item = $scope.model.questions[oldIndex];
-                    $scope.model.questions.splice(oldIndex, 1);
-                    $scope.model.questions.splice(index, 0, item);
-                }
             };
         }
     ]);
