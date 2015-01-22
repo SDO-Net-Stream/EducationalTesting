@@ -11,6 +11,10 @@ namespace EduTesting.ViewModels.Test
         public int TestId { get; set; }
         public string TestName { get; set; }
         public string TestDescription { get; set; }
+        public bool TestIsPublic { get; set; }
+        public int? TestTimeLimit { get; set; }
+        public int? TestRandomSubsetSize { get; set; }
+
         public QuestionViewModel[] Questions { get; set; }
         public TestResultRatingViewModel[] Ratings { get; set; }
     }

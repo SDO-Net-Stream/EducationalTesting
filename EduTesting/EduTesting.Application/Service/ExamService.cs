@@ -66,31 +66,32 @@ namespace EduTesting.Service
                 TestResultEndTime = exam.TestResultEndTime,
                 TestResultStatus = exam.TestResultStatus,
             };
-            result.Questions = _Repository.GetQuestionsByTest(result.TestId).ToArray()
+            var userAnswers = exam.UsersAnswers.ToArray();
+            result.Questions = userAnswers.GroupBy(a => a.QuestionId, (k, g) => g.First().Question)
                 .Select(q =>
-            {
-                var item = new TestResultQuestionViewModel
                 {
-                    QuestionId = q.QuestionId,
-                    QuestionType = q.QuestionType,
-                    QuestionDescription = q.QuestionDescription,
-                    Answers = q.Answers.OrderBy(a => a.AnswerOrder).Select(a => new TestResultAnswerViewModel
+                    var item = new TestResultQuestionViewModel
                     {
-                        AnswerId = a.AnswerId,
-                        AnswerText = a.AnswerText
-                    }).ToArray(),
-                    UserAnswer = new UserAnswerViewModel
-                    {
-                        //TODO: AnswerText
                         QuestionId = q.QuestionId,
-                        TestResultId = exam.TestResultId,
-                        AnswerIds = _Repository.GetUserAnswersByTestResultId(exam.TestResultId)
-                            .Where(ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null))
-                            .Select(ua => ua.Answer.AnswerId).ToArray()
-                    }
-                };
-                return item;
-            }).ToArray();
+                        QuestionType = q.QuestionType,
+                        QuestionDescription = q.QuestionDescription,
+                        Answers = q.Answers.OrderBy(a => a.AnswerOrder).Select(a => new TestResultAnswerViewModel
+                        {
+                            AnswerId = a.AnswerId,
+                            AnswerText = a.AnswerText
+                        }).ToArray(),
+                        UserAnswer = new UserAnswerViewModel
+                        {
+                            //TODO: AnswerText
+                            QuestionId = q.QuestionId,
+                            TestResultId = exam.TestResultId,
+                            AnswerIds = userAnswers
+                                .Where(ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null))
+                                .Select(ua => ua.Answer.AnswerId).ToArray()
+                        }
+                    };
+                    return item;
+                }).ToArray();
             return result;
         }
 

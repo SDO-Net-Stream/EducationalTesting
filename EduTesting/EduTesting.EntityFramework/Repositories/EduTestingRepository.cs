@@ -110,12 +110,7 @@ namespace EduTesting.Repositories
     public partial class EduTestingRepository : EduTestingGenericRepository, IEduTestingRepository
     {
         #region Methods
-
-        public IEnumerable<Question> GetQuestionsByTest(int testId)
-        {
-            return GetDBContext().Questions.Where(q => q.TestId == testId);
-        }
-
+        
         public IEnumerable<TestResult> GetTestResultsByTest(int testId)
         {
             return GetDBContext().TestResults.Where(tr => tr.TestId == testId);
@@ -142,13 +137,42 @@ namespace EduTesting.Repositories
             );
         }
 
-        public IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testsResultId)
+        #endregion
+
+        #region Test Repository
+        public void AddTestAttribute(int testId, AttributeCode code, string value)
         {
-            return GetDBContext().UsersAnswers.Where(ua => ua.TestResult.TestResultId == testsResultId);
+            var db = GetDBContext();
+            var attr = db.TestAttributes.FirstOrDefault(a => a.AttributeId == (int)code && a.TestId == testId);
+            if (attr == null)
+            {
+                attr = new TestAttribute
+                {
+                    AttributeId = (int)code,
+                    TestId = testId,
+                    AttributeValue = value
+                };
+                db.TestAttributes.Add(attr);
+            }
+            else
+            {
+                attr.AttributeValue = value;
+                Update(attr);
+            }
+            db.SaveChanges();
+        }
+
+        public void RemoveTestAttribute(int testId, AttributeCode code)
+        {
+            var db = GetDBContext();
+            var attr = db.TestAttributes.FirstOrDefault(a => a.AttributeId == (int)code && a.TestId == testId);
+            if (attr != null)
+            {
+                db.TestAttributes.Remove(attr);
+                db.SaveChanges();
+            }
         }
 
         #endregion
-
-
     }
 }
