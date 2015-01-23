@@ -9,6 +9,7 @@ namespace EduTesting.ViewModels.Exam
     public class TestResultQuestionViewModel
     {
         public int QuestionId { get; set; }
+        public string QuestionText { get; set; }
         public string QuestionDescription { get; set; }
         public QuestionType QuestionType { get; set; }
         public TestResultAnswerViewModel[] Answers { get; set; }

@@ -118,6 +118,7 @@ namespace EduTesting.Service
                         QuestionId = q.QuestionId,
                         QuestionType = q.QuestionType,
                         QuestionDescription = q.QuestionDescription,
+                        QuestionText = q.QuestionText,
                         Answers = q.Answers.OrderBy(a => a.AnswerOrder).Select(a => new TestResultAnswerViewModel
                         {
                             AnswerId = a.AnswerId,

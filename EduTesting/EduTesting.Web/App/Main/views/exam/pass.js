@@ -1,8 +1,8 @@
 ﻿(function () {
     var controllerId = 'app.views.exam.pass';
     angular.module('app').controller(controllerId, [
-        '$scope', 'abp.services.app.exam', 'message', '$state', '$stateParams', 'testResult', 'enumConverter', '$q',
-        function ($scope, examService, message, $state, $stateParams, testResult, enumConverter, $q) {
+        '$scope', 'abp.services.app.exam', 'message', '$state', '$stateParams', 'testResult', 'enumConverter', '$q', '$interval',
+        function ($scope, examService, message, $state, $stateParams, testResult, enumConverter, $q, $interval) {
             var vm = this;
             $scope.examination = testResult;
             $scope.questionN = parseInt($stateParams.question);
@@ -73,6 +73,9 @@
                 }
                 $scope.trackChanges();
             };
+            $scope.textChanged = function () {
+                $scope.trackChanges(false, 10000);
+            };
             var countAnswers = function () {
                 var count = 0;
                 for (var i = 0; i < $scope.examination.questions.length; i++) {
@@ -88,7 +91,7 @@
             var saveDefer = $q.defer();
             saveDefer.resolve();
             var saveTimeout = null;
-            $scope.trackChanges = function (immediate) {
+            $scope.trackChanges = function (immediate, interval) {
                 countAnswers();
                 if (saveTimeout) {
                     saveDefer.reject();
@@ -108,7 +111,7 @@
                 if (immediate)
                     handler();
                 else
-                    saveTimeout = setTimeout(handler, 5000);
+                    saveTimeout = setTimeout(handler, interval || 5000);
             };
             $scope.waitSaving = function (immediate) {
                 if (saveTimeout && immediate) {
@@ -132,7 +135,7 @@
                 $scope.endTime = {
                     value: end
                 };
-                var timer = setInterval(function () {
+                var stop = $interval(function () {
                     var diff = Math.floor((end.getTime() - (new Date()).getTime()) / 1000);
                     if (diff > 0) {
                         $scope.endTime.minutes = Math.floor(diff / 60);
@@ -143,11 +146,9 @@
                         $scope.endTime.minutes = 0;
                         $scope.endTime.seconds = '00';
                     }
-                    $scope.$apply();
                 }, 100);
-                $scope.$on('$locationChangeStart', function () {
-                    clearInterval(timer);
-                    timer = null;
+                $scope.$on('$destroy', function () {
+                    $interval.cancel(stop);
                 });
             };
         }

@@ -5,7 +5,7 @@
     </div>
     <div ng-if="endTime">
         End time: <span class="label label-info">{{endTime.value|date:'mediumTime'}}</span><br />
-        Elapsed: <span class="label label-info">{{endTime.minutes}}:{{endTime.seconds}}</span>
+        Remaining: <span class="label label-info">{{endTime.minutes}}:{{endTime.seconds}}</span>
     </div>
 </div>
 <h3>
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="answer-text" class="control-label col-xs-2">Answer:</label>
                 <div class="col-xs-10">
-                    <input type="text" ng-model="question.userAnswer.answerText" id="answer-text" class="form-control"></input>
+                    <input type="text" ng-model="question.userAnswer.answerText" id="answer-text" class="form-control" ng-change="textChanged()"></input>
                 </div>
             </div>
         </div>
