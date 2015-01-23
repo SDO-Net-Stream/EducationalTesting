@@ -1,22 +1,31 @@
-﻿<h3>
+﻿<div>
+    <h3>{{examination.testName}}</h3>
+    <div>
+        {{examination.testDescription}}
+    </div>
+    <span class="label label-info" ng-if="examination.testResultEndTime">End time: {{examination.testResultEndTime|date:'mediumTime'}}</span>
+</div>
+<h3>
     <a class="glyphicon glyphicon-step-backward" ui-sref="exam.pass.question({test: examination.testId, question: questionN - 1})" ng-if="questionN > 1"></a>
     Question # {{questionN}} / {{examination.questions.length}}
     <a class="glyphicon glyphicon-step-forward" ui-sref="exam.pass.question({test: examination.testId, question: questionN + 1})" ng-if="questionN < examination.questions.length"></a>
 </h3>
 <div>{{question.questionDescription}}</div>
 <div>
-    <ul ng-if="questionType == 'SingleAnswer'">
-        <li ng-repeat="answer in question.answers">
-            <input type="radio" value="{{answer.answerId}}" ng-model="$parent.$parent.answerId" name="question{{question.questionId}}" />
-            {{answer.answerText}}
-        </li>
-    </ul>
-    <ul ng-if="questionType == 'MultipleAnswers'">
-        <li ng-repeat="answer in question.answers">
-            <input type="checkbox" value="{{answer.answerId}}" ng-checked="answerIds.indexOf(answer.answerId) > -1" ng-click="checkAnswer(answer.answerId)" />
-            {{answer.answerText}}
-        </li>
-    </ul>
+    <div class="list-group" ng-if="question.answers.length > 0">
+        <a class="list-group-item" ng-repeat="answer in question.answers" ng-class="{active: question.userAnswer.answerIds.indexOf(answer.answerId) > -1}" ng-click="toggleAnswer(answer.answerId)">{{answer.answerText}}
+        </a>
+    </div>
+    <div ng-if="questionType=='TextAnswer'">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="answer-text" class="control-label col-xs-2">Answer:</label>
+                <div class="col-xs-10">
+                    <input type="text" ng-model="question.userAnswer.answerText" id="answer-text" class="form-control"></input>
+                </div>
+            </div>
+        </div>
+    </div>
     <button class="btn" ng-class="{'btn-success' : isQuestionAnswered(), 'btn-warning' : !isQuestionAnswered() }" ng-click="next()">next</button>
 </div>
 <div>

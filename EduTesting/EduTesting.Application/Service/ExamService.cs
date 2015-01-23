@@ -80,6 +80,14 @@ namespace EduTesting.Service
             return ToTestResultViewModel(exam);
         }
 
+        public TestResultViewModel GetTestResult(TestResultParameterViewModel key)
+        {
+            var exam = _Repository.SelectById<TestResult>(key.TestResultId);
+            if (exam == null || exam.UserId != _webUser.CurrentUser.UserId)
+                throw new BusinessLogicException("Test result not found");
+            return ToTestResultViewModel(exam);
+        }
+
         private TestResultViewModel ToTestResultViewModel(TestResult exam)
         {
             var test = _Repository.SelectById<Test>(exam.TestId);
@@ -87,16 +95,24 @@ namespace EduTesting.Service
             {
                 TestResultId = exam.TestResultId,
                 TestId = test.TestId,
-                UserId = exam.UserId,
+                TestName = test.TestName,
+                TestDescription = test.TestDescription,
                 TestResultBeginTime = exam.TestResultBeginTime,
                 TestResultEndTime = exam.TestResultEndTime,
                 TestResultStatus = exam.TestResultStatus,
             };
+            if (exam.TestResultStatus == TestResultStatus.Completed)
+            {
+                result.TestResultScore = exam.TestResultScore;
+                if (exam.TestResultRating != null)
+                    result.RatingTitle = exam.TestResultRating.RatingTitle;
+            }
             var userAnswers = exam.UsersAnswers.ToArray();
             result.Questions = userAnswers.GroupBy(a => a.QuestionId, (k, g) => g.First().Question)
                 .OrderBy(q => q.QuestionOrder)
                 .Select(q =>
                 {
+                    var answersForQuestion = userAnswers.Where(ua => ua.Question.QuestionId == q.QuestionId).ToArray();
                     var item = new TestResultQuestionViewModel
                     {
                         QuestionId = q.QuestionId,
@@ -109,14 +125,15 @@ namespace EduTesting.Service
                         }).ToArray(),
                         UserAnswer = new UserAnswerViewModel
                         {
-                            //TODO: AnswerText
                             QuestionId = q.QuestionId,
                             TestResultId = exam.TestResultId,
-                            AnswerIds = userAnswers
-                                .Where(ua => ua.Question.QuestionId == q.QuestionId && (ua.Answer != null))
+                            AnswerIds = answersForQuestion
+                                .Where(ua => ua.Answer != null)
                                 .Select(ua => ua.Answer.AnswerId).ToArray()
                         }
                     };
+                    if (answersForQuestion.Length == 1)
+                        item.UserAnswer.AnswerText = answersForQuestion[0].CustomAnswerText;
                     return item;
                 }).ToArray();
             return result;
@@ -182,7 +199,7 @@ namespace EduTesting.Service
                         break;
                     case QuestionType.SingleAnswer:
                         var userAnswer = group.SingleOrDefault();
-                        if (userAnswer != null)
+                        if (userAnswer != null && userAnswer.Answer != null)
                             score += userAnswer.Answer.AnswerScore;
                         break;
                     case QuestionType.MultipleAnswers:
@@ -231,6 +248,7 @@ namespace EduTesting.Service
                 if (results.ContainsKey(t.TestId))
                 {
                     var result = results[t.TestId];
+                    model.TestResultId = result.TestResultId;
                     model.TestResultStatus = result.TestResultStatus;
                     model.TestResultScore = result.TestResultScore;
                     if (result.TestResultRating != null)

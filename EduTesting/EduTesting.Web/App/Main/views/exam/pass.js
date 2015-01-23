@@ -18,26 +18,7 @@
             }
             $scope.question = testResult.questions[$scope.questionN - 1];
             $scope.questionType = enumConverter.questionTypeToString($scope.question.questionType);
-            if ($scope.questionType == 'SingleAnswer') {
-                if ($scope.question.userAnswer.answerIds.length > 0) {
-                    $scope.answerId = $scope.question.userAnswer.answerIds[0];
-                } else {
-                    $scope.answerId = -1;
-                }
-                $scope.$watch('answerId', function (newValue) {
-                    if ($scope.answerId >= 0) {
-                        if ($scope.question.userAnswer.answerIds.length == 0 || $scope.question.userAnswer.answerIds[0] != newValue) {
-                            $scope.question.userAnswer.answerIds = [newValue];
-                            $scope.trackChanges();
-                        }
-                    } else {
-                        $scope.question.userAnswer.answerIds = [];
-                    }
-                });
-            }
-            if ($scope.questionType == 'MultipleAnswers') {
-                $scope.answerIds = $scope.question.userAnswer.answerIds;
-            }
+
             $scope.goToQuestion = function (number) {
                 $scope.waitSaving(true).then(function () {
                     $state.go('exam.pass.question', { test: testResult.testId, question: number });
@@ -51,6 +32,8 @@
                     case "MultipleAnswers":
                         return question.userAnswer.answerIds.length > 0;
                         break;
+                    case 'TextAnswer':
+                        return !!question.userAnswer.answerText;
                     default:
                         throw "Not implemented";
                 }
@@ -71,14 +54,23 @@
                     }
                 });
             };
-            $scope.checkAnswer = function (id) {
+
+            $scope.toggleAnswer = function (id) {
                 var idx = $scope.question.userAnswer.answerIds.indexOf(id);
                 if (idx > -1) {
                     $scope.question.userAnswer.answerIds.splice(idx, 1);
                 } else {
-                    $scope.question.userAnswer.answerIds.push(id);
+                    switch($scope.questionType) {
+                        case 'SingleAnswer':
+                            $scope.question.userAnswer.answerIds = [id];
+                            break;
+                        case 'MultipleAnswers':
+                            $scope.question.userAnswer.answerIds.push(id);
+                            break;
+                        default:
+                            throw 'Not implemented';
+                    }
                 }
-                $scope.answerIds = $scope.question.userAnswer.answerIds;
                 $scope.trackChanges();
             };
             var countAnswers = function () {

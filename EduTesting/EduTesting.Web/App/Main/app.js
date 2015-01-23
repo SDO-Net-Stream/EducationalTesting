@@ -125,7 +125,11 @@
                     controller: 'app.views.exam.pass',
                     menu: 'Exam'
                 })
-
+                .state('exam.answers', {
+                    url: '/:result/answers',
+                    templateUrl: '/App/Main/views/exam/answers.cshtml',
+                    menu: 'Exam'
+                })
 
                 .state('group', {
                     abstract: true,

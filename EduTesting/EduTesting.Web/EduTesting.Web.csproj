@@ -210,6 +210,7 @@
     <Content Include="App\Main\views\account\lostPassword.js" />
     <Content Include="App\Main\views\account\register.js" />
     <Content Include="App\Main\views\account\resetPassword.js" />
+    <Content Include="App\Main\views\exam\answers.js" />
     <Content Include="App\Main\views\group\list.js" />
     <Content Include="App\Main\views\layout\header.js" />
     <Content Include="App\Main\views\layout\layout.js" />
@@ -358,6 +359,7 @@
     <Content Include="App\Main\views\test\result.cshtml" />
     <Content Include="App\Main\views\group\list.cshtml" />
     <Content Include="App\Main\views\user\list.cshtml" />
+    <Content Include="App\Main\views\exam\answers.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-at.js" />
     <Content Include="Scripts\angular\i18n\angular-locale_de-be.js" />

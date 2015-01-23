@@ -1,0 +1,31 @@
+﻿<div ng-controller="app.views.exam.answers as vm">
+    <h3>{{model.testName}}</h3>
+    {{model.testDescription}}
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div>
+                Status: {{testResultStatus}}
+            </div>
+            <div ng-if="testResultStatus == 'Completed'">
+                Score: {{model.testResultScore}}<br />
+                Rating: {{model.ratingTitle}}
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-repeat="question in model.questions">
+        <div class="panel-heading">
+            <h4 class="panel-title">{{question.questionText}}</h4>
+            {{question.questionDescription}}
+        </div>
+        <div class="panel-body">
+            <div class="list-group" ng-if="question.answers.length">
+                <a class="list-group-item" ng-repeat="answer in question.answers" ng-class="{active: question.userAnswer.answerIds.indexOf(answer.answerId) > -1}">
+                    {{answer.answerText}}
+                </a>
+            </div>
+            <div ng-if="question.userAnswer.answerText">
+                Custom answer: {{question.userAnswer.answerText}}
+            </div>
+        </div>
+    </div>
+</div>

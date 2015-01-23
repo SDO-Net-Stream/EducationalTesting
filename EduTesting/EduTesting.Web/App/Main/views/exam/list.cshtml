@@ -18,6 +18,9 @@
                     Score: {{test.testResultScore}} <br />
                     Rating: {{test.ratingTitle}}
                 </div>
+                <a ng-if="test.testResultStatusCode" ui-sref="exam.answers({result: test.testResultId})">
+                    View answers
+                </a>
             </div>
         </accordion-group>
     </accordion>
