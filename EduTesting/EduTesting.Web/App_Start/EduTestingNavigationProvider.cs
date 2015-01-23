@@ -39,7 +39,7 @@ namespace EduTesting.Web
                     new MenuItemDefinition(
                         "Exam",
                         new LocalizableString("PassingTest", EduTestingConsts.LocalizationSourceName),
-                        url: "#/test/available",
+                        url: "#/exam/list",
                         icon: "fa fa-trophy"
                         )
                 ).AddItem(
@@ -48,6 +48,13 @@ namespace EduTesting.Web
                         new LocalizableString("Group", EduTestingConsts.LocalizationSourceName),
                         url: "#/group/list/",
                         icon: "fa fa-group"
+                        )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "User",
+                        new LocalizableString("User", EduTestingConsts.LocalizationSourceName),
+                        url: "#/user/list",
+                        icon: "fa fa-user"
                         )
                 );
         }

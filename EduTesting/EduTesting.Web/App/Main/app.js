@@ -8,6 +8,7 @@
         'ui.router',
         'ui.bootstrap',
         'ui.jq',
+        'ui.sortable',
 
         'abp'
     ]);
@@ -16,6 +17,18 @@
     app.config([
         '$stateProvider', '$urlRouterProvider',
         function ($stateProvider, $urlRouterProvider) {
+            var provideAuth = function (roleName) {
+                return [
+                    '$state', 'user', 'message',
+                    function ($state, user, message) {
+                        user.requireRole(roleName).then(angular.noop, function () {
+                            message.error('Not enought permissions');
+                            $state.go('home');
+                        })
+                    }
+                ];
+            };
+
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
@@ -48,7 +61,8 @@
                 .state('test', {
                     abstract: true,
                     url: '/test',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('Teacher')
                 })
                 .state('test.list', {
                     url: '/list',
@@ -60,25 +74,43 @@
                     templateUrl: '/App/Main/views/test/edit.cshtml',
                     menu: 'Test'
                 })
+                .state('test.result', { // test results
+                    url: '/:test/result',
+                    menu: 'Test'
+                })
+                .state('test.result.details', {
+                    url: '/:user',
+                    menu: 'Test'
+                })
 
 
-                .state('test.available', {
-                    url: '/available',
-                    templateUrl: '/App/Main/views/test/exams.cshtml',
+                .state('exam', {
+                    abstract: true,
+                    url: '/exam',
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('User')
+                })
+                .state('exam.list', {
+                    url: '/list',
+                    templateUrl: '/App/Main/views/exam/list.cshtml',
                     menu: 'Exam'
                 })
-                .state('test.pass', { // answering test
+                .state('exam.pass', { // answering test
                     url: '/:test/pass',
                     abstract: true,
                     resolve: {
                         testResult: [
-                            'abp.services.app.testResult', '$stateParams', '$q', '$state',
-                            function (resultService, $stateParams, $q, $state) {
-                                var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                            'abp.services.app.exam', '$stateParams', '$q', '$state', 'user',
+                            function (resultService, $stateParams, $q, $state, user) {
                                 var defer = $q.defer();
-                                result.success(function (testResult) { defer.resolve(testResult); });
-                                result.error(function () {
-                                    $state.go('test.list');
+                                user.requireRole('User').then(function () {
+                                    var result = resultService.getActiveUserTestResult({ testId: $stateParams.test });
+                                    result.success(function (testResult) { defer.resolve(testResult); });
+                                    result.error(function () {
+                                        $state.go('exam.list');
+                                        defer.reject();
+                                    });
+                                }, function () {
                                     defer.reject();
                                 });
                                 return defer.promise;
@@ -87,26 +119,23 @@
                     },
                     template: '<ui-view/>'
                 })
-                .state('test.pass.question', {
+                .state('exam.pass.question', {
                     url: '/:question',
-                    templateUrl: '/App/Main/views/test/pass.cshtml',
-                    controller: 'app.views.test.pass',
+                    templateUrl: '/App/Main/views/exam/pass.cshtml',
+                    controller: 'app.views.exam.pass',
                     menu: 'Exam'
                 })
-                .state('test.result', { // test results
-                    url: '/:test/result',
-                        menu: 'Test'
+                .state('exam.answers', {
+                    url: '/:result/answers',
+                    templateUrl: '/App/Main/views/exam/answers.cshtml',
+                    menu: 'Exam'
                 })
-                .state('test.result.details', {
-                    url: '/:user',
-                    menu: 'Test'
-                })
-
 
                 .state('group', {
                     abstract: true,
                     url: '/group',
-                    template: '<ui-view/>'
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('Teacher')
                 })
                 .state('group.list', {
                     url: '/list/:group',
@@ -116,40 +145,20 @@
                     templateUrl: '/App/Main/views/group/list.cshtml',
                     menu: 'Group'
                 })
-
+                .state('user', {
+                    abstract: true,
+                    url: '/user',
+                    template: '<ui-view/>',
+                    onEnter: provideAuth('Administrator')
+                })
+                .state('user.list', {
+                    url: '/list',
+                    templateUrl: '/App/Main/views/user/list.cshtml',
+                    menu: 'User'
+                })
             ;
         }
     ]);
-    (function () {
-        var username = null;
-        var roles = [];
-        app.value('user', {
-            signIn: function (loginInfo) {
-                if (loginInfo != null) {
-                    username = loginInfo.userName;
-                    if (loginInfo.userRoles)
-                        roles = loginInfo.userRoles;
-                    else
-                        roles = [];
-                }
-            },
-            isAuthenticated: function () {
-                return !!username;
-            },
-            name: function () {
-                return username;
-            },
-            roles: function () {
-                var result = {};
-                for (var i = 0; i < roles.length; i++)
-                    result[roles[i].toLowerCase()] = true;
-                return result;
-            }
-        });
-    })();
-    app.run(['user', 'abp.services.app.login', function (user, loginService) {
-        loginService.getUserInfo().success(user.signIn);
-    }]);
     app.run(['message', function (message) {
         abp.message.info = message.info;
         abp.message.warn = message.warning;

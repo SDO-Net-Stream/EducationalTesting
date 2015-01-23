@@ -120,12 +120,7 @@ namespace EduTesting.Repositories
     public partial class EduTestingRepository : EduTestingGenericRepository, IEduTestingRepository
     {
         #region Methods
-
-        public IEnumerable<Question> GetQuestionsByTest(int testId)
-        {
-            return GetDBContext().Questions.Where(q => q.TestId == testId);
-        }
-
+        
         public IEnumerable<TestResult> GetTestResultsByTest(int testId)
         {
             return GetDBContext().TestResults.Where(tr => tr.TestId == testId);
@@ -133,7 +128,7 @@ namespace EduTesting.Repositories
 
         public IEnumerable<TestResult> GetTestResultsByUser(int userId)
         {
-            return GetDBContext().TestResults.Where(tr => tr.UserId == userId);
+            return GetDBContext().TestResults.Where(tr => tr.UserId == userId).Include(r => r.TestResultRating);
         }
 
         public IEnumerable<TestResult> GetTestResultsByTestAndUser(int testId, int userId)
@@ -143,49 +138,57 @@ namespace EduTesting.Repositories
 
         public TestResult GetActiveTestResultByUser(int testId, int userId)
         {
-            return GetDBContext().TestResults.FirstOrDefault(tr => tr.TestId == testId && tr.UserId == userId && tr.IsCompleted == false);
-        }
-
-        public IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testsResultId)
-        {
-            return GetDBContext().UsersAnswers.Where(ua => ua.TestResult.TestResultId == testsResultId);
-        }
-
-        public void UpdateQuestionType(int questionId, int questionTypeId)
-        {
-            var db = GetDBContext();
-            var attr = db.QuestionAttributes.FirstOrDefault(qa => qa.QuestionID == questionId && qa.AttributeID == EduTestingConsts.AttributeId_QuestionType);
-            if (attr == null)
-            {
-                attr = new QuestionAttribute
-                {
-                    AttributeID = EduTestingConsts.AttributeId_QuestionType,
-                    QuestionID = questionId
-                };
-                db.QuestionAttributes.Add(attr);
-            }
-            attr.Value = questionTypeId.ToString();
-            db.SaveChanges();
-        }
-
-        public void UpdateAnswerIsRight(int answerId, bool isRight)
-        {
-            var answer = SelectById<Answer>(answerId);
-            if (answer.Attributes == null)
-                answer.Attributes = new List<CustomAttribute>();
-            var attr = answer.Attributes.FirstOrDefault(qa => qa.AttributeID == EduTestingConsts.AttributeId_AnswerIsRight);
-            if (attr == null)
-            {
-                attr = SelectById<CustomAttribute>(EduTestingConsts.AttributeId_AnswerIsRight);
-                answer.Attributes.Add(attr);
-            }
-            // TODO: set attribute value
-            //attr.Value = questionTypeId.ToString();
-            SaveChanges();
+            var now = DateTime.UtcNow;
+            return GetDBContext().TestResults.FirstOrDefault(tr => 
+                tr.TestId == testId && 
+                tr.UserId == userId && 
+                tr.TestResultStatus == TestResultStatus.InProgress && 
+                (!tr.TestResultEndTime.HasValue || tr.TestResultEndTime > now)
+            );
         }
 
         #endregion
 
+        #region Test Repository
+        public void AddTestAttribute(int testId, AttributeCode code, string value)
+        {
+            var db = GetDBContext();
+            var attr = db.TestAttributes.FirstOrDefault(a => a.AttributeId == (int)code && a.TestId == testId);
+            if (attr == null)
+            {
+                attr = new TestAttribute
+                {
+                    AttributeId = (int)code,
+                    TestId = testId,
+                    AttributeValue = value
+                };
+                db.TestAttributes.Add(attr);
+            }
+            else
+            {
+                attr.AttributeValue = value;
+                Update(attr);
+            }
+            db.SaveChanges();
+        }
 
+        public void RemoveTestAttribute(int testId, AttributeCode code)
+        {
+            var db = GetDBContext();
+            var attr = db.TestAttributes.FirstOrDefault(a => a.AttributeId == (int)code && a.TestId == testId);
+            if (attr != null)
+            {
+                db.TestAttributes.Remove(attr);
+                db.SaveChanges();
+            }
+<<<<<<< HEAD
+            // TODO: set attribute value
+            //attr.Value = questionTypeId.ToString();
+            SaveChanges();
+=======
+>>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
+        }
+
+        #endregion
     }
 }

@@ -1,46 +1,27 @@
 ﻿(function () {
-    var controllerId = 'app.views.test.pass';
+    var controllerId = 'app.views.exam.pass';
     angular.module('app').controller(controllerId, [
-        '$scope', 'abp.services.app.testResult', 'message', '$state', '$stateParams', 'testResult', 'enumConverter', '$q',
-        function ($scope, examService, message, $state, $stateParams, testResult, enumConverter, $q) {
+        '$scope', 'abp.services.app.exam', 'message', '$state', '$stateParams', 'testResult', 'enumConverter', '$q', '$interval',
+        function ($scope, examService, message, $state, $stateParams, testResult, enumConverter, $q, $interval) {
             var vm = this;
             $scope.examination = testResult;
             $scope.questionN = parseInt($stateParams.question);
             if (testResult.questions.length == 0) {
                 message.error("Questions list is empty");
-                $state.go('test.available');
+                $state.go('exam.list');
                 return;
             }
             if ($scope.questionN <= 0 || $scope.questionN > testResult.questions.length || isNaN($scope.questionN)) {
                 message.warning("Invalid question number");
-                $state.go('test.pass.question', { test: testResult.testId, question: 1 });
+                $state.go('exam.pass.question', { test: testResult.testId, question: 1 });
                 return;
             }
             $scope.question = testResult.questions[$scope.questionN - 1];
             $scope.questionType = enumConverter.questionTypeToString($scope.question.questionType);
-            if ($scope.questionType == 'SingleAnswer') {
-                if ($scope.question.userAnswer.answerIds.length > 0) {
-                    $scope.answerId = $scope.question.userAnswer.answerIds[0];
-                } else {
-                    $scope.answerId = -1;
-                }
-                $scope.$watch('answerId', function (newValue) {
-                    if ($scope.answerId >= 0) {
-                        if ($scope.question.userAnswer.answerIds.length == 0 || $scope.question.userAnswer.answerIds[0] != newValue) {
-                            $scope.question.userAnswer.answerIds = [newValue];
-                            $scope.trackChanges();
-                        }
-                    } else {
-                        $scope.question.userAnswer.answerIds = [];
-                    }
-                });
-            }
-            if ($scope.questionType == 'MultipleAnswers') {
-                $scope.answerIds = $scope.question.userAnswer.answerIds;
-            }
+
             $scope.goToQuestion = function (number) {
                 $scope.waitSaving(true).then(function () {
-                    $state.go('test.pass.question', { test: testResult.testId, question: number });
+                    $state.go('exam.pass.question', { test: testResult.testId, question: number });
                 });
             };
 
@@ -51,6 +32,8 @@
                     case "MultipleAnswers":
                         return question.userAnswer.answerIds.length > 0;
                         break;
+                    case 'TextAnswer':
+                        return !!question.userAnswer.answerText;
                     default:
                         throw "Not implemented";
                 }
@@ -71,15 +54,27 @@
                     }
                 });
             };
-            $scope.checkAnswer = function (id) {
+
+            $scope.toggleAnswer = function (id) {
                 var idx = $scope.question.userAnswer.answerIds.indexOf(id);
                 if (idx > -1) {
                     $scope.question.userAnswer.answerIds.splice(idx, 1);
                 } else {
-                    $scope.question.userAnswer.answerIds.push(id);
+                    switch($scope.questionType) {
+                        case 'SingleAnswer':
+                            $scope.question.userAnswer.answerIds = [id];
+                            break;
+                        case 'MultipleAnswers':
+                            $scope.question.userAnswer.answerIds.push(id);
+                            break;
+                        default:
+                            throw 'Not implemented';
+                    }
                 }
-                $scope.answerIds = $scope.question.userAnswer.answerIds;
                 $scope.trackChanges();
+            };
+            $scope.textChanged = function () {
+                $scope.trackChanges(false, 10000);
             };
             var countAnswers = function () {
                 var count = 0;
@@ -96,7 +91,7 @@
             var saveDefer = $q.defer();
             saveDefer.resolve();
             var saveTimeout = null;
-            $scope.trackChanges = function (immediate) {
+            $scope.trackChanges = function (immediate, interval) {
                 countAnswers();
                 if (saveTimeout) {
                     saveDefer.reject();
@@ -116,7 +111,7 @@
                 if (immediate)
                     handler();
                 else
-                    saveTimeout = setTimeout(handler, 5000);
+                    saveTimeout = setTimeout(handler, interval || 5000);
             };
             $scope.waitSaving = function (immediate) {
                 if (saveTimeout && immediate) {
@@ -129,8 +124,31 @@
                     examService.completeTestResult({ testResultId: testResult.testResultId })
                         .success(function () {
                             message.success("Test completed");
-                            $state.go('test.available');
+                            $state.go('exam.list');
                         });
+                });
+            };
+
+            if (testResult.testResultEndTime) {
+                var end = new Date(testResult.testResultEndTime);
+                end = new Date(end.getTime() - end.getTimezoneOffset() * 60 * 1000);
+                $scope.endTime = {
+                    value: end
+                };
+                var stop = $interval(function () {
+                    var diff = Math.floor((end.getTime() - (new Date()).getTime()) / 1000);
+                    if (diff > 0) {
+                        $scope.endTime.minutes = Math.floor(diff / 60);
+                        $scope.endTime.seconds = diff - $scope.endTime.minutes * 60;
+                        if ($scope.endTime.seconds < 10)
+                            $scope.endTime.seconds = '0' + $scope.endTime.seconds;
+                    } else {
+                        $scope.endTime.minutes = 0;
+                        $scope.endTime.seconds = '00';
+                    }
+                }, 100);
+                $scope.$on('$destroy', function () {
+                    $interval.cancel(stop);
                 });
             };
         }

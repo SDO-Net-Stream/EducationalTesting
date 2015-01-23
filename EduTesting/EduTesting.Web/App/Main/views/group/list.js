@@ -2,8 +2,8 @@
     var controllerId = 'app.views.group.list';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.group', 'message', '$state', '$stateParams', '$modal', '$q',
-        function ($scope, groupService, message, $state, $stateParams, $modal, $q) {
+        '$scope', 'abp.services.app.group', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', '$q', 'user',
+        function ($scope, groupService, testService, message, $state, $stateParams, $modal, $q, user) {
             var openGroupParam = $stateParams.group;
             var loadGroups = function () {
                 groupService.getGroups({ groupName: $scope.filterGroupName })
@@ -29,7 +29,6 @@
                     loadGroups();
                 }, 500);
             };
-            loadGroups();
 
             var userTimeout = null;
             $scope.searchUser = function (group) {
@@ -57,6 +56,7 @@
                     message.success("Group updated");
                     group.groupName = result.groupName;
                     group.users = result.users;
+                    group.tests = result.tests;
                     defer.resolve(result);
                 });
                 return defer.promise;
@@ -65,10 +65,13 @@
                 var result = {
                     groupId: group.groupId,
                     groupName: group.groupName,
-                    users: []
+                    users: [],
+                    tests: []
                 };
                 for (var i = 0; i < group.users.length; i++)
                     result.users.push(group.users[i].userId);
+                for (var i = 0; i < group.tests.length; i++)
+                    result.tests.push(group.tests[i].testId);
                 return result;
             };
 
@@ -87,13 +90,48 @@
                     }
             };
 
+            var testTimeout = null;
+            $scope.searchTest = function (group) {
+                if (testTimeout)
+                    clearTimeout(testTimeout);
+                testTimeout = setTimeout(function () {
+                    testTimeout = null;
+                    testService.getTests({ testName: group.filterTestName })
+                        .success(function (list) {
+                            group.filteredTests = list;
+                        });
+                }, 500);
+            };
+            $scope.testInGroup = function (test, group) {
+                for (var i = 0; i < group.tests.length; i++) {
+                    if (group.tests[i].testId == test.testId)
+                        return true;
+                }
+                return false;
+            };
+            $scope.addTestToGroup = function (test, group) {
+                var model = getUpdateModel(group);
+                model.tests.push(test.testId);
+                updateGroup(group, model);
+            };
+            $scope.removeTestFromGroup = function (test, group) {
+                var model = getUpdateModel(group);
+                for (var i = 0; i < model.tests.length; i++)
+                    if (model.tests[i] == test.testId) {
+                        model.tests.splice(i, 1);
+                        updateGroup(group, model);
+                        return;
+                    }
+            };
+
             $scope.editGroup = function (group) {
                 var dialog = $modal.open({
                     templateUrl: 'app.views.group.list.edit.html',
                     controller: ['$scope', function ($scopeModal) {
                         var source = group || {
                             groupName: '',
-                            users: []
+                            users: [],
+                            tests: []
                         };
                         var model = {
                             isNew: !group,
@@ -141,6 +179,7 @@
                     }
                 });
             };
+            user.requireRole('Teacher').then(loadGroups);
         }
     ]);
 })();

@@ -9,9 +9,10 @@ namespace EduTesting.DataProvider
 {
     public class FakeUserProvider : IUserRepository
     {
-        private readonly Role[] _fakeRoles = new Role[]{
-            new Role { RoleID=2, RoleName = EduTestingConsts.RoleName_Teacher },
-            new Role { RoleID=1, RoleName = EduTestingConsts.RoleName_User }
+        private readonly Role[] _fakeRoles = new Role[]
+        {
+            new Role { RoleID = (int)RoleCode.Teacher, RoleName = "Teacher" },
+            new Role { RoleID = (int)RoleCode.User, RoleName = "User" }
         };
         private User FakeUser(string key)
         {
@@ -37,18 +38,6 @@ namespace EduTesting.DataProvider
             return FakeUser(domainName);
         }
 
-        public User GetUserByEmailPassword(string email, string password)
-        {
-            if (email == password)
-            {
-                return GetUserByEmail(email);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public User GetUserById(int id)
         {
             return FakeUser(id.ToString());
@@ -66,27 +55,37 @@ namespace EduTesting.DataProvider
             return FakeUser(token.Split(' ')[0]);
         }
 
-        public User Register(string name, string email, string password)
+        public void InsertUser(User user)
         {
-            if (password != email)
-                throw new BusinessLogicException("Email and password must match");
-            return FakeUser(email);
+            throw new NotImplementedException();
         }
 
-        public void ChangePassword(User user, string password)
+        public void UpdateUser(User user)
         {
-            //
+            throw new NotImplementedException();
         }
 
-        public string GenerateUserToken(User user)
+
+        public void AddRoleToUser(User user, RoleCode role)
         {
-            var key = string.IsNullOrWhiteSpace(user.UserEmail) ? user.UserDomainName : user.UserEmail;
-            return key + " " + Guid.NewGuid().ToString();
+            throw new NotImplementedException();
         }
 
-        public void DeleteUserToken(User user, string token)
+
+        public void DeleteUser(User user)
         {
-            //
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<User> GetUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void RemoveRoleFromUser(User entity, RoleCode role)
+        {
+            throw new NotImplementedException();
         }
     }
 }

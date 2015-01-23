@@ -47,6 +47,29 @@
                         </li>
                     </ul>
                 </div>
+                <div class="col-xs-6">
+                    Tests in group ({{group.tests.length}}):
+                    <ul>
+                        <li ng-repeat="test in group.tests">
+                            {{test.testName}}
+                            <button class="btn glyphicon glyphicon-remove" ng-click="removeTestFromGroup(test, group)"></button>
+                        </li>
+                    </ul>
+                    <form ng-submit="void(0);" name="search" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-xs-2">Search:</label>
+                            <div class="col-xs-10">
+                                <input type="text" name="testName" ng-model="group.filterTestName" class="form-control" ng-change="searchTest(group)"></input>
+                            </div>
+                        </div>
+                    </form>
+                    <ul ng-if="group.filteredTests">
+                        <li ng-repeat="test in group.filteredTests">
+                            {{test.testName}}
+                            <button class="btn glyphicon glyphicon-plus" ng-click="addTestToGroup(test, group)" ng-if="!testInGroup(test, group)"></button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </accordion-group>
     </accordion>

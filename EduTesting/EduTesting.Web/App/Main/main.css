@@ -34,3 +34,6 @@ body {
   left: 2em;
   opacity: 0;
 }
+a {
+    cursor: pointer;
+}

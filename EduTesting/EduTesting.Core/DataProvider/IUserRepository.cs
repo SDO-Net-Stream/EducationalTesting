@@ -12,13 +12,16 @@ namespace EduTesting.DataProvider
         User GetUserById(int userId);
         User GetUserByDomainName(string domainName);
         User GetUserByEmail(string email);
-        User GetUserByEmailPassword(string email, string password);
         User GetUserByToken(string token);
 
-        User Register(string name, string email, string password);
-        void ChangePassword(User user, string password);
+        void InsertUser(User user);
+        void UpdateUser(User user);
+        void DeleteUser(User user);
+        void AddRoleToUser(User user, RoleCode role);
 
-        string GenerateUserToken(User user);
-        void DeleteUserToken(User user, string token);
+        // TODO: replace by filtering method
+        IQueryable<User> GetUsers();
+
+        void RemoveRoleFromUser(User user, RoleCode role);
     }
 }

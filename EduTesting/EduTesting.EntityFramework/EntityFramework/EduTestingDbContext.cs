@@ -13,7 +13,7 @@ namespace EduTesting.EntityFramework
          *   pass connection string name to base classes. ABP works either way.
          */
         public EduTestingDbContext()
-            : base()
+            : base("name=EduTestingDbContext")
         {
 
         }
@@ -40,7 +40,9 @@ namespace EduTesting.EntityFramework
 
         public virtual IDbSet<Answer> Answers { get; set; }
         public virtual IDbSet<CustomAttribute> Attributes { get; set; }
+        public virtual IDbSet<TestAttribute> TestAttributes { get; set; }
         public virtual IDbSet<QuestionAttribute> QuestionAttributes { get; set; }
+        public virtual IDbSet<AnswerAttribute> AnswerAttributes { get; set; }
         public virtual IDbSet<Question> Questions { get; set; }
         public virtual IDbSet<Role> Roles { get; set; }
         public virtual IDbSet<Test> Tests { get; set; }
@@ -48,6 +50,7 @@ namespace EduTesting.EntityFramework
         public virtual IDbSet<UserGroup> UserGroups { get; set; }
         public virtual IDbSet<User> Users { get; set; }
         public virtual IDbSet<UserAnswer> UsersAnswers { get; set; }
+        public virtual IDbSet<TestResultRating> TestResultRatings { get; set; }
     }
 
     //Example:

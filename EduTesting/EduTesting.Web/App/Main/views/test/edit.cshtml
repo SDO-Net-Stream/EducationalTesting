@@ -2,36 +2,88 @@
     <h3 class="modal-title" ng-if="id == 'new'">Create test</h3>
     <h3 class="modal-title" ng-if="id != 'new'">Edit test</h3>
     <h4>{{model.testName}}<a ng-click="editTestName()">{{model.testName?'':'Please enter name of the test'}}<span class="glyphicon glyphicon-pencil"></span></a></h4>
+    <div>
+        Status: <strong>{{testStatus}}</strong>
+    </div>
+    <div ng-if="model.testIsPublic">
+        Test is public.
+    </div>
+    <div>
+        Test type: 
+        <span ng-if="!model.testRandomSubsetSize">All questions.</span>
+        <span ng-if="model.testRandomSubsetSize">Random questions: {{model.testRandomSubsetSize}} of {{model.questions.length}}.</span>
+    </div>
+    <div ng-if="model.testTimeLimit">
+        Time limit: {{model.testTimeLimit}} min.
+    </div>
     {{model.testDescription}}
-    <accordion close-others="false">
-        <accordion-group ng-repeat="question in model.questions" is-open="question.$isopen" ng-class="{'panel-danger': question.$error}">
-            <accordion-heading>
-                <div class="width:100%">
-                    {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
-                    <div style="float: right">
+
+    <div class="clearfix">
+        <h3>Questions:</h3>
+
+        <div class="panel-group" ui-sortable="{ handle: '>.panel-heading', cancel: 'a,button' }" ng-model="model.questions">
+            <div ng-repeat="question in model.questions" class="panel panel-default" ng-class="{'panel-danger': question.$error}">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left">
+                        <a data-toggle="collapse" ng-click="question.$isopen = !question.$isopen; $event.preventDefault();">
+                            {{ (question.$isopen ? question.questionText : (question.questionText || question.questionDescription)) || "-- no text --"}}
+                        </a>
+                    </h4>
+                    <div class="pull-right">
                         <button class="glyphicon glyphicon-pencil btn-link" ng-click="editQuestion(question); $event.stopPropagation();"></button>
                         <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteQuestion(question); $event.stopPropagation();"></button>
                     </div>
                 </div>
-            </accordion-heading>
-            {{ question.questionDescription || "-- no description --" }}
-            <div ng-repeat="answer in question.answers" style="margin-bottom: 8px">
-                {{answer.answerText}}
-                <div style="float: right;">
-                    <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
-                    <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
-                </div>
-                <div style="float: right;">
-                    <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct</button>
-                    <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="!answer.answerIsRight" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong</button>
+                <div class="panel-collapse" collapse="!question.$isopen">
+                    <div class="panel-body">
+                        {{ question.questionDescription || "-- no description --" }}
+                        <h4 ng-if="question.questionTypeCode != 'TextAnswer' || question.answers.length > 0">Answers:</h4>
+                        <table class="table">
+                            <tbody ui-sortable ng-model="question.answers">
+                                <tr ng-repeat="answer in question.answers">
+                                    <td>{{answer.answerText}}
+                                    </td>
+                                    <td>
+                                        <button class="glyphicon glyphicon-ok btn-link text-success" ng-if="answer.answerScore > 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is correct.{{answer.answerScore != 1? ' (score: ' + answer.answerScore + ')' : ''}}</button>
+                                        <button class="glyphicon glyphicon-remove btn-link text-warning" ng-if="answer.answerScore <= 0" ng-click="vm.toggleAnswerRight(question, answer)">Answer is wrong.</button>
+                                    </td>
+                                    <td>
+                                        <button class="glyphicon glyphicon-pencil btn-link" ng-click="editAnswer(answer, question)"></button>
+                                        <button class="glyphicon glyphicon-remove btn-link" ng-click="deleteAnswer(answer, question)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
+                    </div>
                 </div>
             </div>
-            <div class="clearfix"></div>
-            <button type="button" class="btn" ng-click="editAnswer(null, question)" ng-if="question.questionTypeCode != 'TextAnswer'">Create new Answer</button>
-        </accordion-group>
-    </accordion>
-    <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
-    <div class="clearfix"></div>
+        </div>
+        <button type="button" class="btn" ng-click="editQuestion(null)">Create new Question</button>
+    </div>
+    <div class="clearfix">
+        <h3>Ratings:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Min score</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="rating in model.ratings">
+                    <td>{{rating.ratingTitle}}</td>
+                    <td>{{rating.ratingLowerBound}}</td>
+                    <td>
+                        <button class="glyphicon glyphicon-pencil btn" ng-click="editRating(rating)"></button>
+                        <button class="glyphicon glyphicon-remove btn" ng-click="deleteRating(rating)"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn" ng-click="editRating(null)">Add rating</button>
+    </div>
     <div class="pull-right">
         <button class="btn btn-primary" ng-click="save()">{{id=='new' ? "Create" : "Update"}}</button>
         <a class="btn" ui-sref="test.list">Cancel</a>
@@ -93,28 +145,48 @@
             </div>
             <div class="modal-body">
                 <div class="form-group" ng-class="{'has-error': form.testName.$dirty && form.testName.$invalid, 'has-success': form.testName.$dirty && !form.testName.$invalid}">
-                    <label for="test-edit-text" class="control-label col-xs-2">Name:</label>
+                    <label for="test-edit-name" class="control-label col-xs-2">Name:</label>
                     <div class="col-xs-10">
-                        <input type="text" name="testName" ng-model="model.testName" id="test-edit-text" class="form-control" required="required"></input>
+                        <input type="text" name="testName" ng-model="model.testName" id="test-edit-name" class="form-control" required="required"></input>
                         <span ng-show="form.testName.$dirty && form.testName.$error.required" class="help-block">Enter name of the test.</span>
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.testDescription.$dirty && form.testDescription.$invalid, 'has-success': form.testDescription.$dirty && !form.testDescription.$invalid}">
-                    <label for="test-edit-text" class="control-label col-xs-2">Description:</label>
+                    <label for="test-edit-description" class="control-label col-xs-2">Description:</label>
                     <div class="col-xs-10">
-                        <input type="text" name="testDescription" ng-model="model.testDescription" id="test-edit-text" class="form-control"></input>
+                        <input type="text" name="testDescription" ng-model="model.testDescription" id="test-edit-description" class="form-control"></input>
                         <span ng-show="form.testDescription.$dirty && form.testDescription.$error.required" class="help-block">Enter description.</span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.testType.$dirty && form.testType.$invalid, 'has-success': form.testType.$dirty && !form.testType.$invalid}">
-                    <label for="test-edit-text" class="control-label col-xs-2">Type:</label>
+                <div class="form-group" ng-class="{'has-error': form.testIsPublic.$dirty && form.testIsPublic.$invalid, 'has-success': form.testIsPublic.$dirty && !form.testIsPublic.$invalid}">
+                    <label for="test-edit-ispublic" class="control-label col-xs-2">Public:</label>
                     <div class="col-xs-10">
-                        <select ng-change="" ng-model="model.testType" id="test-edit-testType">
-                            <option value="A">Test type A</option>
-                            <option value="B">Test type B</option>
-                            <option value="C">Test type B</option>
+                        <input type="checkbox" name="testIsPublic" ng-model="model.testIsPublic" id="test-edit-ispublic"></input>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.testTimeLimit.$dirty && form.testTimeLimit.$invalid, 'has-success': form.testTimeLimit.$dirty && !form.testTimeLimit.$invalid}">
+                    <label for="test-edit-time" class="control-label col-xs-2">Time limit:</label>
+                    <div class="col-xs-10">
+                        <input type="number" name="testTimeLimit" ng-model="model.testTimeLimit" id="test-edit-time" class="form-control"></input>
+                        <span class="help-block">Minutes</span>
+                        <span ng-show="form.testTimeLimit.$dirty && form.testTimeLimit.$error.number" class="help-block">Not valid number!</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.testRandomSubsetSize.$dirty && form.testRandomSubsetSize.$invalid, 'has-success': form.testRandomSubsetSize.$dirty && !form.testRandomSubsetSize.$invalid}">
+                    <label for="test-edit-time" class="control-label col-xs-2">Random questions:</label>
+                    <div class="col-xs-10">
+                        <input type="number" name="testRandomSubsetSize" ng-model="model.testRandomSubsetSize" id="test-edit-time" class="form-control"></input>
+                        <span ng-show="form.testRandomSubsetSize.$dirty && form.testRandomSubsetSize.$error.number" class="help-block">Not valid number!</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.testStatus.$dirty && form.testStatus.$invalid, 'has-success': form.testStatus.$dirty && !form.testStatus.$invalid}">
+                    <label for="test-edit-status" class="control-label col-xs-2">Status:</label>
+                    <div class="col-xs-10">
+                        <select ng-model="model.testStatus" id="test-edit-status" class="form-control">
+                            <option value="Pending">Pending</option>
+                            <option value="Published">Published</option>
                         </select>
-                        <span ng-show="form.testType.$dirty && form.testType.$error.required" class="help-block">Enter text.</span>
+                        <span ng-show="form.testStatus.$dirty && form.testStatus.$error.required" class="help-block">Choose status.</span>
                     </div>
                 </div>
             </div>
@@ -137,9 +209,12 @@
                         <span ng-show="form.answerText.$dirty && form.answerText.$error.required" class="help-block">Enter text.</span>
                     </div>
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.answerIsRight.$dirty && form.answerIsRight.$invalid, 'has-success': form.answerIsRight.$dirty && !form.answerIsRight.$invalid}">
-                    <label for="answer-edit-answerIsRight" class="control-label col-xs-2">Is right:</label>
-                    <input type="checkbox" ng-model="model.answerIsRight" id="answer-edit-answerIsRight" />
+                <div class="form-group" ng-class="{'has-error': form.answerScore.$dirty && form.answerScore.$invalid, 'has-success': form.answerScore.$dirty && !form.answerScore.$invalid}">
+                    <label for="answer-edit-answerScore" class="control-label col-xs-2">Score:</label>
+                    <div class="col-xs-10">
+                        <input type="number" ng-model="model.answerScore" id="answer-edit-answerScore" required="required"/>
+                        <span ng-show="form.answerScore.$dirty && form.answerScore.$error.required" class="help-block">Enter score.</span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -162,5 +237,42 @@
             </div>
         </form>
     </script>
-
+    <script id="app.views.test.edit.rating.html" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">{{model.isNew ? "Create" : "Edit"}} rating</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-class="{'has-error': form.ratingTitle.$dirty && form.ratingTitle.$invalid, 'has-success': form.ratingTitle.$dirty && !form.ratingTitle.$invalid}">
+                    <label for="rating-edit-title" class="control-label col-xs-2">Title:</label>
+                    <div class="col-xs-10">
+                        <input type="text" name="ratingTitle" ng-model="model.ratingTitle" id="rating-edit-title" class="form-control" required="required"></input>
+                        <span ng-show="form.ratingTitle.$dirty && form.ratingTitle.$error.required" class="help-block">Enter title.</span>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.ratingScore.$dirty && form.ratingScore.$invalid, 'has-success': form.ratingScore.$dirty && !form.ratingScore.$invalid}">
+                    <label for="rating-edit-score" class="control-label col-xs-2">Min score:</label>
+                    <input type="number" name="ratingScore" ng-model="model.ratingScore" id="rating-edit-score" class="form-control" required="required"></input>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">{{model.isNew ? 'Create' : 'Update'}}</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
+    <script id="app.views.test.edit.deleteRating.html" type="text/ng-template">
+        <form ng-submit="ok()" name="form" class="form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete rating</h3>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete rating '{{model.ratingTitle}}'?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </form>
+    </script>
 </div>

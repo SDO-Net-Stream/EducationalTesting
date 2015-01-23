@@ -1,17 +1,28 @@
 ﻿<div ng-controller="app.views.test.result as result">
     <tabset>
         <tab heading="Users">
-<div class="panel">
-    <input type="text" ng-model="result.filter.userName" />
-    <ul>
-        <li ng-repeat="user in result.users" ng-class="{ active: $parent.user == user }">
-            {{user.userFirstName}} {{user.userLastName}} - {{user.testResultIsCompleted ? "Completed" : "In Prodress"}}
-        </li>
-    </ul>
-</div>
+            <div class="panel">
+                <input type="text" ng-model="result.filter.userName" />
+                <ul>
+                    <li ng-repeat="user in result.users" ng-class="{ active: result.filter.userId == user.userId }">
+                        {{user.userFirstName}} {{user.userLastName}} - {{user.testResultStatusCode == "InProgress" ? "In Prodress" : "Completed"}}
+                    </li>
+                </ul>
+            </div>
         </tab>
         <tab heading="Groups">
-
+            <div class="panel">
+                <div class="clearfix">
+                    <div class="col-xs-3">
+                        <input type="text" ng-model="result.filter.groupName" />
+                        <ul>
+                            <li ng-repeat="group in result.groups" ng-class="{ active: result.filter.groupId == group.groupId }">
+                                {{group.groupName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </tab>
     </tabset>
 </div>

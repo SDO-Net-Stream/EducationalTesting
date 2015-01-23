@@ -3,6 +3,7 @@ using EduTesting.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,34 +29,45 @@ namespace EduTesting.Repositories
                 return GetDBContext().Users.FirstOrDefault(user => email.Equals(user.UserEmail, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public User GetUserByEmailPassword(string email, string password)
+        public void InsertUser(User user)
         {
-            throw new NotImplementedException();
+            Insert(user);
+        }
+
+        public void UpdateUser(User user)
+        {
+            Update(user);
         }
 
         public User GetUserByToken(string token)
         {
-            return GetDBContext().Users.FirstOrDefault(user => user.UserPasswordVerificationToken == token);
+            return GetDBContext().Users.FirstOrDefault(u => u.UserPasswordVerificationToken == token);
         }
 
-        public User Register(string name, string email, string password)
+
+        public void AddRoleToUser(User user, RoleCode role)
         {
-            throw new NotImplementedException();
+            var db = GetDBContext();
+            if (user.Roles == null)
+                user.Roles = new List<Role>();
+            user.Roles.Add(SelectById<Role>((int)role));
+            Update(user);
         }
 
-        public void ChangePassword(User user, string password)
+        public void RemoveRoleFromUser(User user, RoleCode role)
         {
-            throw new NotImplementedException();
+            user.Roles.Remove(user.Roles.First(r => r.RoleID == (int)role));
+            Update(user);
         }
 
-        public string GenerateUserToken(User user)
+        public void DeleteUser(User user)
         {
-            throw new NotImplementedException();
+            Delete<User>(user.UserId);
         }
 
-        public void DeleteUserToken(User user, string token)
+        public IQueryable<User> GetUsers()
         {
-            throw new NotImplementedException();
+            return SelectAll<User>(u => u.Roles);
         }
     }
 }

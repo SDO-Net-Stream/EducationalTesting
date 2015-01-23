@@ -93,6 +93,18 @@
     <Compile Include="Migrations\201501151659196_UserFieldsRename.Designer.cs">
       <DependentUpon>201501151659196_UserFieldsRename.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501200816456_TestStatus.cs" />
+    <Compile Include="Migrations\201501200816456_TestStatus.Designer.cs">
+      <DependentUpon>201501200816456_TestStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501201119498_UserAnswer_QuestionId.cs" />
+    <Compile Include="Migrations\201501201119498_UserAnswer_QuestionId.Designer.cs">
+      <DependentUpon>201501201119498_UserAnswer_QuestionId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501220851193_attributes.cs" />
+    <Compile Include="Migrations\201501220851193_attributes.Designer.cs">
+      <DependentUpon>201501220851193_attributes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="EduTestingDataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,7 +112,7 @@
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
+    <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -120,6 +132,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501151659196_UserFieldsRename.resx">
       <DependentUpon>201501151659196_UserFieldsRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501200816456_TestStatus.resx">
+      <DependentUpon>201501200816456_TestStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501201119498_UserAnswer_QuestionId.resx">
+      <DependentUpon>201501201119498_UserAnswer_QuestionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501220851193_attributes.resx">
+      <DependentUpon>201501220851193_attributes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

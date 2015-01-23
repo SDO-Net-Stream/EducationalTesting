@@ -1,5 +1,6 @@
 ﻿using EduTesting.Interfaces;
 using EduTesting.Model;
+using EduTesting.ViewModels.Test;
 using EduTesting.ViewModels.UserGroup;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EduTesting.Service
 {
-    public class UserGroupService : EduTestingAppServiceBase, IUserGroupService
+    public class UserGroupService : IUserGroupService
     {
         private readonly IEduTestingRepository _repository;
         public UserGroupService(IEduTestingRepository repository)
@@ -19,9 +20,27 @@ namespace EduTesting.Service
 
         public UserGroupViewModel[] GetGroups(UserGroupListFilterViewModel filter)
         {
-            var groups = string.IsNullOrWhiteSpace(filter.GroupName) ?
-                _repository.SelectAll<UserGroup>() :
-                _repository.SelectAll<UserGroup>().Where(g => g.GroupName.Contains(filter.GroupName));
+            IEnumerable<UserGroup> groups;
+            if (filter.TestId.HasValue)
+            {
+                groups = _repository.SelectById<Test>(filter.TestId.Value).UserGroups;
+                if (filter.UserId.HasValue)
+                    groups = groups.Where(g => g.Users.Any(u => u.UserId == filter.UserId.Value));
+            }
+            else
+                if (filter.UserId.HasValue)
+                {
+                    groups = _repository.SelectById<User>(filter.UserId.Value).UserGroups;
+                }
+                else
+                {
+                    groups = _repository.SelectAll<UserGroup>();
+                }
+            if (!string.IsNullOrWhiteSpace(filter.GroupName))
+            {
+                var nameFilter = filter.GroupName.ToLowerInvariant();
+                groups = groups.Where(g => g.GroupName.ToLowerInvariant().Contains(nameFilter));
+            }
             return groups.OrderBy(g => g.GroupName).Take(filter.Count ?? 10)
                 .Select(g => ToViewModel(g))
                 .ToArray();
@@ -62,6 +81,16 @@ namespace EduTesting.Service
                         UserFirstName = u.UserFirstName,
                         UserLastName = u.UserLastName
                     }).ToArray();
+            if (entity.Tests == null)
+                model.Tests = new TestListItemViewModel[0];
+            else
+                model.Tests = entity.Tests.OrderBy(t => t.TestName)
+                    .Select(t => new TestListItemViewModel
+                    {
+                        TestId = t.TestId,
+                        TestName = t.TestName,
+                        TestStatus = t.TestStatus
+                    }).ToArray();
             return model;
         }
 
@@ -72,7 +101,12 @@ namespace EduTesting.Service
             UpdateGroupFromViewModel(group, entity);
             entity = _repository.Insert(entity, false);
             UpdateGroupUsersFromViewModel(group, entity);
+<<<<<<< HEAD
             _repository.Update(entity, true); // TODO: replace by SaveChanges
+=======
+            UpdateGroupTestsFromViewModel(group, entity);
+            _repository.Update(entity); // TODO: replace by SaveChanges
+>>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
             return ToViewModel(entity);
         }
 
@@ -100,6 +134,29 @@ namespace EduTesting.Service
             }
         }
 
+        private void UpdateGroupTestsFromViewModel(UserGroupUpdateViewModel group, UserGroup entity)
+        {
+            var toRemove = (entity.Tests ?? new Test[0]).ToDictionary(u => u.TestId);
+            foreach (var testId in group.Tests)
+            {
+                if (toRemove.ContainsKey(testId))
+                {
+                    toRemove.Remove(testId);
+                }
+                else
+                {
+                    var newTest = _repository.SelectById<Test>(testId);
+                    if (entity.Tests == null)
+                        entity.Tests = new List<Test>();
+                    entity.Tests.Add(newTest);
+                }
+            }
+            foreach (var test in toRemove)
+            {
+                entity.Tests.Remove(test.Value);
+            }
+        }
+
         private void UpdateGroupFromViewModel(UserGroupUpdateViewModel group, UserGroup entity)
         {
             entity.GroupName = group.GroupName;
@@ -110,7 +167,12 @@ namespace EduTesting.Service
             var entity = _repository.SelectById<UserGroup>(group.GroupId);
             UpdateGroupFromViewModel(group, entity);
             UpdateGroupUsersFromViewModel(group, entity);
+<<<<<<< HEAD
             _repository.Update(entity, true); // TODO: replace by SaveChanges
+=======
+            UpdateGroupTestsFromViewModel(group, entity);
+            _repository.Update(entity); // TODO: replace by SaveChanges
+>>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
             return ToViewModel(entity);
         }
         

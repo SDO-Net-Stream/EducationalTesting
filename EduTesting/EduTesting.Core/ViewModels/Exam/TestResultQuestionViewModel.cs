@@ -4,16 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EduTesting.ViewModels.TestResult
+namespace EduTesting.ViewModels.Exam
 {
-    public enum QuestionType
-    {
-        SingleAnswer, MultipleAnswers, TextAnswer
-    }
-
     public class TestResultQuestionViewModel
     {
         public int QuestionId { get; set; }
+        public string QuestionText { get; set; }
         public string QuestionDescription { get; set; }
         public QuestionType QuestionType { get; set; }
         public TestResultAnswerViewModel[] Answers { get; set; }

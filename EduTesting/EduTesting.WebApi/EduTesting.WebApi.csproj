@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EduTestingWebApiModule.cs" />
+    <Compile Include="Security\AuthorizationFilter.cs" />
     <Compile Include="ViewModels\Login\LoginInfo.cs" />
     <Compile Include="ViewModels\Login\LoginByEmailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

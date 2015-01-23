@@ -2,19 +2,25 @@
     var controllerId = 'app.views.test.edit';
     var app = angular.module('app');
     app.controller(controllerId, [
-        '$scope', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', 'enumConverter',
-        function ($scope, testService, message, $state, $stateParams, $modal, enumConverter) {
+        '$scope', 'abp.services.app.test', 'message', '$state', '$stateParams', '$modal', 'enumConverter', 'user',
+        function ($scope, testService, message, $state, $stateParams, $modal, enumConverter, user) {
             var vm = this;
             $scope.id = $stateParams.test;
+            $scope.testStatus = "Pending";
             $scope.model = {
                 testId: 0,
-                questions: []
+                testStatus: enumConverter.stringToTestStatus($scope.testStatus),
+                questions: [],
+                ratings: []
             };
             if ($scope.id != 'new') {
-                testService.getTest({ testId: $scope.id }).success(function (test) {
-                    for (var i = 0; i < test.questions.length; i++)
-                        test.questions[i].questionTypeCode = enumConverter.questionTypeToString(test.questions[i].questionType);
-                    $scope.model = test;
+                user.requireRole('Teacher').then(function () {
+                    testService.getTest({ testId: $scope.id }).success(function (test) {
+                        for (var i = 0; i < test.questions.length; i++)
+                            test.questions[i].questionTypeCode = enumConverter.questionTypeToString(test.questions[i].questionType);
+                        $scope.testStatus = enumConverter.testStatusToString(test.testStatus);
+                        $scope.model = test;
+                    });
                 });
             }
 
@@ -26,13 +32,20 @@
                         var model = {
                             testName: source.testName,
                             testDescription: source.testDescription,
-                            testType: source.testType
+                            testIsPublic: source.testIsPublic,
+                            testTimeLimit: source.testTimeLimit,
+                            testRandomSubsetSize: source.testRandomSubsetSize,
+                            testStatus: enumConverter.testStatusToString(source.testStatus)
                         };
                         $scopeModal.model = model;
                         $scopeModal.ok = function () {
                             source.testName = model.testName;
                             source.testDescription = model.testDescription;
-                            source.testType = model.testType;
+                            source.testIsPublic = model.testIsPublic;
+                            source.testTimeLimit = model.testTimeLimit;
+                            source.testRandomSubsetSize = model.testRandomSubsetSize;
+                            source.testStatus = enumConverter.stringToTestStatus(model.testStatus);
+                            $scope.testStatus = model.testStatus;
                             $scopeModal.$close(source);
                         };
                         $scopeModal.cancel = function () {
@@ -102,21 +115,19 @@
                     controller: ['$scope', function ($scopeModal) {
                         var source = answer || {
                             answerId: 0,
-                            answerIsRight: false,
+                            answerScore: 0,
                         };
                         var model = {
                             isNew: !answer,
                             answerText: source.answerText,
-                            answerIsRight: source.answerIsRight
+                            answerScore: source.answerScore
                         };
                         $scopeModal.model = model;
                         $scopeModal.ok = function () {
                             source.answerText = model.answerText;
+                            source.answerScore = model.answerScore;
                             if (model.isNew) {
                                 question.answers.push(source);
-                            }
-                            if (source.answerIsRight != model.answerIsRight) {
-                                vm.toggleAnswerRight(question, source);
                             }
 
                             $scopeModal.$close(source);
@@ -152,26 +163,74 @@
             vm.toggleAnswerRight = function (question, answer) {
                 switch (question.questionTypeCode) {
                     case "SingleAnswer":
-                        /*
-                        for (var i = 0; i < question.answers.length; i++)
-                            question.answers[i].answerIsRight = false;
-                        answer.answerIsRight = true;
-                        break;
-                        */
                     case "MultipleAnswers":
-                        answer.answerIsRight = !answer.answerIsRight;
+                        answer.answerScore = answer.answerScore ? 0 : 1;
                         break;
                     default:
                         throw "Invalid question type";
                 }
             };
+
+            $scope.editRating = function (rating) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.test.edit.rating.html',
+                    controller: ['$scope', function ($scopeModal) {
+                        var source = rating || {
+                            ratingId: 0,
+                            ratingLowerBound: 0
+                        };
+                        var model = {
+                            isNew: !rating,
+                            ratingTitle: source.ratingTitle,
+                            ratingScore: source.ratingLowerBound
+                        };
+                        $scopeModal.model = model;
+                        $scopeModal.ok = function () {
+                            source.ratingTitle = model.ratingTitle;
+                            source.ratingLowerBound = model.ratingScore;
+                            if (model.isNew) {
+                                $scope.model.ratings.push(source);
+                            }
+                            $scopeModal.$close(source);
+                            //TODO: sort ratings by score
+                        };
+                        $scopeModal.cancel = function () {
+                            $scopeModal.$dismiss('cancel');
+                        };
+                    }]
+                });
+            };
+            $scope.deleteRating = function (rating) {
+                var dialog = $modal.open({
+                    templateUrl: 'app.views.test.edit.deleteRating.html',
+                    controller: ['$scope', function ($scopeModal) {
+                        $scopeModal.model = rating;
+                        $scopeModal.ok = function () {
+                            var ratings = $scope.model.ratings;
+                            for (var i = 0; i < ratings.length; i++) {
+                                if (ratings[i] == rating) {
+                                    ratings.splice(i, 1);
+                                    break;
+                                }
+                            }
+                            $scopeModal.$close();
+                        };
+                        $scopeModal.cancel = function () {
+                            $scopeModal.$dismiss('cancel');
+                        };
+                    }]
+                });
+            };
+
             $scope.highlightQuestion = function (question) {
                 var questions = $scope.model.questions;
-                for (var i = 0; i < questions.length; i++)
+                for (var i = 0; i < questions.length; i++) {
                     if (questions[i] != question)
                         questions[i].$isopen = false;
+                    else
+                        questions[i].$isopen = true;
+                }
                 if (question) {
-                    question.$isopen = true;
                     question.$error = true;
                 }
             };
@@ -215,7 +274,7 @@
                                     $scope.highlightQuestion(question);
                                     return false;
                                 }
-                                if (answer.answerIsRight)
+                                if (answer.answerScore > 0)
                                     right++;
                             }
                             if (right == 0) {

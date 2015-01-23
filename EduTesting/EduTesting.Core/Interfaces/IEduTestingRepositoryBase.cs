@@ -28,16 +28,22 @@ namespace EduTesting.Interfaces
 
     public interface IEduTestingRepository : IEduTestingGenericRepository, IUserRepository
     {
-        IEnumerable<Question> GetQuestionsByTest(int testId);
-
+        #region Test Result Repository
         IEnumerable<TestResult> GetTestResultsByTest(int testId);
         IEnumerable<TestResult> GetTestResultsByUser(int userId);
         IEnumerable<TestResult> GetTestResultsByTestAndUser(int testId, int userId);
         TestResult GetActiveTestResultByUser(int testId, int userId);
+<<<<<<< HEAD
         IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testResultId);
 
         void UpdateQuestionType(int questionId, int questionTypeId);
+=======
+        #endregion
+>>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
 
-        void UpdateAnswerIsRight(int answerId, bool isRight);
+        #region Test Repository
+        void AddTestAttribute(int testId, AttributeCode code, string value);
+        void RemoveTestAttribute(int testId, AttributeCode code);
+        #endregion
     }
 }

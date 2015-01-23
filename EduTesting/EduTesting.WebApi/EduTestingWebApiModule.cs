@@ -10,6 +10,7 @@ using Castle.MicroKernel.Registration;
 using EduTesting.WebRequestParameters;
 using Abp.Events.Bus;
 using Abp.Events.Bus.Exceptions;
+using EduTesting.Model;
 namespace EduTesting
 {
     [DependsOn(typeof(AbpWebApiModule), typeof(EduTestingApplicationModule))]
@@ -27,21 +28,33 @@ namespace EduTesting
                 .ForAll<IApplicationService>(typeof(EduTestingApplicationModule).Assembly, "app")
                 .Build();
              */
-            var authenticationFilter = new AuthenticationFilter(IocManager);
+            var authenticate = new AuthenticationFilter(IocManager);
+            var authorizeUser = new AuthorizationFilter(RoleCode.User, IocManager);
+            var authorizeTeacher = new AuthorizationFilter(RoleCode.Teacher, IocManager);
+            var authorizeAdministrator = new AuthorizationFilter(RoleCode.Administrator, IocManager);
+
             DynamicApiControllerBuilder.For<ITestService>("app/test")
-                .WithFilters(authenticationFilter)
+                .WithFilters(authenticate, authorizeTeacher)
                 .Build();
+
             DynamicApiControllerBuilder.For<ILoginService>("app/login")
-                .WithFilters(authenticationFilter)
+                .WithFilters(authenticate)
                 .Build();
             DynamicApiControllerBuilder.For<IAccountService>("app/account")
                 .Build();
-            DynamicApiControllerBuilder.For<ITestResultService>("app/testResult")
-                .WithFilters(authenticationFilter)
+            DynamicApiControllerBuilder.For<ITestResultService>("app/result")
+                .WithFilters(authenticate, authorizeTeacher)
                 .Build();
             DynamicApiControllerBuilder.For<IUserGroupService>("app/group")
-                .WithFilters(authenticationFilter)
+                .WithFilters(authenticate, authorizeTeacher)
                 .Build();
+            DynamicApiControllerBuilder.For<IUserService>("app/user")
+                .WithFilters(authenticate, authorizeAdministrator)
+                .Build();
+            DynamicApiControllerBuilder.For<IExamService>("app/exam")
+                .WithFilters(authenticate, authorizeUser)
+                .Build();
+
 
 #if DEBUG
             EventBus.Default.Register<AbpHandledExceptionData>(eventData =>

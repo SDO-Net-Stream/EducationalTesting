@@ -31,8 +31,11 @@ namespace EduTesting.Service
         [UnitOfWork(false)]
         public LoginInfo Login(LoginByEmailModel login)
         {
-            var user = _userProvider.GetUserByEmailPassword(login.Email, login.Password);
+            var user = _userProvider.GetUserByEmail(login.Email);
             if (user == null || !user.UserActivated)
+                return null;
+            var hash = PasswordEncription.HashPassword(login.Password, user.UserPasswordSalt);
+            if (hash != user.UserPassword)
                 return null;
             _sessionManager.UpdateSession(user);
             return new LoginInfo(user);
@@ -45,7 +48,7 @@ namespace EduTesting.Service
             if (identity != null && identity.IsAuthenticated)
             {
                 var user = _userProvider.GetUserByDomainName(identity.Name);
-                if (user != null || !user.UserActivated)
+                if (user != null && !user.UserActivated)
                 {
                     _sessionManager.UpdateSession(user);
                     return new LoginInfo(user);
