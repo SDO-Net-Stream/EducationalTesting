@@ -125,6 +125,31 @@
                         });
                 });
             };
+
+            if (testResult.testResultEndTime) {
+                var end = new Date(testResult.testResultEndTime);
+                end = new Date(end.getTime() - end.getTimezoneOffset() * 60 * 1000);
+                $scope.endTime = {
+                    value: end
+                };
+                var timer = setInterval(function () {
+                    var diff = Math.floor((end.getTime() - (new Date()).getTime()) / 1000);
+                    if (diff > 0) {
+                        $scope.endTime.minutes = Math.floor(diff / 60);
+                        $scope.endTime.seconds = diff - $scope.endTime.minutes * 60;
+                        if ($scope.endTime.seconds < 10)
+                            $scope.endTime.seconds = '0' + $scope.endTime.seconds;
+                    } else {
+                        $scope.endTime.minutes = 0;
+                        $scope.endTime.seconds = '00';
+                    }
+                    $scope.$apply();
+                }, 100);
+                $scope.$on('$locationChangeStart', function () {
+                    clearInterval(timer);
+                    timer = null;
+                });
+            };
         }
     ]);
 })();

@@ -3,7 +3,10 @@
     <div>
         {{examination.testDescription}}
     </div>
-    <span class="label label-info" ng-if="examination.testResultEndTime">End time: {{examination.testResultEndTime|date:'mediumTime'}}</span>
+    <div ng-if="endTime">
+        End time: <span class="label label-info">{{endTime.value|date:'mediumTime'}}</span><br />
+        Elapsed: <span class="label label-info">{{endTime.minutes}}:{{endTime.seconds}}</span>
+    </div>
 </div>
 <h3>
     <a class="glyphicon glyphicon-step-backward" ui-sref="exam.pass.question({test: examination.testId, question: questionN - 1})" ng-if="questionN > 1"></a>
