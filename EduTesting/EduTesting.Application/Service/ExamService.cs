@@ -22,20 +22,46 @@ namespace EduTesting.Service
 
         public void StartTest(StartTestViewModel startModel)
         {
+            var user = _webUser.CurrentUser;
+            var groups = user.UserGroups.Select(g => g.GroupID).ToArray();
             var exam = _Repository.GetActiveTestResultByUser(startModel.TestId, _webUser.CurrentUser.UserId);
             if (exam != null)
                 throw new BusinessLogicException("Test already started. Complete previous before starting new one.");
             var test = _Repository.SelectById<Test>(startModel.TestId);
+            if (
+                test.TestStatus != TestStatus.Published ||
+                !(
+                    test.TestAttributes.Any(a => a.AttributeId == (int)AttributeCode.TestIsPublic) ||
+                    test.UserGroups.Any(g => groups.Contains(g.GroupID))
+                )
+            )
+            {
+                throw new BusinessLogicException("You can not start this test");
+            }
+            var attributes = test.TestAttributes.ToDictionary(a => (AttributeCode)a.AttributeId, a => a.AttributeValue);
             exam = new TestResult
             {
                 UserId = _webUser.CurrentUser.UserId,
                 TestId = test.TestId,
                 TestResultBeginTime = DateTime.UtcNow,
                 TestResultStatus = TestResultStatus.InProgress,
+                TestResultEndTime = null
             };
+            if (attributes.ContainsKey(AttributeCode.TestTimeLimit))
+            {
+                exam.TestResultEndTime = exam.TestResultBeginTime.AddMinutes(int.Parse(attributes[AttributeCode.TestTimeLimit]));
+            }
             exam = _Repository.Insert<TestResult>(exam);
-            // TODO: check test type
-            foreach (var question in test.Questions)
+            var questions = test.Questions.ToList();
+            if (attributes.ContainsKey(AttributeCode.TestRandomSubsetSize))
+            {
+                var maxQuestions = Math.Max(0, int.Parse(attributes[AttributeCode.TestRandomSubsetSize]));
+                var random = new Random((int)DateTime.Now.Ticks);
+                while (questions.Count > maxQuestions)
+                    questions.RemoveAt(random.Next(questions.Count));
+
+            }
+            foreach (var question in questions)
             {
                 _Repository.Insert(new UserAnswer
                 {
@@ -68,6 +94,7 @@ namespace EduTesting.Service
             };
             var userAnswers = exam.UsersAnswers.ToArray();
             result.Questions = userAnswers.GroupBy(a => a.QuestionId, (k, g) => g.First().Question)
+                .OrderBy(q => q.QuestionOrder)
                 .Select(q =>
                 {
                     var item = new TestResultQuestionViewModel
@@ -97,12 +124,13 @@ namespace EduTesting.Service
 
         public void SaveUserAnswer(UserAnswerViewModel answer)
         {
-            if (_Repository.SelectById<TestResult>(answer.TestResultId) == null)
+            var testResult = _Repository.SelectById<TestResult>(answer.TestResultId);
+            if (testResult == null || testResult.UserId != _webUser.CurrentUser.UserId)
                 throw new BusinessLogicException("Test result not found by id " + answer.TestResultId);
+
             var question = _Repository.SelectById<Question>(answer.QuestionId);
             if (question == null)
                 throw new BusinessLogicException("Question not found by id " + answer.QuestionId);
-            var testResult = _Repository.SelectById<TestResult>(answer.TestResultId);
             var oldAnswers = testResult.UsersAnswers
                 .Where(a => a.Question.QuestionId == answer.QuestionId).ToArray();
             if (oldAnswers.Length == 0)
@@ -114,7 +142,8 @@ namespace EduTesting.Service
                 {
                     TestResultId = answer.TestResultId,
                     Question = question,
-                    Answer = null
+                    Answer = null,
+                    CustomAnswerText = answer.AnswerText
                 });
             }
             else
@@ -122,7 +151,7 @@ namespace EduTesting.Service
                 foreach (var answerId in answer.AnswerIds)
                 {
                     var answerModel = _Repository.SelectById<Answer>(answerId);
-                    if (answerModel == null)
+                    if (answerModel == null || answerModel.QuestionId != answer.QuestionId)
                         throw new BusinessLogicException("Answer not found by id " + answerId);
                     _Repository.Insert<UserAnswer>(new UserAnswer
                     {
@@ -139,6 +168,8 @@ namespace EduTesting.Service
             var exam = _Repository.SelectById<TestResult>(key.TestResultId);
             if (exam.UserId != _webUser.CurrentUser.UserId)
                 throw new BusinessLogicException("You can complete only owning test sessions");
+            if (exam.TestResultStatus != TestResultStatus.InProgress)
+                throw new BusinessLogicException("Test already completed");
             var textAnswers = false;
             var score = 0m;
             #region calculate score
@@ -184,7 +215,6 @@ namespace EduTesting.Service
                 //TODO: should be executed in repository
                 .GroupBy(r => r.TestId, (testId, testResults) => testResults.OrderByDescending(r => r.TestResultBeginTime).First())
                 .ToDictionary(r => r.TestId);
-            // TODO: include public tests
             var tests = _Repository.SelectAll<Test>(new Expression<Func<Test, object>>[0]);
             tests = tests.Where(t =>
                 (t.TestAttributes.Any(a => a.AttributeId == (int)AttributeCode.TestIsPublic) ||
