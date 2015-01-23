@@ -33,13 +33,7 @@ namespace EduTesting.Interfaces
         IEnumerable<TestResult> GetTestResultsByUser(int userId);
         IEnumerable<TestResult> GetTestResultsByTestAndUser(int testId, int userId);
         TestResult GetActiveTestResultByUser(int testId, int userId);
-<<<<<<< HEAD
-        IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testResultId);
-
-        void UpdateQuestionType(int questionId, int questionTypeId);
-=======
         #endregion
->>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
 
         #region Test Repository
         void AddTestAttribute(int testId, AttributeCode code, string value);

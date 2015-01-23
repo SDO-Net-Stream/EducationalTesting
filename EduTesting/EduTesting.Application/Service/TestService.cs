@@ -114,9 +114,8 @@ namespace EduTesting.Service
             UpdateTestQuestionsFromViewModel(test, entity);
             UpdateRatingsFromViewModel(test, entity);
             UpdateAttributesFromViewModel(test, entity);
-            _Repository.Update(entity);
+            _Repository.Update(entity, true);
             test.TestId = entity.TestId;
-            _Repository.SaveChanges();
             return test;
         }
 
@@ -126,13 +125,9 @@ namespace EduTesting.Service
             UpdateTestPropertiesFromViewModel(test, entity);
             _Repository.Update(entity, false);
             UpdateTestQuestionsFromViewModel(test, entity);
-<<<<<<< HEAD
-            _Repository.SaveChanges();
-=======
             UpdateRatingsFromViewModel(test, entity);
             UpdateAttributesFromViewModel(test, entity);
-            _Repository.Update(entity);
->>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
+            _Repository.Update(entity, true);        
         }
         
         #region Update Test
@@ -168,7 +163,7 @@ namespace EduTesting.Service
                 newQuestion.QuestionDescription = question.QuestionDescription;
                 newQuestion.QuestionType = question.QuestionType;
                 newQuestion.QuestionOrder = i;
-                _Repository.Update(newQuestion);
+                _Repository.Update(newQuestion, false);
                 UpdateTestAnswersFromViewModel(question, newQuestion);
             }
             foreach (var question in toUpdate)
@@ -207,27 +202,11 @@ namespace EduTesting.Service
                 _Repository.Delete<Answer>(answer.Value.QuestionId, false);
             }
         }
-<<<<<<< HEAD
         
-        #endregion
-=======
->>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
-
         private void UpdateRatingsFromViewModel(TestViewModel model, Test entity)
         {
-<<<<<<< HEAD
-            _Repository.Delete<Test>(test.TestId, true);
-        }
-        /*
-        public IEnumerable<QuestionListItemViewModel> GetQuestions(int testId)
-        {
-            var questions = _Repository.GetQuestionsByTest(testId);
-            var result = new List<QuestionListItemViewModel>();
-            foreach(var question in questions)
-=======
             var toUpdate = (entity.Ratings ?? new TestResultRating[0]).ToDictionary(r => r.RatingId);
             foreach (var rating in model.Ratings)
->>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
             {
                 TestResultRating newRating;
                 if (toUpdate.ContainsKey(rating.RatingId))
@@ -239,17 +218,17 @@ namespace EduTesting.Service
                 {
                     newRating = new TestResultRating();
                     newRating.TestId = entity.TestId;
-                    _Repository.Insert(newRating);
+                    _Repository.Insert(newRating, false);
                     entity.Ratings.Add(newRating);
                 }
                 newRating.RatingTitle = rating.RatingTitle;
                 newRating.RatingLowerBound = rating.RatingLowerBound;
-                _Repository.Update(newRating);
+                _Repository.Update(newRating, false);
             }
             foreach (var rating in toUpdate)
             {
                 entity.Ratings.Remove(rating.Value);
-                _Repository.Delete<TestResultRating>(rating.Value.RatingId);
+                _Repository.Delete<TestResultRating>(rating.Value.RatingId, false);
             }
         }
 
@@ -273,7 +252,7 @@ namespace EduTesting.Service
 
         public void DeleteTest(TestViewModel test)
         {
-            _Repository.Delete<Test>(test.TestId);
+            _Repository.Delete<Test>(test.TestId, true);
         }
     }
 }
