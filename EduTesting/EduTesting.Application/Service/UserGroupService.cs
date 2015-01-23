@@ -70,9 +70,9 @@ namespace EduTesting.Service
         {
             var entity = new UserGroup();
             UpdateGroupFromViewModel(group, entity);
-            entity = _repository.Insert(entity);
+            entity = _repository.Insert(entity, false);
             UpdateGroupUsersFromViewModel(group, entity);
-            _repository.Update(entity); // TODO: replace by SaveChanges
+            _repository.Update(entity, true); // TODO: replace by SaveChanges
             return ToViewModel(entity);
         }
 
@@ -104,17 +104,19 @@ namespace EduTesting.Service
         {
             entity.GroupName = group.GroupName;
         }
+        
         public UserGroupViewModel UpdateGroup(UserGroupUpdateViewModel group)
         {
             var entity = _repository.SelectById<UserGroup>(group.GroupId);
             UpdateGroupFromViewModel(group, entity);
             UpdateGroupUsersFromViewModel(group, entity);
-            _repository.Update(entity); // TODO: replace by SaveChanges
+            _repository.Update(entity, true); // TODO: replace by SaveChanges
             return ToViewModel(entity);
         }
+        
         public void DeleteGroup(UserGroupUpdateViewModel group)
         {
-            _repository.Delete<UserGroup>(group.GroupId);
+            _repository.Delete<UserGroup>(group.GroupId, true);
         }
         #endregion
     }

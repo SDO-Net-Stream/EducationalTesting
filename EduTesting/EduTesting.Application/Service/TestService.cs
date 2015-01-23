@@ -83,9 +83,10 @@ namespace EduTesting.Service
         {
             var entity = new Test();
             UpdateTestPropertiesFromViewModel(test, entity);
-            entity = _Repository.Insert<Test>(entity);
+            entity = _Repository.Insert<Test>(entity, false);
             UpdateTestQuestionsFromViewModel(test, entity);
             test.TestId = entity.TestId;
+            _Repository.SaveChanges();
             return test;
         }
 
@@ -93,15 +94,19 @@ namespace EduTesting.Service
         {
             var entity = _Repository.SelectById<Test>(test.TestId);
             UpdateTestPropertiesFromViewModel(test, entity);
-            _Repository.Update(entity);
+            _Repository.Update(entity, false);
             UpdateTestQuestionsFromViewModel(test, entity);
+            _Repository.SaveChanges();
         }
+        
         #region Update Test
+        
         private void UpdateTestPropertiesFromViewModel(TestViewModel model, Test entity)
         {
             entity.TestName = model.TestName;
             entity.TestDescription = model.TestDescription;
         }
+        
         private void UpdateTestQuestionsFromViewModel(TestViewModel model, Test entity)
         {
             var toUpdate = (entity.Questions ?? new Question[0]).ToDictionary(q => q.QuestionId);
@@ -117,7 +122,7 @@ namespace EduTesting.Service
                 {
                     newQuestion = new Question();
                     newQuestion.TestId = entity.TestId;
-                    _Repository.Insert(newQuestion);
+                    _Repository.Insert(newQuestion, false);
                     entity.Questions.Add(newQuestion);
                 }
                 newQuestion.QuestionText = question.QuestionText;
@@ -128,7 +133,7 @@ namespace EduTesting.Service
             foreach (var question in toUpdate)
             {
                 entity.Questions.Remove(question.Value);
-                _Repository.Delete<Question>(question.Value.QuestionId);
+                _Repository.Delete<Question>(question.Value.QuestionId, false);
             }
         }
 
@@ -147,7 +152,7 @@ namespace EduTesting.Service
                 {
                     newAnswer = new Answer();
                     newAnswer.QuestionId = entity.QuestionId;
-                    _Repository.Insert(newAnswer);
+                    _Repository.Insert(newAnswer, false);
                     entity.Answers.Add(newAnswer);
                 }
                 newAnswer.AnswerText = answer.AnswerText;
@@ -156,14 +161,15 @@ namespace EduTesting.Service
             foreach (var answer in toUpdate)
             {
                 entity.Answers.Remove(answer.Value);
-                _Repository.Delete<Answer>(answer.Value.QuestionId);
+                _Repository.Delete<Answer>(answer.Value.QuestionId, false);
             }
         }
+        
         #endregion
 
         public void DeleteTest(TestViewModel test)
         {
-            _Repository.Delete<Test>(test.TestId);
+            _Repository.Delete<Test>(test.TestId, true);
         }
         /*
         public IEnumerable<QuestionListItemViewModel> GetQuestions(int testId)

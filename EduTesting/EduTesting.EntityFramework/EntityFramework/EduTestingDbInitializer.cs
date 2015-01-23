@@ -228,7 +228,7 @@ namespace EduTesting.EntityFramework
             var roles = new List<Role>
             {
                 new Role { RoleID = 1, RoleName = "User" },
-                new Role { RoleID = 1, RoleName = "Teacher" },
+                new Role { RoleID = 2, RoleName = "Teacher" },
                 new Role { RoleID = 3, RoleName = "Administrator" }
             };
             roles.ForEach(r => context.Roles.Add(r));

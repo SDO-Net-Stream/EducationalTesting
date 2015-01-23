@@ -13,15 +13,17 @@ namespace EduTesting.Interfaces
         IQueryable<TEntity> SelectAll<TEntity>(params Expression<Func<TEntity, object>>[] includeObjects) where TEntity : class;
         IEnumerable<TEntity> SelectAll<TEntity>() where TEntity : class;
         TEntity SelectById<TEntity>(params object[] keyValues) where TEntity : class;
-        
-        TEntity Insert<TEntity>(TEntity item) where TEntity : class;
-        IEnumerable<TEntity> Insert<TEntity>(IEnumerable<TEntity> items) where TEntity : class;
 
-        void Update<TEntity>(TEntity item) where TEntity : class;
-        void Update<TEntity>(IEnumerable<TEntity> items) where TEntity : class;
+        TEntity Insert<TEntity>(TEntity item, bool saveChanges) where TEntity : class;
+        IEnumerable<TEntity> Insert<TEntity>(IEnumerable<TEntity> items, bool saveChanges) where TEntity : class;
 
-        void Delete<TEntity>(int itemId) where TEntity : class;
-        void Delete<TEntity>(IEnumerable<TEntity> items) where TEntity : class;
+        void Update<TEntity>(TEntity item, bool saveChanges) where TEntity : class;
+        void Update<TEntity>(IEnumerable<TEntity> items, bool saveChanges) where TEntity : class;
+
+        void Delete<TEntity>(int itemId, bool saveChanges) where TEntity : class;
+        void Delete<TEntity>(IEnumerable<TEntity> items, bool saveChanges) where TEntity : class;
+
+        void SaveChanges();
     }
 
     public interface IEduTestingRepository : IEduTestingGenericRepository, IUserRepository
@@ -33,8 +35,8 @@ namespace EduTesting.Interfaces
         IEnumerable<TestResult> GetTestResultsByTestAndUser(int testId, int userId);
         TestResult GetActiveTestResultByUser(int testId, int userId);
         IEnumerable<UserAnswer> GetUserAnswersByTestResultId(int testResultId);
-        void UpdateQuestionType(int questionId, int questionTypeId);
 
+        void UpdateQuestionType(int questionId, int questionTypeId);
 
         void UpdateAnswerIsRight(int answerId, bool isRight);
     }

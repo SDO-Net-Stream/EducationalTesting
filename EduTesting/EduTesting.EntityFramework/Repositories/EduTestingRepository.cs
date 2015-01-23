@@ -49,7 +49,7 @@ namespace EduTesting.Repositories
             return GetDBContext().Set<TEntity>().Find(keyValues);
         }
 
-        public TEntity Insert<TEntity>(TEntity item) where TEntity : class
+        public TEntity Insert<TEntity>(TEntity item, bool saveChanges) where TEntity : class
         {
             var db = GetDBContext();
             var entity = db.Set<TEntity>().Add(item);
@@ -57,11 +57,12 @@ namespace EduTesting.Repositories
             return entity;
         }
 
-        public IEnumerable<TEntity> Insert<TEntity>(IEnumerable<TEntity> items) where TEntity : class
+        public IEnumerable<TEntity> Insert<TEntity>(IEnumerable<TEntity> items, bool saveChanges) where TEntity : class
         {
             var db = GetDBContext();
             var entities = db.Set<TEntity>().AddRange(items);
-            db.SaveChanges();
+            if (saveChanges)
+                db.SaveChanges();
             return entities;
         }
 
@@ -71,37 +72,46 @@ namespace EduTesting.Repositories
             db.Entry(item).State = EntityState.Modified;
         }
 
-        public void Update<TEntity>(TEntity item) where TEntity : class
+        public void Update<TEntity>(TEntity item, bool saveChanges) where TEntity : class
         {
             var db = GetDBContext();
             UpdateInternal<TEntity>(db, item);
-            db.SaveChanges();
+            if (saveChanges)
+                db.SaveChanges();
         }
 
-        public void Update<TEntity>(IEnumerable<TEntity> items) where TEntity : class
+        public void Update<TEntity>(IEnumerable<TEntity> items, bool saveChanges) where TEntity : class
         {
             var db = GetDBContext();
             foreach (var item in items)
             {
                 UpdateInternal<TEntity>(db, item);
             }
-            db.SaveChanges();
+            if (saveChanges)
+                db.SaveChanges();
         }
 
-        public void Delete<TEntity>(int itemId) where TEntity : class
+        public void Delete<TEntity>(int itemId, bool saveChanges) where TEntity : class
         {
             var db = GetDBContext();
             var table = db.Set<TEntity>();
             var item = table.Find(itemId);
             table.Remove(item);
-            db.SaveChanges();
+            if (saveChanges)
+                db.SaveChanges();
         }
 
-        public void Delete<TEntity>(IEnumerable<TEntity> items) where TEntity : class
+        public void Delete<TEntity>(IEnumerable<TEntity> items, bool saveChanges) where TEntity : class
         {
             var db = GetDBContext();
             db.Set<TEntity>().RemoveRange(items);
-            db.SaveChanges();
+            if (saveChanges)
+                db.SaveChanges();
+        }
+
+        public void SaveChanges()
+        {
+            GetDBContext().SaveChanges();
         }
 
         #endregion
@@ -171,7 +181,7 @@ namespace EduTesting.Repositories
             }
             // TODO: set attribute value
             //attr.Value = questionTypeId.ToString();
-            GetDBContext().SaveChanges();
+            SaveChanges();
         }
 
         #endregion

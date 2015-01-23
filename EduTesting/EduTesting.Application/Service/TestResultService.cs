@@ -51,7 +51,7 @@ namespace EduTesting.Service
                 Timestamp = DateTime.UtcNow,
                 IsCompleted = false,
             };
-            exam = _Repository.Insert<TestResult>(exam);
+            exam = _Repository.Insert<TestResult>(exam, false);
             // TODO: check test type
             foreach (var question in test.Questions)
             {
@@ -60,8 +60,9 @@ namespace EduTesting.Service
                     TestResultId = exam.TestResultId,
                     Question = question,
                     Answer = null
-                });
+                }, false);
             }
+            _Repository.SaveChanges();
         }
 
         public TestResultViewModel GetActiveUserTestResult(StartTestViewModel startModel)
@@ -141,7 +142,7 @@ namespace EduTesting.Service
                 .Where(a => a.Question.QuestionId == answer.QuestionId).ToArray();
             if (oldAnswers.Length == 0)
                 throw new BusinessLogicException("Question is not included in the test");
-            _Repository.Delete(oldAnswers);
+            _Repository.Delete(oldAnswers, false);
             if (answer.AnswerIds.Length == 0)
             {
                 _Repository.Insert(new UserAnswer
@@ -149,7 +150,7 @@ namespace EduTesting.Service
                     TestResultId = answer.TestResultId,
                     Question = question,
                     Answer = null
-                });
+                }, false);
             }
             else
             {
@@ -163,9 +164,10 @@ namespace EduTesting.Service
                         TestResultId = answer.TestResultId,
                         Question = question,
                         Answer = answerModel
-                    });
+                    }, false);
                 }
             }
+            _Repository.SaveChanges();
         }
 
         public void CompleteTestResult(TestResultParameterViewModel key)
@@ -174,7 +176,7 @@ namespace EduTesting.Service
             if (exam.UserId != _webUser.CurrentUser.UserId)
                 throw new BusinessLogicException("You can complete only owning test sessions");
             exam.IsCompleted = true;
-            _Repository.Update<TestResult>(exam);
+            _Repository.Update<TestResult>(exam, true);
         }
 
 
