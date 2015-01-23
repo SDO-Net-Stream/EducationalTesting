@@ -31,12 +31,12 @@ namespace EduTesting.Repositories
 
         public void InsertUser(User user)
         {
-            Insert(user);
+            Insert(user, true);
         }
 
         public void UpdateUser(User user)
         {
-            Update(user);
+            Update(user, true);
         }
 
         public User GetUserByToken(string token)
@@ -44,25 +44,24 @@ namespace EduTesting.Repositories
             return GetDBContext().Users.FirstOrDefault(u => u.UserPasswordVerificationToken == token);
         }
 
-
         public void AddRoleToUser(User user, RoleCode role)
         {
             var db = GetDBContext();
             if (user.Roles == null)
                 user.Roles = new List<Role>();
             user.Roles.Add(SelectById<Role>((int)role));
-            Update(user);
+            Update(user, true);
         }
 
         public void RemoveRoleFromUser(User user, RoleCode role)
         {
             user.Roles.Remove(user.Roles.First(r => r.RoleID == (int)role));
-            Update(user);
+            Update(user, true);
         }
 
         public void DeleteUser(User user)
         {
-            Delete<User>(user.UserId);
+            Delete<User>(user.UserId, true);
         }
 
         public IQueryable<User> GetUsers()

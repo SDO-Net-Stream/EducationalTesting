@@ -150,6 +150,7 @@ namespace EduTesting.Repositories
         #endregion
 
         #region Test Repository
+        
         public void AddTestAttribute(int testId, AttributeCode code, string value)
         {
             var db = GetDBContext();
@@ -167,7 +168,7 @@ namespace EduTesting.Repositories
             else
             {
                 attr.AttributeValue = value;
-                Update(attr);
+                Update(attr, false);
             }
             db.SaveChanges();
         }
@@ -181,12 +182,9 @@ namespace EduTesting.Repositories
                 db.TestAttributes.Remove(attr);
                 db.SaveChanges();
             }
-<<<<<<< HEAD
             // TODO: set attribute value
             //attr.Value = questionTypeId.ToString();
             SaveChanges();
-=======
->>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
         }
 
         #endregion

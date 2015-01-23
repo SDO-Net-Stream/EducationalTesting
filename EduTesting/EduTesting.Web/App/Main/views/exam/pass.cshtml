@@ -1,0 +1,37 @@
+﻿<div>
+    <h3>{{examination.testName}}</h3>
+    <div>
+        {{examination.testDescription}}
+    </div>
+    <div ng-if="endTime">
+        End time: <span class="label label-info">{{endTime.value|date:'mediumTime'}}</span><br />
+        Remaining: <span class="label label-info">{{endTime.minutes}}:{{endTime.seconds}}</span>
+    </div>
+</div>
+<h3>
+    <a class="glyphicon glyphicon-step-backward" ui-sref="exam.pass.question({test: examination.testId, question: questionN - 1})" ng-if="questionN > 1"></a>
+    Question # {{questionN}} / {{examination.questions.length}}
+    <a class="glyphicon glyphicon-step-forward" ui-sref="exam.pass.question({test: examination.testId, question: questionN + 1})" ng-if="questionN < examination.questions.length"></a>
+</h3>
+<div>{{question.questionDescription}}</div>
+<div>
+    <div class="list-group" ng-if="question.answers.length > 0">
+        <a class="list-group-item" ng-repeat="answer in question.answers" ng-class="{active: question.userAnswer.answerIds.indexOf(answer.answerId) > -1}" ng-click="toggleAnswer(answer.answerId)">{{answer.answerText}}
+        </a>
+    </div>
+    <div ng-if="questionType=='TextAnswer'">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="answer-text" class="control-label col-xs-2">Answer:</label>
+                <div class="col-xs-10">
+                    <input type="text" ng-model="question.userAnswer.answerText" id="answer-text" class="form-control" ng-change="textChanged()"></input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn" ng-class="{'btn-success' : isQuestionAnswered(), 'btn-warning' : !isQuestionAnswered() }" ng-click="next()">next</button>
+</div>
+<div>
+    <h4>Answered questions: {{userAnswersCount}} / {{examination.questions.length}}</h4>
+    <button class="btn" ng-class="{'btn-success' : userAnswersFull, 'btn-warning' : !userAnswersFull }" ng-click="completeTest()">Complete</button>
+</div>

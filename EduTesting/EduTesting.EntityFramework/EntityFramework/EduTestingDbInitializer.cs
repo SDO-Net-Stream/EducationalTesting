@@ -225,15 +225,9 @@ namespace EduTesting.EntityFramework
             context.SaveChanges();
             var roles = new List<Role>
             {
-<<<<<<< HEAD
-                new Role { RoleID = 1, RoleName = "User" },
-                new Role { RoleID = 2, RoleName = "Teacher" },
-                new Role { RoleID = 3, RoleName = "Administrator" }
-=======
                 new Role { RoleID = (int)RoleCode.User, RoleName = "User" },
                 new Role { RoleID = (int)RoleCode.Teacher, RoleName = "Teacher" },
                 new Role { RoleID = (int)RoleCode.Administrator, RoleName = "Administrator" }
->>>>>>> 1ca246f28d5496934918c805a0d44c7d397a1d62
             };
             roles.ForEach(r => context.Roles.Add(r));
             context.SaveChanges();
